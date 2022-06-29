@@ -38,6 +38,8 @@ public class StudyTripService extends AbstractService
 
 		query.setPagingBehavior( new PagingBehaviorUsingOffsetSize<>( offset, size ) );
 
+		Logger.logGetCollection();
+
 		return new GetCollectionStudyTripsState.Builder( )
 			.setQuery( query )
 			.setUriInfo( this.uriInfo )
@@ -53,6 +55,9 @@ public class StudyTripService extends AbstractService
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getSingleStudyTrip( @PathParam( "id" ) final long id )
 	{
+
+		Logger.logGetSingle(id);
+
 		return new GetSingleStudyTripState.Builder( )
 			.setRequestedId( id )
 			.setUriInfo( this.uriInfo )
