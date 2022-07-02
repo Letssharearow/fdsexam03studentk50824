@@ -14,6 +14,10 @@ import de.fhws.fiw.fds.sutton.server.models.AbstractModel;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Response;
 
+import java.util.Date;
+
+import static de.fhws.fiw.fds.exam02.api.states.StateHelper.*;
+
 public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 {
 	public GetSingleStudyTripState( final AbstractGetStateBuilder builder )
@@ -39,7 +43,7 @@ public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 
 	@Override protected void defineHttpCaching( )
 	{
-		this.responseBuilder.cacheControl( CachingUtils.create30SecondsPrivateCaching( ) );
+		this.responseBuilder.cacheControl( CachingUtils.create2SecondsPrivateCaching( ) );
 	}
 
 	@Override protected boolean clientKnowsCurrentModelState( final AbstractModel modelFromDatabase )
@@ -59,7 +63,8 @@ public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 	@Override protected Response createResponse( )
 	{
 		addEtagHeader( );
-
+		addVaryHeader(this.responseBuilder);
+		addExpiresHeaderNeverIfPastEndDate(this.responseBuilder, this.requestedModel.getResult().getEndDate() );
 		return super.createResponse( );
 	}
 
@@ -76,5 +81,7 @@ public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 		{
 			return new GetSingleStudyTripState( this );
 		}
+
+
 	}
 }

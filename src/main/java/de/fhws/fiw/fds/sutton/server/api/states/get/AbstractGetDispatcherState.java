@@ -52,7 +52,7 @@ public abstract class AbstractGetDispatcherState extends AbstractState
 		return this.responseBuilder.build( );
 	}
 
-	private void defineHttpResponseBody( )
+	protected void defineHttpResponseBody( )
 	{
 		this.responseBuilder.entity( "" );
 	}

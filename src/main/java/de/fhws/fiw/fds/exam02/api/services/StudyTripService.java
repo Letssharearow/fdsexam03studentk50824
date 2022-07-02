@@ -1,5 +1,6 @@
 package de.fhws.fiw.fds.exam02.api.services;
 
+import de.fhws.fiw.fds.exam02.api.states.Logger;
 import de.fhws.fiw.fds.exam02.api.states.study_trip_students.*;
 import de.fhws.fiw.fds.exam02.api.states.study_trips.*;
 import de.fhws.fiw.fds.exam02.models.Student;

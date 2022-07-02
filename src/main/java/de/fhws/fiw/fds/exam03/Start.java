@@ -20,7 +20,7 @@ import de.fhws.fiw.fds.sutton.server.AbstractStart;
 
 public class Start extends AbstractStart
 {
-	public static final String CONTEXT_PATH = "exam03";
+	public static final String CONTEXT_PATH = "exam02";
 
 	public static void main( final String[] args ) throws Exception
 	{

@@ -13,11 +13,14 @@ import de.fhws.fiw.fds.sutton.server.database.results.CollectionModelResult;
 import org.apache.commons.lang.StringUtils;
 
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
+
+import static de.fhws.fiw.fds.exam02.api.states.StateHelper.addVaryHeader;
 
 public class GetCollectionStudyTripsState extends AbstractGetCollectionState<StudyTrip>
 {
@@ -30,6 +33,12 @@ public class GetCollectionStudyTripsState extends AbstractGetCollectionState<Stu
 	protected void authorizeRequest( )
 	{
 
+	}
+
+	@Override protected Response createResponse( )
+	{
+		addVaryHeader(this.responseBuilder);
+		return super.createResponse( );
 	}
 
 	@Override
@@ -49,7 +58,7 @@ public class GetCollectionStudyTripsState extends AbstractGetCollectionState<Stu
 	@Override
 	protected void configureState( )
 	{
-		this.responseBuilder.cacheControl( CachingUtils.createNoCacheNoStoreCaching( ) );
+		this.responseBuilder.cacheControl( CachingUtils.create2SecondsPublicCaching( ) );
 	}
 
 	public static class ByAttributes extends AbstractQuery<StudyTrip>

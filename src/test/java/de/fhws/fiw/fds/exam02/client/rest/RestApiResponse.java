@@ -87,6 +87,12 @@ public class RestApiResponse<M extends AbstractModel>
 		return this.relationTypeToLinkHeaderMap.get( relationType ).getUrl( );
 	}
 
+	public boolean headerExists( final String key, final String value )
+	{
+		String headerValue = this.allResponseHeaders.get(key);
+		return headerValue != null && headerValue.equals(value);
+	}
+
 	public String getEtagHeader( )
 	{
 		return this.allResponseHeaders.get( "Etag" );

@@ -39,6 +39,11 @@ public abstract class AbstractTest<R extends AbstractModel, C extends AbstractRe
 		return IBaseUrl.BASE_URL;
 	}
 
+	protected String defineCacheUrl( )
+	{
+		return IBaseUrl.BASE_URL_CACHE;
+	}
+
 	protected abstract C newRestClient( final HeaderMap headers );
 
 	protected RestApiResponse<R> getCollectionRequest(

@@ -29,6 +29,15 @@ public class CachingUtils
 		return cacheControl;
 	}
 
+	public static CacheControl create2SecondsPrivateCaching( )
+	{
+		final CacheControl cacheControl = new CacheControl( );
+		cacheControl.setPrivate( true );
+		cacheControl.setMaxAge( 2 );
+
+		return cacheControl;
+	}
+
 	public static CacheControl create30SecondsPublicCaching( )
 	{
 		final CacheControl cacheControl = new CacheControl( );
@@ -53,6 +62,14 @@ public class CachingUtils
 		cacheControl.setPrivate( true );
 		cacheControl.setMaxAge( 30 );
 
+		return cacheControl;
+	}
+
+	public static CacheControl createAcceptCache( )
+	{
+		final CacheControl cacheControl = new CacheControl( );
+		cacheControl.setPrivate( true );
+		cacheControl.setMaxAge( 30 );
 		return cacheControl;
 	}
 
