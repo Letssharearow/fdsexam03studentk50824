@@ -7,11 +7,11 @@ public class DaoFactory
 {
 	private static DaoFactory INSTANCE;
 
-	public static final DaoFactory getInstance( )
+	public static final DaoFactory getInstance()
 	{
-		if ( INSTANCE == null )
+		if (INSTANCE == null)
 		{
-			INSTANCE = new DaoFactory( );
+			INSTANCE = new DaoFactory();
 		}
 
 		return INSTANCE;
@@ -23,29 +23,29 @@ public class DaoFactory
 
 	private final IStudyTripStudentDao studyTripStudentDao;
 
-	public DaoFactory( )
+	public DaoFactory()
 	{
-		this.studyTripDao = new StudyTripInMemoryStorage( );
-		this.studentDao = new StudentInMemoryStorage( );
-		this.studyTripStudentDao = new StudyTripToStudentRelationInMemoryStorage( );
+		this.studyTripDao = new StudyTripInMemoryStorage();
+		this.studentDao = new StudentInMemoryStorage();
+		this.studyTripStudentDao = new StudyTripToStudentRelationInMemoryStorage();
 	}
 
-	public IStudyTripDao getStudyTripDao( )
+	public IStudyTripDao getStudyTripDao()
 	{
 		return studyTripDao;
 	}
 
-	public IStudentDao getStudentDao( )
+	public IStudentDao getStudentDao()
 	{
 		return studentDao;
 	}
 
-	public IStudyTripStudentDao getStudyTripStudentDao( )
+	public IStudyTripStudentDao getStudyTripStudentDao()
 	{
 		return studyTripStudentDao;
 	}
 
-	public static void resetDaoFactory( )
+	public static void resetDaoFactory()
 	{
 		INSTANCE = null;
 	}

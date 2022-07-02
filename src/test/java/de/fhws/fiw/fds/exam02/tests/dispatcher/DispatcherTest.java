@@ -16,47 +16,42 @@ import static org.junit.Assert.assertNotNull;
 
 public class DispatcherTest extends AbstractTest<EmptyResource, EmptyResourceRestClient>
 {
-	@Test
-	public void test_200( ) throws IOException
+	@Test public void test_200() throws IOException
 	{
-		final DispatcherRestClient dispatcherRestClient = new DispatcherRestClient( );
-		final RestApiResponse<EmptyResource> response = dispatcherRestClient.triggerDispatcherRequest( );
+		final DispatcherRestClient dispatcherRestClient = new DispatcherRestClient();
+		final RestApiResponse<EmptyResource> response = dispatcherRestClient.triggerDispatcherRequest();
 
-		assertEquals( 200, response.getLastStatusCode( ) );
+		assertEquals(200, response.getLastStatusCode());
 	}
 
-	@Test
-	public void test_hypermedia( ) throws IOException
+	@Test public void test_hypermedia() throws IOException
 	{
-		final DispatcherRestClient dispatcherRestClient = new DispatcherRestClient( );
-		final RestApiResponse<EmptyResource> response = dispatcherRestClient.triggerDispatcherRequest( );
+		final DispatcherRestClient dispatcherRestClient = new DispatcherRestClient();
+		final RestApiResponse<EmptyResource> response = dispatcherRestClient.triggerDispatcherRequest();
 
-		assertNotNull( response.getParsedLinkHeader( "self" ) );
-		assertNotNull( response.getParsedLinkHeader( "getAllStudents" ) );
-		assertNotNull( response.getParsedLinkHeader( "getAllStudyTrips" ) );
+		assertNotNull(response.getParsedLinkHeader("self"));
+		assertNotNull(response.getParsedLinkHeader("getAllStudents"));
+		assertNotNull(response.getParsedLinkHeader("getAllStudyTrips"));
 	}
 
-	@Test
-	public void test_correct_media_type( ) throws IOException
+	@Test public void test_correct_media_type() throws IOException
 	{
-		final DispatcherRestClient dispatcherRestClient = new DispatcherRestClient( HeaderMapUtils.withAcceptJson( ) );
-		final RestApiResponse<EmptyResource> response = dispatcherRestClient.triggerDispatcherRequest( );
+		final DispatcherRestClient dispatcherRestClient = new DispatcherRestClient(HeaderMapUtils.withAcceptJson());
+		final RestApiResponse<EmptyResource> response = dispatcherRestClient.triggerDispatcherRequest();
 
-		assertEquals( 200, response.getLastStatusCode( ) );
+		assertEquals(200, response.getLastStatusCode());
 	}
 
-	@Test
-	public void test_incorrect_media_type( ) throws IOException
+	@Test public void test_incorrect_media_type() throws IOException
 	{
-		final DispatcherRestClient dispatcherRestClient = new DispatcherRestClient( HeaderMapUtils.withAcceptXml( ) );
-		final RestApiResponse<EmptyResource> response = dispatcherRestClient.triggerDispatcherRequest( );
+		final DispatcherRestClient dispatcherRestClient = new DispatcherRestClient(HeaderMapUtils.withAcceptXml());
+		final RestApiResponse<EmptyResource> response = dispatcherRestClient.triggerDispatcherRequest();
 
-		assertEquals( 406, response.getLastStatusCode( ) );
+		assertEquals(406, response.getLastStatusCode());
 	}
 
-	@Override
-	protected EmptyResourceRestClient newRestClient( final HeaderMap headers )
+	@Override protected EmptyResourceRestClient newRestClient(final HeaderMap headers)
 	{
-		return new EmptyResourceRestClient( headers );
+		return new EmptyResourceRestClient(headers);
 	}
 }

@@ -15,15 +15,16 @@ public abstract class AbstractStudentTest extends AbstractTest<Student, StudentR
 
 	protected final static String HARRY_POTTER = "Harry Potter";
 
-	protected final static String[] STUDENTS_SORTED = new String[]{ JAMES_BOND, ERIKA_MUSTERMANN, MAX_MUSTERMANN, HARRY_POTTER };
+	protected final static String[] STUDENTS_SORTED = new String[] { JAMES_BOND, ERIKA_MUSTERMANN, MAX_MUSTERMANN,
+		HARRY_POTTER };
 
-	@Override protected StudentRestClient newRestClient( final HeaderMap headers )
+	@Override protected StudentRestClient newRestClient(final HeaderMap headers)
 	{
-		return new StudentRestClient( headers );
+		return new StudentRestClient(headers);
 	}
 
-	@Override protected String defineBaseUrl( )
+	@Override protected String defineBaseUrl()
 	{
-		return super.defineBaseUrl( ) + "students";
+		return super.defineBaseUrl() + "students";
 	}
 }

@@ -9,34 +9,32 @@ import javax.ws.rs.ApplicationPath;
 import java.util.HashSet;
 import java.util.Set;
 
-@ApplicationPath( "api" )
-public class Exam02 extends AbstractApplication
+@ApplicationPath("api") public class Exam02 extends AbstractApplication
 {
-	public Exam02( )
+	public Exam02()
 	{
-		super( );
+		super();
 
-		register( LocalDateConverterProvider.class );
+		register(LocalDateConverterProvider.class);
 
-		initializeDatabase( );
+		initializeDatabase();
 	}
 
-	private void initializeDatabase( )
+	private void initializeDatabase()
 	{
-		new InitializeDatabase( ).initialize( );
+		new InitializeDatabase().initialize();
 	}
 
-	@Override
-	protected Set<Class<?>> getServiceClasses( )
+	@Override protected Set<Class<?>> getServiceClasses()
 	{
-		final Set<Class<?>> returnValue = new HashSet<>( );
+		final Set<Class<?>> returnValue = new HashSet<>();
 
-		returnValue.add( DispatcherService.class );
-		returnValue.add( StudyTripService.class );
-		returnValue.add( StudentService.class );
+		returnValue.add(DispatcherService.class);
+		returnValue.add(StudyTripService.class);
+		returnValue.add(StudentService.class);
 
-		returnValue.add( InitializeDatabaseService.class );
-		returnValue.add( ResetDatabaseService.class );
+		returnValue.add(InitializeDatabaseService.class);
+		returnValue.add(ResetDatabaseService.class);
 
 		return returnValue;
 	}

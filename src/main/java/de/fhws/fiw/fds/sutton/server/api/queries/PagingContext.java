@@ -27,26 +27,24 @@ public class PagingContext
 
 	private final String mediaType;
 
-	public PagingContext( final UriInfo uriInfo,
-		final Response.ResponseBuilder responseBuilder,
-		final String mediaType )
+	public PagingContext(final UriInfo uriInfo, final Response.ResponseBuilder responseBuilder, final String mediaType)
 	{
 		this.uriInfo = uriInfo;
 		this.responseBuilder = responseBuilder;
 		this.mediaType = mediaType;
 	}
 
-	public UriInfo getUriInfo( )
+	public UriInfo getUriInfo()
 	{
 		return this.uriInfo;
 	}
 
-	public Response.ResponseBuilder getResponseBuilder( )
+	public Response.ResponseBuilder getResponseBuilder()
 	{
 		return this.responseBuilder;
 	}
 
-	public String getMediaType( )
+	public String getMediaType()
 	{
 		return this.mediaType;
 	}

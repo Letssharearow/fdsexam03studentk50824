@@ -15,17 +15,16 @@ public abstract class AbstractStudyTripStudentsTest extends AbstractSubResourceT
 
 	protected final static String HARRY_POTTER = "Harry Potter";
 
-	protected final static String[] STUDENTS_SORTED = new String[]{ JAMES_BOND, ERIKA_MUSTERMANN, MAX_MUSTERMANN, HARRY_POTTER };
+	protected final static String[] STUDENTS_SORTED = new String[] { JAMES_BOND, ERIKA_MUSTERMANN, MAX_MUSTERMANN,
+		HARRY_POTTER };
 
-	@Override
-	protected StudyTripStudentRestClient newRestClient( final HeaderMap headers )
+	@Override protected StudyTripStudentRestClient newRestClient(final HeaderMap headers)
 	{
-		return new StudyTripStudentRestClient( headers );
+		return new StudyTripStudentRestClient(headers);
 	}
 
-	@Override
-	protected String defineBaseUrl( )
+	@Override protected String defineBaseUrl()
 	{
-		return super.defineBaseUrl( ) + "studytrips/1/students";
+		return super.defineBaseUrl() + "studytrips/1/students";
 	}
 }

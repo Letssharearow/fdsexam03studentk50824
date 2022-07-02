@@ -14,74 +14,80 @@ import de.fhws.fiw.fds.sutton.server.models.AbstractModel;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Response;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static de.fhws.fiw.fds.exam02.api.states.StateHelper.*;
 
 public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 {
-	public GetSingleStudyTripState( final AbstractGetStateBuilder builder )
+	public GetSingleStudyTripState(final AbstractGetStateBuilder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override protected SingleModelResult<StudyTrip> loadModel( )
+	@Override protected SingleModelResult<StudyTrip> loadModel()
 	{
-		return DaoFactory.getInstance( ).getStudyTripDao( ).readById( this.requestedId );
+		return DaoFactory.getInstance().getStudyTripDao().readById(this.requestedId);
 	}
 
-	@Override protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink( IStudyTripUri.REL_PATH_ID, IStudyTripRelTypes.UPDATE_SINGLE_STUDY_TRIP, getAcceptRequestHeader( ) );
-		addLink( IStudyTripUri.REL_PATH_ID, IStudyTripRelTypes.DELETE_SINGLE_STUDY_TRIP, getAcceptRequestHeader( ) );
+		addLink(IStudyTripUri.REL_PATH_ID, IStudyTripRelTypes.UPDATE_SINGLE_STUDY_TRIP, getAcceptRequestHeader());
+		addLink(IStudyTripUri.REL_PATH_ID, IStudyTripRelTypes.DELETE_SINGLE_STUDY_TRIP, getAcceptRequestHeader());
 	}
 
-	@Override protected void defineHttpCaching( )
+	@Override protected void defineHttpCaching()
 	{
-		this.responseBuilder.cacheControl( CachingUtils.create2SecondsPrivateCaching( ) );
+		if (this.requestedModel.getResult().getEndDate().isAfter(LocalDate.now()))
+		{
+			addNeverExpireHeader(responseBuilder);
+		}
+		else
+		{
+			this.responseBuilder.cacheControl(CachingUtils.create2SecondsPublicCaching());
+		}
 	}
 
-	@Override protected boolean clientKnowsCurrentModelState( final AbstractModel modelFromDatabase )
+	@Override protected boolean clientKnowsCurrentModelState(final AbstractModel modelFromDatabase)
 	{
-		return doesEtagMatch( modelFromDatabase );
+		return doesEtagMatch(modelFromDatabase);
 	}
 
-	private boolean doesEtagMatch( final AbstractModel modelFromDatabase )
+	private boolean doesEtagMatch(final AbstractModel modelFromDatabase)
 	{
-		EntityTag etag = EtagGenerator.createEntityTag( modelFromDatabase );
+		EntityTag etag = EtagGenerator.createEntityTag(modelFromDatabase);
 
-		Response.ResponseBuilder builder = this.request.evaluatePreconditions( etag );
+		Response.ResponseBuilder builder = this.request.evaluatePreconditions(etag);
 
 		return builder != null;
 	}
 
-	@Override protected Response createResponse( )
+	@Override protected Response createResponse()
 	{
-		addEtagHeader( );
+		addEtagHeader();
 		addVaryHeader(this.responseBuilder);
-		addExpiresHeaderNeverIfPastEndDate(this.responseBuilder, this.requestedModel.getResult().getEndDate() );
-		return super.createResponse( );
+		return super.createResponse();
 	}
 
-	private void addEtagHeader( )
+	private void addEtagHeader()
 	{
-		final EntityTag etag = EtagGenerator.createEntityTag( this.requestedModel.getResult( ) );
+		final EntityTag etag = EtagGenerator.createEntityTag(this.requestedModel.getResult());
 
-		this.responseBuilder.tag( etag );
+		this.responseBuilder.tag(etag);
 	}
 
 	public static class Builder extends AbstractGetStateBuilder
 	{
-		@Override public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new GetSingleStudyTripState( this );
+			return new GetSingleStudyTripState(this);
 		}
-
 
 	}
 }

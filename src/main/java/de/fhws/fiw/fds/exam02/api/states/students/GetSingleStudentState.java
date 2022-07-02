@@ -16,65 +16,65 @@ import javax.ws.rs.core.Response;
 
 public class GetSingleStudentState extends AbstractGetState<Student>
 {
-	public GetSingleStudentState( final Builder builder )
+	public GetSingleStudentState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override protected SingleModelResult<Student> loadModel( )
+	@Override protected SingleModelResult<Student> loadModel()
 	{
-		return DaoFactory.getInstance( ).getStudentDao( ).readById( this.requestedId );
+		return DaoFactory.getInstance().getStudentDao().readById(this.requestedId);
 	}
 
-	@Override protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink( IStudentUri.REL_PATH_ID, IStudentRelTypes.UPDATE_SINGLE_STUDENT, getAcceptRequestHeader( ) );
-		addLink( IStudentUri.REL_PATH_ID, IStudentRelTypes.DELETE_SINGLE_STUDENT, getAcceptRequestHeader( ) );
+		addLink(IStudentUri.REL_PATH_ID, IStudentRelTypes.UPDATE_SINGLE_STUDENT, getAcceptRequestHeader());
+		addLink(IStudentUri.REL_PATH_ID, IStudentRelTypes.DELETE_SINGLE_STUDENT, getAcceptRequestHeader());
 	}
 
-	@Override protected void defineHttpCaching( )
+	@Override protected void defineHttpCaching()
 	{
-		this.responseBuilder.cacheControl( CachingUtils.create30SecondsPrivateCaching( ) );
+		this.responseBuilder.cacheControl(CachingUtils.create30SecondsPrivateCaching());
 	}
 
-	@Override protected boolean clientKnowsCurrentModelState( final AbstractModel modelFromDatabase )
+	@Override protected boolean clientKnowsCurrentModelState(final AbstractModel modelFromDatabase)
 	{
-		return doesEtagMatch( modelFromDatabase );
+		return doesEtagMatch(modelFromDatabase);
 	}
 
-	private boolean doesEtagMatch( final AbstractModel modelFromDatabase )
+	private boolean doesEtagMatch(final AbstractModel modelFromDatabase)
 	{
-		EntityTag etag = EtagGenerator.createEntityTag( modelFromDatabase );
+		EntityTag etag = EtagGenerator.createEntityTag(modelFromDatabase);
 
-		Response.ResponseBuilder builder = this.request.evaluatePreconditions( etag );
+		Response.ResponseBuilder builder = this.request.evaluatePreconditions(etag);
 
 		return builder != null;
 	}
 
-	@Override protected Response createResponse( )
+	@Override protected Response createResponse()
 	{
-		addEtagHeader( );
+		addEtagHeader();
 
-		return super.createResponse( );
+		return super.createResponse();
 	}
 
-	private void addEtagHeader( )
+	private void addEtagHeader()
 	{
-		final EntityTag etag = EtagGenerator.createEntityTag( this.requestedModel.getResult( ) );
+		final EntityTag etag = EtagGenerator.createEntityTag(this.requestedModel.getResult());
 
-		this.responseBuilder.tag( etag );
+		this.responseBuilder.tag(etag);
 	}
 
 	public static class Builder extends AbstractGetStateBuilder
 	{
-		@Override public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new GetSingleStudentState( this );
+			return new GetSingleStudentState(this);
 		}
 	}
 }

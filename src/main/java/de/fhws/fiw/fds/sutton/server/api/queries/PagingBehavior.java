@@ -27,54 +27,47 @@ import java.util.List;
 
 public abstract class PagingBehavior<T extends AbstractModel>
 {
-	public final CollectionModelResult<T> page( final CollectionModelResult<T> fullResult )
+	public final CollectionModelResult<T> page(final CollectionModelResult<T> fullResult)
 	{
-		final CollectionModelResult<T> returnValue = new CollectionModelResult<>( );
-		returnValue.getResult( ).addAll( page( fullResult.getResult( ) ) );
-		returnValue.setTotalNumberOfResult( fullResult.getTotalNumberOfResult( ) );
+		final CollectionModelResult<T> returnValue = new CollectionModelResult<>();
+		returnValue.getResult().addAll(page(fullResult.getResult()));
+		returnValue.setTotalNumberOfResult(fullResult.getTotalNumberOfResult());
 		return returnValue;
 	}
 
-	public final void addSelfLink( final PagingContext pagingContext )
+	public final void addSelfLink(final PagingContext pagingContext)
 	{
-		Hyperlinks.addLink( pagingContext.getResponseBuilder( ),
-			getSelfUri( pagingContext.getUriInfo( ) ),
-			"self",
-			pagingContext.getMediaType( ) );
+		Hyperlinks.addLink(pagingContext.getResponseBuilder(), getSelfUri(pagingContext.getUriInfo()), "self",
+			pagingContext.getMediaType());
 	}
 
-	public final void addPrevPageLink( final PagingContext pagingContext )
+	public final void addPrevPageLink(final PagingContext pagingContext)
 	{
-		if ( hasPrevLink( ) )
+		if (hasPrevLink())
 		{
-			Hyperlinks.addLink( pagingContext.getResponseBuilder( ),
-				getPrevUri( pagingContext.getUriInfo( ) ),
-				"prev",
-				pagingContext.getMediaType( ) );
+			Hyperlinks.addLink(pagingContext.getResponseBuilder(), getPrevUri(pagingContext.getUriInfo()), "prev",
+				pagingContext.getMediaType());
 		}
 	}
 
-	public final void addNextPageLink( final PagingContext pagingContext,
-		final CollectionModelResult<?> databaseResult )
+	public final void addNextPageLink(final PagingContext pagingContext, final CollectionModelResult<?> databaseResult)
 	{
-		if ( hasNextLink( databaseResult ) )
+		if (hasNextLink(databaseResult))
 		{
-			Hyperlinks.addLink( pagingContext.getResponseBuilder( ),
-				getNextUri( pagingContext.getUriInfo( ), databaseResult ),
-				"next",
-				pagingContext.getMediaType( ) );
+			Hyperlinks.addLink(pagingContext.getResponseBuilder(),
+				getNextUri(pagingContext.getUriInfo(), databaseResult), "next", pagingContext.getMediaType());
 		}
 	}
 
-	protected abstract List<T> page( final Collection<T> result );
+	protected abstract List<T> page(final Collection<T> result);
 
-	protected abstract boolean hasNextLink( final CollectionModelResult<?> result );
+	protected abstract boolean hasNextLink(final CollectionModelResult<?> result);
 
-	protected abstract boolean hasPrevLink( );
+	protected abstract boolean hasPrevLink();
 
-	protected abstract URI getSelfUri( final UriInfo uriInfo );
+	protected abstract URI getSelfUri(final UriInfo uriInfo);
 
-	protected abstract URI getPrevUri( final UriInfo uriInfo );
+	protected abstract URI getPrevUri(final UriInfo uriInfo);
 
-	protected abstract URI getNextUri( final UriInfo uriInfo, final CollectionModelResult<?> result );
+	protected abstract URI getNextUri(final UriInfo uriInfo, final CollectionModelResult<?> result);
 }

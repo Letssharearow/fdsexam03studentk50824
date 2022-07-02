@@ -34,72 +34,70 @@ public abstract class AbstractGetCollectionState<T extends AbstractModel> extend
 
 	protected CollectionModelResult<T> result;
 
-	protected AbstractGetCollectionState( final AbstractGetCollectionStateBuilder<T> builder )
+	protected AbstractGetCollectionState(final AbstractGetCollectionStateBuilder<T> builder)
 	{
-		super( builder );
+		super(builder);
 		this.query = builder.query;
 	}
 
-	@Override
-	protected Response buildInternal( )
+	@Override protected Response buildInternal()
 	{
-		configureState( );
+		configureState();
 
-		authorizeRequest( );
+		authorizeRequest();
 
-		this.result = loadModels( );
+		this.result = loadModels();
 
-		if ( this.result.hasError( ) )
+		if (this.result.hasError())
 		{
-			return Response.serverError( )
-						   .build( );
+			return Response.serverError().build();
 		}
 
-		return createResponse( );
+		return createResponse();
 	}
 
-	protected abstract void authorizeRequest( );
+	protected abstract void authorizeRequest();
 
-	protected final CollectionModelResult<T> loadModels( )
+	protected final CollectionModelResult<T> loadModels()
 	{
-		return this.query.startQuery( );
+		return this.query.startQuery();
 	}
 
-	protected Response createResponse( )
+	protected Response createResponse()
 	{
-		defineHttpHeaderTotalNumberOfResults( );
+		defineHttpHeaderTotalNumberOfResults();
 
-		defineHttpHeaderNumberOfResults( );
+		defineHttpHeaderNumberOfResults();
 
-		defineHttpResponseBody( );
+		defineHttpResponseBody();
 
-		defineSelfLink( );
+		defineSelfLink();
 
-		definePagingLinks( );
+		definePagingLinks();
 
-		defineTransitionLinks( );
+		defineTransitionLinks();
 
-		return this.responseBuilder.build( );
+		return this.responseBuilder.build();
 	}
 
-	protected void defineHttpHeaderTotalNumberOfResults( )
+	protected void defineHttpHeaderTotalNumberOfResults()
 	{
-		this.responseBuilder.header( getHeaderForTotalNumberOfResults( ), this.result.getTotalNumberOfResult( ) );
+		this.responseBuilder.header(getHeaderForTotalNumberOfResults(), this.result.getTotalNumberOfResult());
 	}
 
-	protected String getHeaderForTotalNumberOfResults( )
+	protected String getHeaderForTotalNumberOfResults()
 	{
 		return HEADER_TOTALNUMBEROFRESULTS;
 	}
 
-	protected abstract void defineHttpResponseBody( );
+	protected abstract void defineHttpResponseBody();
 
-	protected void defineHttpHeaderNumberOfResults( )
+	protected void defineHttpHeaderNumberOfResults()
 	{
-		this.responseBuilder.header( getHeaderForNumberOfResults( ), this.result.getResult( ).size( ) );
+		this.responseBuilder.header(getHeaderForNumberOfResults(), this.result.getResult().size());
 	}
 
-	protected String getHeaderForNumberOfResults( )
+	protected String getHeaderForNumberOfResults()
 	{
 		return HEADER_NUMBEROFRESULTS;
 	}
@@ -108,32 +106,31 @@ public abstract class AbstractGetCollectionState<T extends AbstractModel> extend
 	 * This method is used to define all transition links based on the idea of a REST system as
 	 * a finite state machine.
 	 */
-	protected abstract void defineTransitionLinks( );
+	protected abstract void defineTransitionLinks();
 
-	protected void definePagingLinks( )
+	protected void definePagingLinks()
 	{
-		final PagingContext pagingContext = createPagingContext( );
+		final PagingContext pagingContext = createPagingContext();
 
-		this.query.addPrevPageLink( pagingContext );
-		this.query.addNextPageLink( pagingContext );
+		this.query.addPrevPageLink(pagingContext);
+		this.query.addNextPageLink(pagingContext);
 	}
 
-	protected void defineSelfLink( )
+	protected void defineSelfLink()
 	{
-		this.query.addSelfLink( createPagingContext( ) );
+		this.query.addSelfLink(createPagingContext());
 	}
 
-	private PagingContext createPagingContext( )
+	private PagingContext createPagingContext()
 	{
-		return new PagingContext( this.uriInfo, this.responseBuilder, getAcceptRequestHeader( ) );
+		return new PagingContext(this.uriInfo, this.responseBuilder, getAcceptRequestHeader());
 	}
 
-	public static abstract class AbstractGetCollectionStateBuilder<T extends AbstractModel>
-		extends AbstractStateBuilder
+	public static abstract class AbstractGetCollectionStateBuilder<T extends AbstractModel> extends AbstractStateBuilder
 	{
 		protected AbstractQuery<T> query;
 
-		public AbstractGetCollectionStateBuilder setQuery( final AbstractQuery<T> query )
+		public AbstractGetCollectionStateBuilder setQuery(final AbstractQuery<T> query)
 		{
 			this.query = query;
 			return this;

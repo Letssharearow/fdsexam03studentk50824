@@ -10,42 +10,42 @@ public class User extends AbstractModel
 
 	private String role;
 
-	public User( )
+	public User()
 	{
 	}
 
-	public User( final String name, final String secret )
+	public User(final String name, final String secret)
 	{
 		this.name = name;
 		this.secret = secret;
 		this.role = "";
 	}
 
-	public User( final String name, final String secret, final String role )
+	public User(final String name, final String secret, final String role)
 	{
 		this.name = name;
 		this.secret = secret;
 		this.role = role;
 	}
 
-	public String getName( )
+	public String getName()
 	{
 		return name;
 	}
 
-	public String getSecret( )
+	public String getSecret()
 	{
 		return secret;
 	}
 
-	public String getRole( )
+	public String getRole()
 	{
 		return role;
 	}
 
-	public User cloneWithoutSecret( )
+	public User cloneWithoutSecret()
 	{
-		final User returnValue = new User( );
+		final User returnValue = new User();
 
 		returnValue.id = this.id;
 		returnValue.role = this.role;

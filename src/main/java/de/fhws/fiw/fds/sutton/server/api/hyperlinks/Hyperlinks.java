@@ -23,31 +23,27 @@ import java.net.URI;
 
 public class Hyperlinks
 {
-	public static void addLink( final UriInfo uriInfo,
-		final Response.ResponseBuilder responseBuilder,
-		final String path,
-		final String relationType,
-		final String mediaType,
-		final Object... params )
+	public static void addLink(final UriInfo uriInfo, final Response.ResponseBuilder responseBuilder, final String path,
+		final String relationType, final String mediaType, final Object... params)
 	{
-		final UriBuilder builder = uriInfo.getAbsolutePathBuilder( );
-		builder.replacePath( beforeQuestionMark( path ) );
-		builder.replaceQuery( afterQuestionMark( path ) );
-		String uriTemplate = builder.toTemplate( );
+		final UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+		builder.replacePath(beforeQuestionMark(path));
+		builder.replaceQuery(afterQuestionMark(path));
+		String uriTemplate = builder.toTemplate();
 
-		for ( final Object p : params )
+		for (final Object p : params)
 		{
-			uriTemplate = replaceFirstTemplate( uriTemplate, p );
+			uriTemplate = replaceFirstTemplate(uriTemplate, p);
 		}
 
-		responseBuilder.header( "Link", linkHeader( uriTemplate, relationType, mediaType ) );
+		responseBuilder.header("Link", linkHeader(uriTemplate, relationType, mediaType));
 	}
 
-	private static String beforeQuestionMark( final String path )
+	private static String beforeQuestionMark(final String path)
 	{
-		if ( path.contains( "?" ) )
+		if (path.contains("?"))
 		{
-			return path.substring( 0, path.indexOf( "?" ) );
+			return path.substring(0, path.indexOf("?"));
 		}
 		else
 		{
@@ -55,11 +51,11 @@ public class Hyperlinks
 		}
 	}
 
-	private static String afterQuestionMark( final String path )
+	private static String afterQuestionMark(final String path)
 	{
-		if ( path.contains( "?" ) )
+		if (path.contains("?"))
 		{
-			return path.substring( path.indexOf( "?" ) + 1 );
+			return path.substring(path.indexOf("?") + 1);
 		}
 		else
 		{
@@ -67,30 +63,28 @@ public class Hyperlinks
 		}
 	}
 
-	public static String replaceFirstTemplate( final String uri, final Object value )
+	public static String replaceFirstTemplate(final String uri, final Object value)
 	{
-		return uri.replaceFirst( "\\{id\\}", value.toString( ) );
+		return uri.replaceFirst("\\{id\\}", value.toString());
 	}
 
-	public static String linkHeader( final String uri, final String rel, final String mediaType )
+	public static String linkHeader(final String uri, final String rel, final String mediaType)
 	{
-		final StringBuilder sb = new StringBuilder( );
-		sb.append( '<' ).append( uri ).append( ">;" );
-		sb.append( "rel" ).append( "=\"" ).append( rel ).append( "\"" );
-		if ( mediaType != null && !mediaType.isEmpty( ) )
+		final StringBuilder sb = new StringBuilder();
+		sb.append('<').append(uri).append(">;");
+		sb.append("rel").append("=\"").append(rel).append("\"");
+		if (mediaType != null && !mediaType.isEmpty())
 		{
-			sb.append( ";" );
-			sb.append( "type" ).append( "=\"" ).append( mediaType ).append( "\"" );
+			sb.append(";");
+			sb.append("type").append("=\"").append(mediaType).append("\"");
 		}
 
-		return sb.toString( );
+		return sb.toString();
 	}
 
-	public static void addLink( final Response.ResponseBuilder responseBuilder,
-		final URI uri,
-		final String relType,
-		final String mediaType )
+	public static void addLink(final Response.ResponseBuilder responseBuilder, final URI uri, final String relType,
+		final String mediaType)
 	{
-		responseBuilder.header( "Link", linkHeader( uri.toASCIIString( ), relType, mediaType ) );
+		responseBuilder.header("Link", linkHeader(uri.toASCIIString(), relType, mediaType));
 	}
 }

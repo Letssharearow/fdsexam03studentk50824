@@ -19,21 +19,21 @@ public abstract class AbstractStudyTripTest extends AbstractTest<StudyTrip, Stud
 
 	protected final static String FR_20 = "Frankreich 2020";
 
-	protected final static String[] NATIONAL_STUDY_TRIPS_SORTED = new String[]{ SW_21, WUE_21, WUE_22 };
+	protected final static String[] NATIONAL_STUDY_TRIPS_SORTED = new String[] { SW_21, WUE_21, WUE_22 };
 
-	protected final static String[] INTERNATIONAL_STUDY_TRIPS_SORTED = new String[]{ INDIA_TRIP_00, FR_20, INDIA_GATEWAY_22 };
+	protected final static String[] INTERNATIONAL_STUDY_TRIPS_SORTED = new String[] { INDIA_TRIP_00, FR_20,
+		INDIA_GATEWAY_22 };
 
-	protected final static String[] ALL_STUDY_TRIPS_SORTED = new String[]{ INDIA_TRIP_00, FR_20, SW_21, WUE_21, WUE_22, INDIA_GATEWAY_22 };
+	protected final static String[] ALL_STUDY_TRIPS_SORTED = new String[] { INDIA_TRIP_00, FR_20, SW_21, WUE_21, WUE_22,
+		INDIA_GATEWAY_22 };
 
-	@Override
-	protected StudyTripRestClient newRestClient( final HeaderMap headers )
+	@Override protected StudyTripRestClient newRestClient(final HeaderMap headers)
 	{
-		return new StudyTripRestClient( headers );
+		return new StudyTripRestClient(headers);
 	}
 
-	@Override
-	protected String defineBaseUrl( )
+	@Override protected String defineBaseUrl()
 	{
-		return super.defineBaseUrl( ) + "studytrips";
+		return super.defineBaseUrl() + "studytrips";
 	}
 }

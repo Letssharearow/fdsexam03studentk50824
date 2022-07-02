@@ -11,38 +11,38 @@ import de.fhws.fiw.fds.sutton.server.database.results.SingleModelResult;
 
 public class DeleteStudentState extends AbstractDeleteState<Student>
 {
-	public DeleteStudentState( final Builder builder )
+	public DeleteStudentState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override protected SingleModelResult<Student> loadModel( )
+	@Override protected SingleModelResult<Student> loadModel()
 	{
-		return DaoFactory.getInstance( ).getStudentDao( ).readById( this.modelIdToDelete );
+		return DaoFactory.getInstance().getStudentDao().readById(this.modelIdToDelete);
 	}
 
-	@Override protected NoContentResult deleteModel( )
+	@Override protected NoContentResult deleteModel()
 	{
-		DaoFactory.getInstance( ).getStudyTripStudentDao( ).deleteRelationsFromPrimary( this.modelIdToDelete );
+		DaoFactory.getInstance().getStudyTripStudentDao().deleteRelationsFromPrimary(this.modelIdToDelete);
 
-		return DaoFactory.getInstance( ).getStudentDao( ).delete( this.modelIdToDelete );
+		return DaoFactory.getInstance().getStudentDao().delete(this.modelIdToDelete);
 	}
 
-	@Override protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink( IStudentUri.REL_PATH, IStudentRelTypes.GET_ALL_STUDENTS, getAcceptRequestHeader( ) );
+		addLink(IStudentUri.REL_PATH, IStudentRelTypes.GET_ALL_STUDENTS, getAcceptRequestHeader());
 	}
 
 	public static class Builder extends AbstractDeleteStateBuilder
 	{
-		@Override public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new DeleteStudentState( this );
+			return new DeleteStudentState(this);
 		}
 	}
 }

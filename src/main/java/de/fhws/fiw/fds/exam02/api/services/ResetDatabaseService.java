@@ -9,22 +9,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path( "resetdatabase" )
-public class ResetDatabaseService extends AbstractService
+@Path("resetdatabase") public class ResetDatabaseService extends AbstractService
 {
-	@GET
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response resetDatabase( )
+	@GET @Produces({ MediaType.APPLICATION_JSON }) public Response resetDatabase()
 	{
-		System.out.println( "RESET DATABASE" );
+		System.out.println("RESET DATABASE");
 
-		reset( );
+		reset();
 
-		return Response.ok( ).build( );
+		return Response.ok().build();
 	}
 
-	private void reset( )
+	private void reset()
 	{
-		new ResetDatabase( ).reset( );
+		new ResetDatabase().reset();
 	}
 }

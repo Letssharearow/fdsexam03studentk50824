@@ -16,68 +16,65 @@ import javax.ws.rs.core.Response;
 
 public class PutStudentState extends AbstractPutState<Student>
 {
-	public PutStudentState( final Builder builder )
+	public PutStudentState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override protected SingleModelResult<Student> loadModel( )
+	@Override protected SingleModelResult<Student> loadModel()
 	{
-		return DaoFactory.getInstance( ).getStudentDao( ).readById( this.modelToUpdate.getId( ) );
+		return DaoFactory.getInstance().getStudentDao().readById(this.modelToUpdate.getId());
 	}
 
-	@Override protected NoContentResult updateModel( )
+	@Override protected NoContentResult updateModel()
 	{
-		return DaoFactory.getInstance( ).getStudentDao( ).update( this.modelToUpdate );
+		return DaoFactory.getInstance().getStudentDao().update(this.modelToUpdate);
 	}
 
-	@Override protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink(
-			IStudentUri.REL_PATH_ID,
-			IStudentRelTypes.GET_SINGLE_STUDENT,
-			getAcceptRequestHeader( ),
-			this.modelToUpdate.getId( ) );
+		addLink(IStudentUri.REL_PATH_ID, IStudentRelTypes.GET_SINGLE_STUDENT, getAcceptRequestHeader(),
+			this.modelToUpdate.getId());
 	}
 
-	@Override protected boolean clientDoesNotKnowCurrentModelState( final AbstractModel modelFromDatabase )
+	@Override protected boolean clientDoesNotKnowCurrentModelState(final AbstractModel modelFromDatabase)
 	{
-		return !doesEtagMatch( modelFromDatabase );
+		return !doesEtagMatch(modelFromDatabase);
 	}
 
-	private boolean doesEtagMatch( final AbstractModel modelFromDatabase )
+	private boolean doesEtagMatch(final AbstractModel modelFromDatabase)
 	{
-		EntityTag etag = EtagGenerator.createEntityTag( modelFromDatabase );
+		EntityTag etag = EtagGenerator.createEntityTag(modelFromDatabase);
 
-		Response.ResponseBuilder builder = this.request.evaluatePreconditions( etag );
+		Response.ResponseBuilder builder = this.request.evaluatePreconditions(etag);
 
 		return builder == null;
 	}
 
-	@Override protected Response createResponse( )
+	@Override protected Response createResponse()
 	{
-		addEtagHeader( );
+		addEtagHeader();
 
-		return super.createResponse( );
+		return super.createResponse();
 	}
 
-	private void addEtagHeader( )
+	private void addEtagHeader()
 	{
-		final EntityTag etag = EtagGenerator.createEntityTag( this.modelToUpdate);
+		final EntityTag etag = EtagGenerator.createEntityTag(this.modelToUpdate);
 
-		this.responseBuilder.tag( etag );
+		this.responseBuilder.tag(etag);
 	}
 
 	public static class Builder extends AbstractPutStateBuilder<Student>
 	{
-		@Override public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new PutStudentState( this );
+			return new PutStudentState(this);
 		}
 	}
 }

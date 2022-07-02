@@ -9,9 +9,9 @@ public abstract class AbstractGetCollectionRelationState<T extends AbstractModel
 
 	protected AbstractRelationQuery<T> query;
 
-	public AbstractGetCollectionRelationState( final AbstractGetCollectionRelationStateBuilder builder )
+	public AbstractGetCollectionRelationState(final AbstractGetCollectionRelationStateBuilder builder)
 	{
-		super( builder );
+		super(builder);
 		this.primaryId = builder.parentId;
 		this.query = builder.query;
 		super.query = this.query;
@@ -24,13 +24,13 @@ public abstract class AbstractGetCollectionRelationState<T extends AbstractModel
 
 		protected AbstractRelationQuery<T> query;
 
-		public AbstractGetCollectionRelationStateBuilder setParentId( final long parentId )
+		public AbstractGetCollectionRelationStateBuilder setParentId(final long parentId)
 		{
 			this.parentId = parentId;
 			return this;
 		}
 
-		public AbstractGetCollectionRelationStateBuilder setQuery( final AbstractRelationQuery<T> query )
+		public AbstractGetCollectionRelationStateBuilder setQuery(final AbstractRelationQuery<T> query)
 		{
 			this.query = query;
 			return this;

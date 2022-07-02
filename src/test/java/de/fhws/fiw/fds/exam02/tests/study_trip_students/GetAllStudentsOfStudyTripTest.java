@@ -20,74 +20,67 @@ public class GetAllStudentsOfStudyTripTest extends AbstractStudyTripStudentsTest
 
 	private final static String GET_ALL_LINKABLE_STUDENTS = "getAllLinkableStudents";
 
-	@Test
-	public void test_200_show_all_false( ) throws IOException
+	@Test public void test_200_show_all_false() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequestByUrl( HeaderMapUtils.withAcceptJson( ), defineBaseUrl( ) + "?showAll=false" );
+		final RestApiResponse<Student> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			defineBaseUrl() + "?showAll=false");
 
-		assertEquals( 200, response.getLastStatusCode( ) );
-		assertEquals( 3, response.getResponseCollectionData( ).size( ) );
+		assertEquals(200, response.getLastStatusCode());
+		assertEquals(3, response.getResponseCollectionData().size());
 
-		final Collection<String> namesOfLinkedStudents = response.getResponseCollectionData( )
-			.stream( )
-			.map( Student::getFirstName )
-			.collect( Collectors.toList( ) );
+		final Collection<String> namesOfLinkedStudents = response.getResponseCollectionData().stream()
+			.map(Student::getFirstName).collect(Collectors.toList());
 
-		assertTrue( namesOfLinkedStudents.containsAll( Arrays.asList( "Max", "James", "Erika" ) ) );
+		assertTrue(namesOfLinkedStudents.containsAll(Arrays.asList("Max", "James", "Erika")));
 	}
 
-	@Test
-	public void test_200_show_all_true( ) throws IOException
+	@Test public void test_200_show_all_true() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequestByUrl( HeaderMapUtils.withAcceptJson( ), defineBaseUrl( ) + "?showAll=true" );
+		final RestApiResponse<Student> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			defineBaseUrl() + "?showAll=true");
 
-		assertEquals( 200, response.getLastStatusCode( ) );
-		assertEquals( 4, response.getResponseCollectionData( ).size( ) );
+		assertEquals(200, response.getLastStatusCode());
+		assertEquals(4, response.getResponseCollectionData().size());
 	}
 
-	@Test
-	public void test_hypermedia( ) throws IOException
+	@Test public void test_hypermedia() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequest( HeaderMapUtils.withAcceptJson( ) );
+		final RestApiResponse<Student> response = getCollectionRequest(HeaderMapUtils.withAcceptJson());
 
-		assertLinkHeaderStartsWith( response, SELF, defineBaseUrl( ) );
-		assertLinkHeaderStartsWith( response, CREATE_STUDENT_OF_STUDY_TRIP, defineBaseUrl( ) );
-		assertLinkHeaderStartsWith( response, GET_ALL_LINKABLE_STUDENTS, defineBaseUrl( ) );
+		assertLinkHeaderStartsWith(response, SELF, defineBaseUrl());
+		assertLinkHeaderStartsWith(response, CREATE_STUDENT_OF_STUDY_TRIP, defineBaseUrl());
+		assertLinkHeaderStartsWith(response, GET_ALL_LINKABLE_STUDENTS, defineBaseUrl());
 	}
 
-	@Test
-	public void test_correct_media_type( ) throws IOException
+	@Test public void test_correct_media_type() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequest( HeaderMapUtils.withAcceptJson( ) );
+		final RestApiResponse<Student> response = getCollectionRequest(HeaderMapUtils.withAcceptJson());
 
-		assertEquals( 200, response.getLastStatusCode( ) );
+		assertEquals(200, response.getLastStatusCode());
 	}
 
-	@Test
-	public void test_incorrect_media_type( ) throws IOException
+	@Test public void test_incorrect_media_type() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequest( HeaderMapUtils.withAcceptXml( ) );
+		final RestApiResponse<Student> response = getCollectionRequest(HeaderMapUtils.withAcceptXml());
 
-		assertEquals( 406, response.getLastStatusCode( ) );
+		assertEquals(406, response.getLastStatusCode());
 	}
 
-	@Test
-	public void test_sort_by_last_name_and_first_name( ) throws IOException
+	@Test public void test_sort_by_last_name_and_first_name() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequestByUrl( HeaderMapUtils.withAcceptJson( ), defineBaseUrl( ) + "?showAll=true" );
+		final RestApiResponse<Student> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			defineBaseUrl() + "?showAll=true");
 
-		final Collection<String> receivedFullNamesOfStudents = extractFullNamesOfStudents( response );
+		final Collection<String> receivedFullNamesOfStudents = extractFullNamesOfStudents(response);
 
-		final Collection<String> expectedFullNamesOfStudents = Arrays.asList( STUDENTS_SORTED );
+		final Collection<String> expectedFullNamesOfStudents = Arrays.asList(STUDENTS_SORTED);
 
-		assertEquals( expectedFullNamesOfStudents, receivedFullNamesOfStudents );
+		assertEquals(expectedFullNamesOfStudents, receivedFullNamesOfStudents);
 	}
 
-	private List<String> extractFullNamesOfStudents( final RestApiResponse<Student> response )
+	private List<String> extractFullNamesOfStudents(final RestApiResponse<Student> response)
 	{
-		return response.getResponseCollectionData( )
-			.stream( )
-			.map( s -> s.getFirstName( ) + " " + s.getLastName( ) )
-			.collect( Collectors.toList( ) );
+		return response.getResponseCollectionData().stream().map(s -> s.getFirstName() + " " + s.getLastName())
+			.collect(Collectors.toList());
 	}
 }

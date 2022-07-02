@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 
 public class LocalDateConverter implements ParamConverter<LocalDate>
 {
-	@Override public LocalDate fromString( final String value )
+	@Override public LocalDate fromString(final String value)
 	{
-		if ( StringUtils.isEmpty( value ) )
+		if (StringUtils.isEmpty(value))
 		{
 			return null;
 		}
@@ -18,12 +18,12 @@ public class LocalDateConverter implements ParamConverter<LocalDate>
 		{
 			final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
-			return LocalDate.parse( value, formatter );
+			return LocalDate.parse(value, formatter);
 		}
 	}
 
-	@Override public String toString( final LocalDate value )
+	@Override public String toString(final LocalDate value)
 	{
-		return value.format( DateTimeFormatter.ISO_LOCAL_DATE );
+		return value.format(DateTimeFormatter.ISO_LOCAL_DATE);
 	}
 }

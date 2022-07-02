@@ -27,20 +27,17 @@ import java.util.Set;
 
 public abstract class AbstractApplication extends ResourceConfig
 {
-	public AbstractApplication( )
+	public AbstractApplication()
 	{
-		super( );
-		registerClasses( getServiceClasses( ) );
-		packages( "org.glassfish.jersey.examples.linking" );
-		register( DeclarativeLinkingFeature.class );
-		register( MultiPartFeature.class );
-		register( CorsFilter.class );
-		register( new GensonJaxRSFeature( ).use(
-			new GensonBuilder( ).setSkipNull( true )
-								.useFields( false )
-								.useIndentation( true )
-								.create( ) ) );
+		super();
+		registerClasses(getServiceClasses());
+		packages("org.glassfish.jersey.examples.linking");
+		register(DeclarativeLinkingFeature.class);
+		register(MultiPartFeature.class);
+		register(CorsFilter.class);
+		register(new GensonJaxRSFeature().use(
+			new GensonBuilder().setSkipNull(true).useFields(false).useIndentation(true).create()));
 	}
 
-	protected abstract Set<Class<?>> getServiceClasses( );
+	protected abstract Set<Class<?>> getServiceClasses();
 }

@@ -31,71 +31,68 @@ public abstract class AbstractGetState<T extends AbstractModel> extends Abstract
 
 	protected SingleModelResult<T> requestedModel;
 
-	public AbstractGetState( final AbstractGetStateBuilder builder )
+	public AbstractGetState(final AbstractGetStateBuilder builder)
 	{
-		super( builder );
+		super(builder);
 		this.requestedId = builder.requestedId;
 	}
 
-	@Override
-	protected Response buildInternal( )
+	@Override protected Response buildInternal()
 	{
-		configureState( );
+		configureState();
 
-		authorizeRequest( );
+		authorizeRequest();
 
-		this.requestedModel = loadModel( );
+		this.requestedModel = loadModel();
 
-		if ( this.requestedModel.hasError( ) )
+		if (this.requestedModel.hasError())
 		{
-			return Response.serverError( )
-						   .build( );
+			return Response.serverError().build();
 		}
 
-		if ( this.requestedModel.isEmpty( ) )
+		if (this.requestedModel.isEmpty())
 		{
-			return Response.status( Response.Status.NOT_FOUND )
-						   .build( );
+			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 
-		if ( clientKnowsCurrentModelState( this.requestedModel.getResult( ) ) )
+		if (clientKnowsCurrentModelState(this.requestedModel.getResult()))
 		{
-			return Response.notModified( ).build( );
+			return Response.notModified().build();
 		}
 
-		this.responseBuilder = Response.ok( );
+		this.responseBuilder = Response.ok();
 
-		return createResponse( );
+		return createResponse();
 	}
 
-	protected abstract void authorizeRequest( );
+	protected abstract void authorizeRequest();
 
-	protected abstract SingleModelResult<T> loadModel( );
+	protected abstract SingleModelResult<T> loadModel();
 
-	protected boolean clientKnowsCurrentModelState( final AbstractModel modelFromDatabase )
+	protected boolean clientKnowsCurrentModelState(final AbstractModel modelFromDatabase)
 	{
 		return false;
 	}
 
-	protected Response createResponse( )
+	protected Response createResponse()
 	{
-		defineHttpResponseBody( );
+		defineHttpResponseBody();
 
-		defineHttpCaching( );
+		defineHttpCaching();
 
-		defineSelfLink( );
+		defineSelfLink();
 
-		defineTransitionLinks( );
+		defineTransitionLinks();
 
-		return this.responseBuilder.build( );
+		return this.responseBuilder.build();
 	}
 
-	protected void defineHttpResponseBody( )
+	protected void defineHttpResponseBody()
 	{
-		this.responseBuilder.entity( this.requestedModel.getResult( ) );
+		this.responseBuilder.entity(this.requestedModel.getResult());
 	}
 
-	protected void defineHttpCaching( )
+	protected void defineHttpCaching()
 	{
 
 	}
@@ -104,21 +101,21 @@ public abstract class AbstractGetState<T extends AbstractModel> extends Abstract
 	 * This method is used to define all transition links based on the idea of a REST system as
 	 * a finite state machine.
 	 */
-	protected abstract void defineTransitionLinks( );
+	protected abstract void defineTransitionLinks();
 
-	protected void defineSelfLink( )
+	protected void defineSelfLink()
 	{
-		final UriBuilder builder = this.uriInfo.getAbsolutePathBuilder( );
-		final URI self = builder.build( );
+		final UriBuilder builder = this.uriInfo.getAbsolutePathBuilder();
+		final URI self = builder.build();
 
-		Hyperlinks.addLink( this.responseBuilder, self, "self", getAcceptRequestHeader( ) );
+		Hyperlinks.addLink(this.responseBuilder, self, "self", getAcceptRequestHeader());
 	}
 
 	public static abstract class AbstractGetStateBuilder extends AbstractState.AbstractStateBuilder
 	{
 		protected long requestedId;
 
-		public AbstractGetStateBuilder setRequestedId( final long requestedId )
+		public AbstractGetStateBuilder setRequestedId(final long requestedId)
 		{
 			this.requestedId = requestedId;
 			return this;

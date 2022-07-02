@@ -5,19 +5,19 @@ import javax.ws.rs.core.Response;
 
 public class DemoStateThrowsWebException extends AbstractState
 {
-	public DemoStateThrowsWebException( )
+	public DemoStateThrowsWebException()
 	{
-		super( new AbstractStateBuilder( )
+		super(new AbstractStateBuilder()
 		{
-			@Override public AbstractState build( )
+			@Override public AbstractState build()
 			{
 				return null;
 			}
-		} );
+		});
 	}
 
-	@Override protected Response buildInternal( )
+	@Override protected Response buildInternal()
 	{
-		throw new WebApplicationException( );
+		throw new WebApplicationException();
 	}
 }

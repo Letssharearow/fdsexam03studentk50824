@@ -16,76 +16,65 @@ import javax.ws.rs.core.Response;
 
 public class PutStudyTripState extends AbstractPutState<StudyTrip>
 {
-	public PutStudyTripState( final AbstractPutStateBuilder<StudyTrip> builder )
+	public PutStudyTripState(final AbstractPutStateBuilder<StudyTrip> builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override
-	protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override
-	protected SingleModelResult<StudyTrip> loadModel( )
+	@Override protected SingleModelResult<StudyTrip> loadModel()
 	{
-		return DaoFactory.getInstance( ).getStudyTripDao( ).readById( this.modelToUpdate.getId( ) );
+		return DaoFactory.getInstance().getStudyTripDao().readById(this.modelToUpdate.getId());
 	}
 
-	@Override
-	protected NoContentResult updateModel( )
+	@Override protected NoContentResult updateModel()
 	{
-		return DaoFactory.getInstance( ).getStudyTripDao( ).update( this.modelToUpdate );
+		return DaoFactory.getInstance().getStudyTripDao().update(this.modelToUpdate);
 	}
 
-	@Override
-	protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink(
-			IStudyTripUri.REL_PATH,
-			IStudyTripRelTypes.GET_SINGLE_STUDY_TRIP,
-			getAcceptRequestHeader( ),
-			this.modelToUpdate.getId( )
-		);
+		addLink(IStudyTripUri.REL_PATH, IStudyTripRelTypes.GET_SINGLE_STUDY_TRIP, getAcceptRequestHeader(),
+			this.modelToUpdate.getId());
 	}
 
-	@Override
-	protected boolean clientDoesNotKnowCurrentModelState( final AbstractModel modelFromDatabase )
+	@Override protected boolean clientDoesNotKnowCurrentModelState(final AbstractModel modelFromDatabase)
 	{
-		return !doesEtagMatch( modelFromDatabase );
+		return !doesEtagMatch(modelFromDatabase);
 	}
 
-	private boolean doesEtagMatch( final AbstractModel modelFromDatabase )
+	private boolean doesEtagMatch(final AbstractModel modelFromDatabase)
 	{
-		EntityTag etag = EtagGenerator.createEntityTag( modelFromDatabase );
+		EntityTag etag = EtagGenerator.createEntityTag(modelFromDatabase);
 
-		Response.ResponseBuilder builder = this.request.evaluatePreconditions( etag );
+		Response.ResponseBuilder builder = this.request.evaluatePreconditions(etag);
 
 		return builder == null;
 	}
 
-	@Override
-	protected Response createResponse( )
+	@Override protected Response createResponse()
 	{
-		addEtagHeader( );
+		addEtagHeader();
 
-		return super.createResponse( );
+		return super.createResponse();
 	}
 
-	private void addEtagHeader( )
+	private void addEtagHeader()
 	{
-		final EntityTag etag = EtagGenerator.createEntityTag( this.modelToUpdate );
+		final EntityTag etag = EtagGenerator.createEntityTag(this.modelToUpdate);
 
-		this.responseBuilder.tag( etag );
+		this.responseBuilder.tag(etag);
 	}
 
 	public static class Builder extends AbstractPutStateBuilder<StudyTrip>
 	{
-		@Override
-		public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new PutStudyTripState( this );
+			return new PutStudyTripState(this);
 		}
 	}
 }

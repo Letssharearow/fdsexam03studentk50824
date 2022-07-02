@@ -4,12 +4,12 @@ import de.fhws.fiw.fds.sutton.server.models.AbstractModel;
 
 public class OnePageWithAllResults<T extends AbstractModel> extends PagingBehaviorUsingOffsetSize<T>
 {
-	public OnePageWithAllResults( )
+	public OnePageWithAllResults()
 	{
-		super( 0, Integer.MAX_VALUE );
+		super(0, Integer.MAX_VALUE);
 	}
 
-	@Override protected int getDefaultMaxPageSize( )
+	@Override protected int getDefaultMaxPageSize()
 	{
 		return Integer.MAX_VALUE;
 	}

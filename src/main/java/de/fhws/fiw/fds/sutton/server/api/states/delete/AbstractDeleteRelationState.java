@@ -6,9 +6,9 @@ public abstract class AbstractDeleteRelationState<T extends AbstractModel> exten
 {
 	protected long primaryId;
 
-	public AbstractDeleteRelationState( final AbstractDeleteRelationStateBuilder builder )
+	public AbstractDeleteRelationState(final AbstractDeleteRelationStateBuilder builder)
 	{
-		super( builder );
+		super(builder);
 		this.primaryId = builder.parentId;
 	}
 
@@ -16,7 +16,7 @@ public abstract class AbstractDeleteRelationState<T extends AbstractModel> exten
 	{
 		protected long parentId;
 
-		public AbstractDeleteRelationStateBuilder setParentId( final long parentId )
+		public AbstractDeleteRelationStateBuilder setParentId(final long parentId)
 		{
 			this.parentId = parentId;
 			return this;

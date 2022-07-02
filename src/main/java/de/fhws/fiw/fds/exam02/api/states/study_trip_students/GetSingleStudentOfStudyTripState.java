@@ -16,108 +16,84 @@ import javax.ws.rs.core.Response;
 
 public class GetSingleStudentOfStudyTripState extends AbstractGetRelationState<Student>
 {
-	public GetSingleStudentOfStudyTripState( final Builder builder )
+	public GetSingleStudentOfStudyTripState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override
-	protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override
-	protected SingleModelResult<Student> loadModel( )
+	@Override protected SingleModelResult<Student> loadModel()
 	{
-		return DaoFactory.getInstance( ).getStudentDao( ).readById( this.requestedId );
+		return DaoFactory.getInstance().getStudentDao().readById(this.requestedId);
 	}
 
-	@Override
-	protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		if ( isStudentLinkedToThisStudyTrip( ) )
+		if (isStudentLinkedToThisStudyTrip())
 		{
-			addLink(
-				IStudyTripStudentUri.REL_PATH_ID,
-				IStudyTripStudentRelTypes.UPDATE_SINGLE_STUDENT,
-				getAcceptRequestHeader( ),
-				this.primaryId,
-				this.requestedId );
+			addLink(IStudyTripStudentUri.REL_PATH_ID, IStudyTripStudentRelTypes.UPDATE_SINGLE_STUDENT,
+				getAcceptRequestHeader(), this.primaryId, this.requestedId);
 
-			addLink(
-				IStudyTripStudentUri.REL_PATH_ID,
-				IStudyTripStudentRelTypes.DELETE_LINK_FROM_STUDY_TRIP_TO_STUDENT,
-				getAcceptRequestHeader( ),
-				this.primaryId,
-				this.requestedId );
+			addLink(IStudyTripStudentUri.REL_PATH_ID, IStudyTripStudentRelTypes.DELETE_LINK_FROM_STUDY_TRIP_TO_STUDENT,
+				getAcceptRequestHeader(), this.primaryId, this.requestedId);
 		}
 		else
 		{
-			addLink(
-				IStudyTripStudentUri.REL_PATH_ID,
-				IStudyTripStudentRelTypes.CREATE_LINK_FROM_STUDY_TRIP_TO_STUDENT,
-				getAcceptRequestHeader( ),
-				this.primaryId, this.requestedId );
+			addLink(IStudyTripStudentUri.REL_PATH_ID, IStudyTripStudentRelTypes.CREATE_LINK_FROM_STUDY_TRIP_TO_STUDENT,
+				getAcceptRequestHeader(), this.primaryId, this.requestedId);
 		}
 
-		addLink(
-			IStudyTripStudentUri.REL_PATH_SHOW_ONLY_LINKED,
-			IStudyTripStudentRelTypes.GET_ALL_LINKED_STUDENTS,
-			getAcceptRequestHeader( ),
-			this.primaryId );
+		addLink(IStudyTripStudentUri.REL_PATH_SHOW_ONLY_LINKED, IStudyTripStudentRelTypes.GET_ALL_LINKED_STUDENTS,
+			getAcceptRequestHeader(), this.primaryId);
 	}
 
-	private boolean isStudentLinkedToThisStudyTrip( )
+	private boolean isStudentLinkedToThisStudyTrip()
 	{
-		return !DaoFactory.getInstance( )
-			.getStudyTripStudentDao( )
-			.readById( this.primaryId, this.requestedId )
-			.isEmpty( );
+		return !DaoFactory.getInstance().getStudyTripStudentDao().readById(this.primaryId, this.requestedId).isEmpty();
 	}
 
-	@Override
-	protected void defineHttpCaching( )
+	@Override protected void defineHttpCaching()
 	{
-		this.responseBuilder.cacheControl( CachingUtils.create30SecondsPrivateCaching( ) );
+		this.responseBuilder.cacheControl(CachingUtils.create30SecondsPrivateCaching());
 	}
 
-	@Override
-	protected boolean clientKnowsCurrentModelState( final AbstractModel modelFromDatabase )
+	@Override protected boolean clientKnowsCurrentModelState(final AbstractModel modelFromDatabase)
 	{
-		return doesEtagMatch( modelFromDatabase );
+		return doesEtagMatch(modelFromDatabase);
 	}
 
-	private boolean doesEtagMatch( final AbstractModel modelFromDatabase )
+	private boolean doesEtagMatch(final AbstractModel modelFromDatabase)
 	{
-		EntityTag etag = EtagGenerator.createEntityTag( modelFromDatabase );
+		EntityTag etag = EtagGenerator.createEntityTag(modelFromDatabase);
 
-		Response.ResponseBuilder builder = this.request.evaluatePreconditions( etag );
+		Response.ResponseBuilder builder = this.request.evaluatePreconditions(etag);
 
 		return builder != null;
 	}
 
-	@Override
-	protected Response createResponse( )
+	@Override protected Response createResponse()
 	{
-		addEtagHeader( );
+		addEtagHeader();
 
-		return super.createResponse( );
+		return super.createResponse();
 	}
 
-	private void addEtagHeader( )
+	private void addEtagHeader()
 	{
-		final EntityTag etag = EtagGenerator.createEntityTag( this.requestedModel.getResult( ) );
+		final EntityTag etag = EtagGenerator.createEntityTag(this.requestedModel.getResult());
 
-		this.responseBuilder.tag( etag );
+		this.responseBuilder.tag(etag);
 	}
 
 	public static class Builder extends AbstractGetRelationStateBuilder
 	{
-		@Override
-		public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new GetSingleStudentOfStudyTripState( this );
+			return new GetSingleStudentOfStudyTripState(this);
 		}
 	}
 }

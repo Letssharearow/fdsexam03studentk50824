@@ -25,13 +25,13 @@ import java.util.function.Predicate;
 
 public interface IDatabaseAccessObject<T extends AbstractModel>
 {
-	NoContentResult create( final T model );
+	NoContentResult create(final T model);
 
-	SingleModelResult<T> readById( final long id );
+	SingleModelResult<T> readById(final long id);
 
-	CollectionModelResult<T> readByPredicate( final Predicate<T> predicate );
+	CollectionModelResult<T> readByPredicate(final Predicate<T> predicate);
 
-	NoContentResult update( final T model );
+	NoContentResult update(final T model);
 
-	NoContentResult delete( final long id );
+	NoContentResult delete(final long id);
 }

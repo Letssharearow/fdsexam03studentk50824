@@ -22,12 +22,12 @@ public class Start extends AbstractStart
 {
 	public static final String CONTEXT_PATH = "exam02";
 
-	public static void main( final String[] args ) throws Exception
+	public static void main(final String[] args) throws Exception
 	{
-		new Start( ).startTomcat( );
+		new Start().startTomcat();
 	}
 
-	@Override protected String contextPath( )
+	@Override protected String contextPath()
 	{
 		return CONTEXT_PATH;
 	}

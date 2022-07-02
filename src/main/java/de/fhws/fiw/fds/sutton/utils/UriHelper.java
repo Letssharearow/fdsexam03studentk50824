@@ -5,11 +5,11 @@ import java.net.URI;
 
 public class UriHelper
 {
-	public static int getLastPathElementAsId( final Link link )
+	public static int getLastPathElementAsId(final Link link)
 	{
-		if ( link != null )
+		if (link != null)
 		{
-			return getLastPathElementAsId( link.getUri( ) );
+			return getLastPathElementAsId(link.getUri());
 		}
 		else
 		{
@@ -17,10 +17,10 @@ public class UriHelper
 		}
 	}
 
-	public static int getLastPathElementAsId( final URI uri )
+	public static int getLastPathElementAsId(final URI uri)
 	{
-		final String path = uri.getPath( );
-		final int lastSlash = path.lastIndexOf( "/" );
-		return Integer.parseInt( path.substring( lastSlash + 1 ) );
+		final String path = uri.getPath();
+		final int lastSlash = path.lastIndexOf("/");
+		return Integer.parseInt(path.substring(lastSlash + 1));
 	}
 }

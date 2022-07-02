@@ -18,13 +18,12 @@ package de.fhws.fiw.fds.sutton.server.database.results;
 
 public class NoContentResult extends AbstractResult
 {
-	public NoContentResult( )
+	public NoContentResult()
 	{
-		super( );
+		super();
 	}
 
-	@Override
-	public boolean isEmpty( )
+	@Override public boolean isEmpty()
 	{
 		return true;
 	}

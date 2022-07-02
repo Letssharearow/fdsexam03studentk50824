@@ -11,45 +11,37 @@ import de.fhws.fiw.fds.sutton.server.database.results.SingleModelResult;
 
 public class DeleteStudentOfStudyTripState extends AbstractDeleteRelationState<Student>
 {
-	public DeleteStudentOfStudyTripState( final Builder builder )
+	public DeleteStudentOfStudyTripState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override
-	protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override
-	protected SingleModelResult<Student> loadModel( )
+	@Override protected SingleModelResult<Student> loadModel()
 	{
-		return DaoFactory.getInstance( ).getStudyTripStudentDao( ).readById( this.primaryId, this.modelIdToDelete );
+		return DaoFactory.getInstance().getStudyTripStudentDao().readById(this.primaryId, this.modelIdToDelete);
 	}
 
-	@Override
-	protected NoContentResult deleteModel( )
+	@Override protected NoContentResult deleteModel()
 	{
-		return DaoFactory.getInstance( ).getStudyTripStudentDao( ).deleteRelation( this.primaryId, this.modelIdToDelete );
+		return DaoFactory.getInstance().getStudyTripStudentDao().deleteRelation(this.primaryId, this.modelIdToDelete);
 	}
 
-	@Override
-	protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink(
-			IStudyTripStudentUri.REL_PATH,
-			IStudyTripStudentRelTypes.GET_ALL_LINKED_STUDENTS,
-			getAcceptRequestHeader( ),
-			this.primaryId );
+		addLink(IStudyTripStudentUri.REL_PATH, IStudyTripStudentRelTypes.GET_ALL_LINKED_STUDENTS,
+			getAcceptRequestHeader(), this.primaryId);
 	}
 
 	public static class Builder extends AbstractDeleteRelationStateBuilder
 	{
-		@Override
-		public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new DeleteStudentOfStudyTripState( this );
+			return new DeleteStudentOfStudyTripState(this);
 		}
 	}
 }

@@ -23,34 +23,17 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 
 	private String countryName;
 
-	@InjectLink(
-		style = InjectLink.Style.ABSOLUTE,
-		value = "/studytrips/${instance.id}",
-		rel = "getAllStudents",
-		title = "getAllStudents",
-		type = "application/json" )
-	private Link students;
+	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/studytrips/${instance.id}", rel = "getAllStudents", title = "getAllStudents", type = "application/json") private Link students;
 
-	@InjectLink(
-		style = InjectLink.Style.ABSOLUTE,
-		value = "/studytrips/${instance.id}",
-		rel = "self",
-		title = "self",
-		type = "application/json" )
-	private Link selfLink;
+	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/studytrips/${instance.id}", rel = "self", title = "self", type = "application/json") private Link selfLink;
 
-	public StudyTrip( )
+	public StudyTrip()
 	{
 
 	}
 
-	public StudyTrip(
-		final String name,
-		final LocalDate startDate,
-		final LocalDate endDate,
-		final String companyName,
-		final String cityName,
-		final String countryName )
+	public StudyTrip(final String name, final LocalDate startDate, final LocalDate endDate, final String companyName,
+		final String cityName, final String countryName)
 	{
 		this.name = name;
 		this.startDate = startDate;
@@ -60,108 +43,95 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 		this.countryName = countryName;
 	}
 
-	public String getName( )
+	public String getName()
 	{
 		return name;
 	}
 
-	public void setName( final String name )
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
 
-	@JsonConverter( JsonDateTimeConverter.class )
-	public LocalDate getStartDate( )
+	@JsonConverter(JsonDateTimeConverter.class) public LocalDate getStartDate()
 	{
 		return startDate;
 	}
 
-	@JsonConverter( JsonDateTimeConverter.class )
-	public void setStartDate( final LocalDate startDate )
+	@JsonConverter(JsonDateTimeConverter.class) public void setStartDate(final LocalDate startDate)
 	{
 		this.startDate = startDate;
 	}
 
-	@JsonConverter( JsonDateTimeConverter.class )
-	public LocalDate getEndDate( )
+	@JsonConverter(JsonDateTimeConverter.class) public LocalDate getEndDate()
 	{
 		return endDate;
 	}
 
-	@JsonConverter( JsonDateTimeConverter.class )
-	public void setEndDate( final LocalDate endDate )
+	@JsonConverter(JsonDateTimeConverter.class) public void setEndDate(final LocalDate endDate)
 	{
 		this.endDate = endDate;
 	}
 
-	public String getCompanyName( )
+	public String getCompanyName()
 	{
 		return companyName;
 	}
 
-	public void setCompanyName( final String companyName )
+	public void setCompanyName(final String companyName)
 	{
 		this.companyName = companyName;
 	}
 
-	public String getCityName( )
+	public String getCityName()
 	{
 		return cityName;
 	}
 
-	public void setCityName( final String cityName )
+	public void setCityName(final String cityName)
 	{
 		this.cityName = cityName;
 	}
 
-	public String getCountryName( )
+	public String getCountryName()
 	{
 		return countryName;
 	}
 
-	public void setCountryName( final String countryName )
+	public void setCountryName(final String countryName)
 	{
 		this.countryName = countryName;
 	}
 
-	@JsonConverter( JsonServerLinkConverter.class )
-	public Link getStudents( )
+	@JsonConverter(JsonServerLinkConverter.class) public Link getStudents()
 	{
 		return students;
 	}
 
-	@JsonConverter( JsonServerLinkConverter.class )
-	public void setStudents( final Link students )
+	@JsonConverter(JsonServerLinkConverter.class) public void setStudents(final Link students)
 	{
 		this.students = students;
 	}
 
-	@JsonConverter( JsonServerLinkConverter.class )
-	public Link getSelfLink( )
+	@JsonConverter(JsonServerLinkConverter.class) public Link getSelfLink()
 	{
 		return selfLink;
 	}
 
-	public void setSelfLink( final Link selfLink )
+	public void setSelfLink(final Link selfLink)
 	{
 		this.selfLink = selfLink;
 	}
 
-	@Override public String toString( )
+	@Override public String toString()
 	{
-		return "StudyTrip {" +
-			"id:" + this.id +
-			", name: '" + this.name + '\'' +
-			", firstDate:" + this.startDate +
-			", lastDate: " + this.endDate +
-			", companyName: '" + this.companyName + '\'' +
-			", cityName: '" + this.cityName + '\'' +
-			", countryName: '" + this.countryName + '\'' +
-			'}';
+		return "StudyTrip {" + "id:" + this.id + ", name: '" + this.name + '\'' + ", firstDate:" + this.startDate
+			+ ", lastDate: " + this.endDate + ", companyName: '" + this.companyName + '\'' + ", cityName: '"
+			+ this.cityName + '\'' + ", countryName: '" + this.countryName + '\'' + '}';
 	}
 
-	@Override public Object clone( ) throws CloneNotSupportedException
+	@Override public Object clone() throws CloneNotSupportedException
 	{
-		return super.clone( );
+		return super.clone();
 	}
 }

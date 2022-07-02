@@ -27,85 +27,82 @@ public class Link
 
 	private String relationType;
 
-	public Link( )
+	public Link()
 	{
 	}
 
-	public Link( final String url, final String mediaType, final String relationType )
+	public Link(final String url, final String mediaType, final String relationType)
 	{
 		this.url = url;
 		this.mediaType = mediaType;
 		this.relationType = relationType;
 	}
 
-	public static Link parseFromHttpHeader( final String header )
+	public static Link parseFromHttpHeader(final String header)
 	{
-		final String[] elements = header.split( ";" );
-		final String href = elements[ 0 ];
-		final String rel = elements.length > 1 ? elements[ 1 ] : "";
-		final String type = elements.length > 2 ? elements[ 2 ] : "type=\"*/*\"";
-		return new Link( parseHref( href ), parseType( type ), parseRel( rel ) );
+		final String[] elements = header.split(";");
+		final String href = elements[0];
+		final String rel = elements.length > 1 ? elements[1] : "";
+		final String type = elements.length > 2 ? elements[2] : "type=\"*/*\"";
+		return new Link(parseHref(href), parseType(type), parseRel(rel));
 	}
 
-	private static String parseHref( final String headerElement )
+	private static String parseHref(final String headerElement)
 	{
-		return parse( headerElement, "<([^>]*)>" );
+		return parse(headerElement, "<([^>]*)>");
 	}
 
-	private static String parse( final String headerElement, final String patternExpression )
+	private static String parse(final String headerElement, final String patternExpression)
 	{
-		final Pattern pattern = Pattern.compile( patternExpression );
-		final Matcher matcher = pattern.matcher( headerElement.trim( ) );
-		return matcher.find( ) ? matcher.group( 1 ) : null;
+		final Pattern pattern = Pattern.compile(patternExpression);
+		final Matcher matcher = pattern.matcher(headerElement.trim());
+		return matcher.find() ? matcher.group(1) : null;
 	}
 
-	private static String parseRel( final String headerElement )
+	private static String parseRel(final String headerElement)
 	{
-		return parse( headerElement, "^rel=\"(.+)\"$" );
+		return parse(headerElement, "^rel=\"(.+)\"$");
 	}
 
-	private static String parseType( final String headerElement )
+	private static String parseType(final String headerElement)
 	{
-		return parse( headerElement, "^type=\"(.+)\"$" );
+		return parse(headerElement, "^type=\"(.+)\"$");
 	}
 
-	public String getUrl( )
+	public String getUrl()
 	{
 		return this.url;
 	}
 
-	public void setUrl( final String url )
+	public void setUrl(final String url)
 	{
 		this.url = url;
 	}
 
-	public String getMediaType( )
+	public String getMediaType()
 	{
 		return this.mediaType;
 	}
 
-	public void setMediaType( final String mediaType )
+	public void setMediaType(final String mediaType)
 	{
 		this.mediaType = mediaType;
 	}
 
-	public String getRelationType( )
+	public String getRelationType()
 	{
 		return this.relationType;
 	}
 
-	public void setRelationType( final String relationType )
+	public void setRelationType(final String relationType)
 	{
 		this.relationType = relationType;
 	}
 
-	@Override public String toString( )
+	@Override public String toString()
 	{
-		return "NorburyLink{" +
-			"url='" + this.url + '\'' +
-			", mediaType='" + this.mediaType + '\'' +
-			", relationType='" + this.relationType + '\'' +
-			'}';
+		return "NorburyLink{" + "url='" + this.url + '\'' + ", mediaType='" + this.mediaType + '\'' + ", relationType='"
+			+ this.relationType + '\'' + '}';
 	}
 
 }

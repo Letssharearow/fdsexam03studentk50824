@@ -5,12 +5,11 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class XmlServerLinkConverter extends XmlAdapter<ServerLink, Link>
 {
-	@Override
-	public Link unmarshal( final ServerLink v ) throws Exception
+	@Override public Link unmarshal(final ServerLink v) throws Exception
 	{
-		if ( v != null )
+		if (v != null)
 		{
-			return Link.fromUri( v.getHref( ) ).build( );
+			return Link.fromUri(v.getHref()).build();
 		}
 		else
 		{
@@ -18,12 +17,11 @@ public class XmlServerLinkConverter extends XmlAdapter<ServerLink, Link>
 		}
 	}
 
-	@Override
-	public ServerLink marshal( final Link v ) throws Exception
+	@Override public ServerLink marshal(final Link v) throws Exception
 	{
-		if ( v != null )
+		if (v != null)
 		{
-			return new ServerLink( v.getUri( ).toASCIIString( ), v.getRel( ), v.getType( ) );
+			return new ServerLink(v.getUri().toASCIIString(), v.getRel(), v.getType());
 		}
 		else
 		{

@@ -4,19 +4,19 @@ import javax.ws.rs.core.Response;
 
 public class DemoStateReturns200Ok extends AbstractState
 {
-	public DemoStateReturns200Ok( )
+	public DemoStateReturns200Ok()
 	{
-		super( new AbstractStateBuilder( )
+		super(new AbstractStateBuilder()
 		{
-			@Override public AbstractState build( )
+			@Override public AbstractState build()
 			{
 				return null;
 			}
-		} );
+		});
 	}
 
-	@Override protected Response buildInternal( )
+	@Override protected Response buildInternal()
 	{
-		return Response.ok( ).build( );
+		return Response.ok().build();
 	}
 }

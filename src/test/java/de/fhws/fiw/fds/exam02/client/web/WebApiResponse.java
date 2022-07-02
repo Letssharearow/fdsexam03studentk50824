@@ -15,55 +15,55 @@ public class WebApiResponse<T extends AbstractModel>
 
 	private final int lastStatusCode;
 
-	public WebApiResponse( final int lastStatusCode )
+	public WebApiResponse(final int lastStatusCode)
 	{
-		this( Collections.EMPTY_LIST, Headers.of( ), lastStatusCode );
+		this(Collections.EMPTY_LIST, Headers.of(), lastStatusCode);
 	}
 
-	public WebApiResponse( final int lastStatusCode, final Headers headers )
+	public WebApiResponse(final int lastStatusCode, final Headers headers)
 	{
-		this( Collections.EMPTY_LIST, headers, lastStatusCode );
+		this(Collections.EMPTY_LIST, headers, lastStatusCode);
 	}
 
-	public WebApiResponse( final T responseData, final Headers headers, final int lastStatusCode )
+	public WebApiResponse(final T responseData, final Headers headers, final int lastStatusCode)
 	{
-		this( Optional.of( responseData ), headers, lastStatusCode );
+		this(Optional.of(responseData), headers, lastStatusCode);
 	}
 
-	public WebApiResponse( final Optional<T> responseData, final Headers headers, final int lastStatusCode )
+	public WebApiResponse(final Optional<T> responseData, final Headers headers, final int lastStatusCode)
 	{
-		this( convertToList( responseData ), headers, lastStatusCode );
+		this(convertToList(responseData), headers, lastStatusCode);
 	}
 
-	public WebApiResponse( final Collection<T> responseData, final Headers headers, final int lastStatusCode )
+	public WebApiResponse(final Collection<T> responseData, final Headers headers, final int lastStatusCode)
 	{
 		this.responseData = responseData;
 		this.responseHeaders = headers;
 		this.lastStatusCode = lastStatusCode;
 	}
 
-	public Collection<T> getResponseData( )
+	public Collection<T> getResponseData()
 	{
 		return responseData;
 	}
 
-	public Headers getResponseHeaders( )
+	public Headers getResponseHeaders()
 	{
 		return responseHeaders;
 	}
 
-	public Optional<T> getFirstResponse( )
+	public Optional<T> getFirstResponse()
 	{
-		return this.responseData.stream( ).findFirst( );
+		return this.responseData.stream().findFirst();
 	}
 
-	public int getLastStatusCode( )
+	public int getLastStatusCode()
 	{
 		return lastStatusCode;
 	}
 
-	private static <T> Collection<T> convertToList( final Optional<T> object )
+	private static <T> Collection<T> convertToList(final Optional<T> object)
 	{
-		return object.isPresent( ) ? Collections.singletonList( object.get( ) ) : Collections.emptyList( );
+		return object.isPresent() ? Collections.singletonList(object.get()) : Collections.emptyList();
 	}
 }

@@ -31,23 +31,23 @@ public abstract class AbstractStart
 	private static final String WEB_APP_MOUNT = "/WEB-INF/classes";
 	private static final String WEB_APP_CLASSES = "target/classes";
 
-	protected void startTomcat( ) throws Exception
+	protected void startTomcat() throws Exception
 	{
-		final Tomcat tomcat = new Tomcat( );
-		tomcat.setPort( 8080 );
+		final Tomcat tomcat = new Tomcat();
+		tomcat.setPort(8080);
 
-		final Context context = tomcat.addWebapp( CONTEXT_PATH_PREFIX + contextPath( ),
-			new File( WEB_APP_LOCATION ).getAbsolutePath( ) );
-		final String pathToClasses = new File( WEB_APP_CLASSES ).getAbsolutePath( );
-		final WebResourceRoot resources = new StandardRoot( context );
-		final DirResourceSet dirResourceSet = new DirResourceSet( resources, WEB_APP_MOUNT, pathToClasses, "/" );
+		final Context context = tomcat.addWebapp(CONTEXT_PATH_PREFIX + contextPath(),
+			new File(WEB_APP_LOCATION).getAbsolutePath());
+		final String pathToClasses = new File(WEB_APP_CLASSES).getAbsolutePath();
+		final WebResourceRoot resources = new StandardRoot(context);
+		final DirResourceSet dirResourceSet = new DirResourceSet(resources, WEB_APP_MOUNT, pathToClasses, "/");
 
-		resources.addPreResources( dirResourceSet );
-		context.setResources( resources );
+		resources.addPreResources(dirResourceSet);
+		context.setResources(resources);
 
-		tomcat.start( );
-		tomcat.getServer( ).await( );
+		tomcat.start();
+		tomcat.getServer().await();
 	}
 
-	protected abstract String contextPath( );
+	protected abstract String contextPath();
 }

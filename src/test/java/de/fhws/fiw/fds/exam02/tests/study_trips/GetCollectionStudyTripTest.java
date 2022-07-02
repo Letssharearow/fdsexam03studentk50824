@@ -14,23 +14,20 @@ import static org.junit.Assert.assertEquals;
 
 public class GetCollectionStudyTripTest extends AbstractStudyTripTest
 {
-	@Test
-	public void test_sort_by_start_date( ) throws IOException
+	@Test public void test_sort_by_start_date() throws IOException
 	{
-		final RestApiResponse<StudyTrip> response = getCollectionRequestByUrl( HeaderMapUtils.withAcceptJson( ), defineBaseUrl( ) );
+		final RestApiResponse<StudyTrip> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			defineBaseUrl());
 
-		final List<String> receivedStudyTripNames = extractStudyTripNames( response );
+		final List<String> receivedStudyTripNames = extractStudyTripNames(response);
 
-		final List<String> expectedStudyTripNames = Arrays.asList( ALL_STUDY_TRIPS_SORTED );
+		final List<String> expectedStudyTripNames = Arrays.asList(ALL_STUDY_TRIPS_SORTED);
 
-		assertEquals( expectedStudyTripNames, receivedStudyTripNames );
+		assertEquals(expectedStudyTripNames, receivedStudyTripNames);
 	}
 
-	private List<String> extractStudyTripNames( final RestApiResponse<StudyTrip> response )
+	private List<String> extractStudyTripNames(final RestApiResponse<StudyTrip> response)
 	{
-		return response.getResponseCollectionData( )
-			.stream( )
-			.map( StudyTrip::getName )
-			.collect( Collectors.toList( ) );
+		return response.getResponseCollectionData().stream().map(StudyTrip::getName).collect(Collectors.toList());
 	}
 }

@@ -24,41 +24,37 @@ import static de.fhws.fiw.fds.exam02.api.states.StateHelper.addVaryHeader;
 
 public class GetCollectionStudyTripsState extends AbstractGetCollectionState<StudyTrip>
 {
-	public GetCollectionStudyTripsState( final Builder builder )
+	public GetCollectionStudyTripsState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override
-	protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override protected Response createResponse( )
+	@Override protected Response createResponse()
 	{
 		addVaryHeader(this.responseBuilder);
-		return super.createResponse( );
+		return super.createResponse();
 	}
 
-	@Override
-	protected void defineHttpResponseBody( )
+	@Override protected void defineHttpResponseBody()
 	{
-		this.responseBuilder.entity( new GenericEntity<Collection<StudyTrip>>( this.result.getResult( ) )
+		this.responseBuilder.entity(new GenericEntity<Collection<StudyTrip>>(this.result.getResult())
 		{
-		} );
+		});
 	}
 
-	@Override
-	protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink( IStudyTripUri.REL_PATH, IStudyTripRelTypes.CREATE_STUDY_TRIP, getAcceptRequestHeader( ) );
+		addLink(IStudyTripUri.REL_PATH, IStudyTripRelTypes.CREATE_STUDY_TRIP, getAcceptRequestHeader());
 	}
 
-	@Override
-	protected void configureState( )
+	@Override protected void configureState()
 	{
-		this.responseBuilder.cacheControl( CachingUtils.create2SecondsPublicCaching( ) );
+		this.responseBuilder.cacheControl(CachingUtils.create2SecondsPublicCaching());
 	}
 
 	public static class ByAttributes extends AbstractQuery<StudyTrip>
@@ -73,12 +69,8 @@ public class GetCollectionStudyTripsState extends AbstractGetCollectionState<Stu
 
 		protected final String countryName;
 
-		public ByAttributes(
-			final String name,
-			final LocalDate intervalStart,
-			final LocalDate intervalEnd,
-			final String cityName,
-			final String countryName )
+		public ByAttributes(final String name, final LocalDate intervalStart, final LocalDate intervalEnd,
+			final String cityName, final String countryName)
 		{
 			this.name = name;
 			this.intervalStart = intervalStart;
@@ -87,67 +79,58 @@ public class GetCollectionStudyTripsState extends AbstractGetCollectionState<Stu
 			this.countryName = countryName;
 		}
 
-		@Override
-		protected CollectionModelResult<StudyTrip> doExecuteQuery( )
+		@Override protected CollectionModelResult<StudyTrip> doExecuteQuery()
 		{
-			final Collection<StudyTrip> studyTripsFromDb =
-				DaoFactory.getInstance( ).getStudyTripDao( ).readByPredicate( byAttributes( ) ).getResult( );
+			final Collection<StudyTrip> studyTripsFromDb = DaoFactory.getInstance().getStudyTripDao()
+				.readByPredicate(byAttributes()).getResult();
 
-			final List<StudyTrip> sortedStudyTrips = new LinkedList<>( studyTripsFromDb );
-			sortedStudyTrips.sort( StudyTrip.getComparator( ) );
+			final List<StudyTrip> sortedStudyTrips = new LinkedList<>(studyTripsFromDb);
+			sortedStudyTrips.sort(StudyTrip.getComparator());
 
-			return new CollectionModelResult<>( sortedStudyTrips );
+			return new CollectionModelResult<>(sortedStudyTrips);
 		}
 
-		protected Predicate<StudyTrip> byAttributes( )
+		protected Predicate<StudyTrip> byAttributes()
 		{
-			return s -> matchName( s ) &&
-				matchDate( s ) &&
-				matchCity( s ) &&
-				matchCountry( s );
+			return s -> matchName(s) && matchDate(s) && matchCity(s) && matchCountry(s);
 		}
 
-		private boolean matchName( final StudyTrip studyTrip )
+		private boolean matchName(final StudyTrip studyTrip)
 		{
-			return StringUtils.isEmpty( this.name ) ||
-				StringUtils.containsIgnoreCase( studyTrip.getName( ), this.name );
+			return StringUtils.isEmpty(this.name) || StringUtils.containsIgnoreCase(studyTrip.getName(), this.name);
 		}
 
-		private boolean matchDate( final StudyTrip studyTrip )
+		private boolean matchDate(final StudyTrip studyTrip)
 		{
 			boolean isMatch = true;
 
-			if ( this.intervalStart != null && this.intervalEnd != null )
+			if (this.intervalStart != null && this.intervalEnd != null)
 			{
-				isMatch =
-					new StudyTripDateUtils(
-						studyTrip,
-						this.intervalStart,
-						this.intervalEnd ).isStudyTripWithinInterval( );
+				isMatch = new StudyTripDateUtils(studyTrip, this.intervalStart,
+					this.intervalEnd).isStudyTripWithinInterval();
 			}
 
 			return isMatch;
 		}
 
-		private boolean matchCity( final StudyTrip studyTrip )
+		private boolean matchCity(final StudyTrip studyTrip)
 		{
-			return StringUtils.isEmpty( this.cityName ) ||
-				StringUtils.containsIgnoreCase( studyTrip.getCityName( ), this.cityName );
+			return StringUtils.isEmpty(this.cityName) || StringUtils.containsIgnoreCase(studyTrip.getCityName(),
+				this.cityName);
 		}
 
-		private boolean matchCountry( final StudyTrip studyTrip )
+		private boolean matchCountry(final StudyTrip studyTrip)
 		{
-			return StringUtils.isEmpty( this.countryName ) ||
-				StringUtils.containsIgnoreCase( studyTrip.getCountryName( ), this.countryName );
+			return StringUtils.isEmpty(this.countryName) || StringUtils.containsIgnoreCase(studyTrip.getCountryName(),
+				this.countryName);
 		}
 	}
 
 	public static class Builder extends AbstractGetCollectionStateBuilder<StudyTrip>
 	{
-		@Override
-		public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new GetCollectionStudyTripsState( this );
+			return new GetCollectionStudyTripsState(this);
 		}
 	}
 }

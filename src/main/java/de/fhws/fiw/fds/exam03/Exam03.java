@@ -26,22 +26,21 @@ import javax.ws.rs.ApplicationPath;
 import java.util.HashSet;
 import java.util.Set;
 
-@ApplicationPath( "api" )
-public class Exam03 extends AbstractApplication
+@ApplicationPath("api") public class Exam03 extends AbstractApplication
 {
-	public Exam03( )
+	public Exam03()
 	{
-		super( );
+		super();
 
-		register( LocalDateConverterProvider.class );
+		register(LocalDateConverterProvider.class);
 	}
 
-	@Override protected Set<Class<?>> getServiceClasses( )
+	@Override protected Set<Class<?>> getServiceClasses()
 	{
-		final Set<Class<?>> returnValue = new HashSet<>( );
-		returnValue.add( DispatcherService.class );
-		returnValue.add( StudyTripService.class );
-		returnValue.add( StudentService.class );
+		final Set<Class<?>> returnValue = new HashSet<>();
+		returnValue.add(DispatcherService.class);
+		returnValue.add(StudyTripService.class);
+		returnValue.add(StudentService.class);
 
 		return returnValue;
 	}

@@ -18,50 +18,52 @@ import java.util.List;
 
 public class GetCollectionStudentsState extends AbstractGetCollectionState<Student>
 {
-	public GetCollectionStudentsState( final Builder builder )
+	public GetCollectionStudentsState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override protected void defineHttpResponseBody( )
+	@Override protected void defineHttpResponseBody()
 	{
-		this.responseBuilder.entity( new GenericEntity<Collection<Student>>( this.result.getResult( ) ) { } );
+		this.responseBuilder.entity(new GenericEntity<Collection<Student>>(this.result.getResult())
+		{
+		});
 	}
 
-	@Override protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink( IStudentUri.REL_PATH, IStudentRelTypes.CREATE_STUDENT, getAcceptRequestHeader( ) );
+		addLink(IStudentUri.REL_PATH, IStudentRelTypes.CREATE_STUDENT, getAcceptRequestHeader());
 	}
 
-	@Override protected void configureState( )
+	@Override protected void configureState()
 	{
-		this.responseBuilder.cacheControl( CachingUtils.createNoCacheNoStoreCaching( ) );
+		this.responseBuilder.cacheControl(CachingUtils.create2SecondsPublicCaching());
 	}
 
 	public static class AllStudents extends AbstractQuery<Student>
 	{
-		@Override protected CollectionModelResult<Student> doExecuteQuery( )
+		@Override protected CollectionModelResult<Student> doExecuteQuery()
 		{
-			final Collection<Student> studentsFromDb =
-				DaoFactory.getInstance( ).getStudentDao( ).readByPredicate( all( ) ).getResult( );
+			final Collection<Student> studentsFromDb = DaoFactory.getInstance().getStudentDao().readByPredicate(all())
+				.getResult();
 
-			final List<Student> sortedStudents = new LinkedList<>( studentsFromDb );
-			sortedStudents.sort( Student.getComparator() );
+			final List<Student> sortedStudents = new LinkedList<>(studentsFromDb);
+			sortedStudents.sort(Student.getComparator());
 
-			return new CollectionModelResult<>( sortedStudents );
+			return new CollectionModelResult<>(sortedStudents);
 		}
 	}
 
 	public static class Builder extends AbstractGetCollectionStateBuilder<Student>
 	{
-		@Override public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new GetCollectionStudentsState( this );
+			return new GetCollectionStudentsState(this);
 		}
 	}
 }

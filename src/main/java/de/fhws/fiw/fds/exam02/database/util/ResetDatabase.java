@@ -4,7 +4,7 @@ import de.fhws.fiw.fds.exam02.database.DaoFactory;
 
 public class ResetDatabase
 {
-	public void reset( )
+	public void reset()
 	{
 		DaoFactory.resetDaoFactory();
 	}

@@ -26,64 +26,64 @@ public abstract class AbstractQuery<T extends AbstractModel>
 {
 	protected CollectionModelResult<T> result;
 
-	protected PagingBehavior pagingBehavior = new OnePageWithAllResults( );
+	protected PagingBehavior pagingBehavior = new OnePageWithAllResults();
 
-	protected AbstractQuery( )
+	protected AbstractQuery()
 	{
 	}
 
-	public AbstractQuery setPagingBehavior( final PagingBehavior pagingBehavior )
+	public AbstractQuery setPagingBehavior(final PagingBehavior pagingBehavior)
 	{
 		this.pagingBehavior = pagingBehavior;
 		return this;
 	}
 
-	public final CollectionModelResult<T> startQuery( )
+	public final CollectionModelResult<T> startQuery()
 	{
 		/* DON'T OPTIMIZE THE FOLLOWING TWO LINES. WE NEED THE RESULT IN OTHER METHODS LATER. */
-		this.result = executeQuery( );
+		this.result = executeQuery();
 		return this.result;
 	}
 
-	protected CollectionModelResult<T> executeQuery( )
+	protected CollectionModelResult<T> executeQuery()
 	{
 		CollectionModelResult<T> result;
 
 		try
 		{
-			result = selectRequestedPage( doExecuteQuery( ) );
+			result = selectRequestedPage(doExecuteQuery());
 		}
-		catch ( final DatabaseException e )
+		catch (final DatabaseException e)
 		{
-			result = new CollectionModelResult<>( );
+			result = new CollectionModelResult<>();
 		}
 
 		return result;
 	}
 
-	protected CollectionModelResult<T> selectRequestedPage( final CollectionModelResult<T> fullResult )
+	protected CollectionModelResult<T> selectRequestedPage(final CollectionModelResult<T> fullResult)
 	{
-		return this.pagingBehavior.page( fullResult );
+		return this.pagingBehavior.page(fullResult);
 	}
 
-	protected abstract CollectionModelResult<T> doExecuteQuery( ) throws DatabaseException;
+	protected abstract CollectionModelResult<T> doExecuteQuery() throws DatabaseException;
 
-	public final void addSelfLink( final PagingContext pagingContext )
+	public final void addSelfLink(final PagingContext pagingContext)
 	{
-		this.pagingBehavior.addSelfLink( pagingContext );
+		this.pagingBehavior.addSelfLink(pagingContext);
 	}
 
-	public final void addPrevPageLink( final PagingContext pagingContext )
+	public final void addPrevPageLink(final PagingContext pagingContext)
 	{
-		this.pagingBehavior.addPrevPageLink( pagingContext );
+		this.pagingBehavior.addPrevPageLink(pagingContext);
 	}
 
-	public final void addNextPageLink( final PagingContext pagingContext )
+	public final void addNextPageLink(final PagingContext pagingContext)
 	{
-		this.pagingBehavior.addNextPageLink( pagingContext, this.result );
+		this.pagingBehavior.addNextPageLink(pagingContext, this.result);
 	}
 
-	protected Predicate<T> all( )
+	protected Predicate<T> all()
 	{
 		return p -> true;
 	}

@@ -26,167 +26,124 @@ public abstract class AbstractTest<R extends AbstractModel, C extends AbstractRe
 
 	protected final static String IF_NONE_MATCH = "If-None-Match";
 
-	@Before
-	public void resetDatabaseState( )
+	@Before public void resetDatabaseState()
 	{
-		System.out.println( "Resetting database for testing" );
+		System.out.println("Resetting database for testing");
 
-		new ResetDatabaseForTesting( ).reset( );
+		new ResetDatabaseForTesting().reset();
 	}
 
-	protected String defineBaseUrl( )
+	protected String defineBaseUrl()
 	{
 		return IBaseUrl.BASE_URL;
 	}
 
-	protected String defineCacheUrl( )
+	protected String defineCacheUrl()
 	{
 		return IBaseUrl.BASE_URL_CACHE;
 	}
 
-	protected abstract C newRestClient( final HeaderMap headers );
+	protected abstract C newRestClient(final HeaderMap headers);
 
-	protected RestApiResponse<R> getCollectionRequest(
-		final HeaderMap headers )
+	protected RestApiResponse<R> getCollectionRequest(final HeaderMap headers) throws IOException
+	{
+		return newRestClient(headers).loadAllResources();
+	}
+
+	protected RestApiResponse<R> getCollectionRequestByUrl(final HeaderMap headers, final String url) throws IOException
+	{
+		return newRestClient(headers).loadAllResourcesByUrl(url);
+	}
+
+	protected RestApiResponse<R> getSingleRequestByUrl(final HeaderMap headers, final String url) throws IOException
+	{
+		return newRestClient(headers).loadSingleResourceByUrl(url);
+	}
+
+	protected RestApiResponse<R> getSingleRequestById(final HeaderMap headers, final long id) throws IOException
+	{
+		return newRestClient(headers).loadSingleResourceById(id);
+	}
+
+	protected RestApiResponse<R> postRequest(final HeaderMap headers, final R resource) throws IOException
+	{
+		return newRestClient(headers).create(resource);
+	}
+
+	protected RestApiResponse<R> postRequestByUrl(final HeaderMap headers, final R resource, final String url)
 		throws IOException
 	{
-		return newRestClient( headers ).loadAllResources( );
+		return newRestClient(headers).createByUrl(url, resource);
 	}
 
-	protected RestApiResponse<R> getCollectionRequestByUrl(
-		final HeaderMap headers,
-		final String url )
+	protected RestApiResponse<R> putRequest(final HeaderMap headerMap, final R resource) throws IOException
+	{
+		return newRestClient(headerMap).update(resource);
+	}
+
+	protected RestApiResponse<R> putRequestByUrl(final HeaderMap headerMap, final R resource, final String url)
 		throws IOException
 	{
-		return newRestClient( headers ).loadAllResourcesByUrl( url );
+		return newRestClient(headerMap).updateByUrl(resource, url);
 	}
 
-	protected RestApiResponse<R> getSingleRequestByUrl(
-		final HeaderMap headers,
-		final String url )
-		throws IOException
+	protected RestApiResponse<R> deleteRequest(final HeaderMap headers, final R resource) throws IOException
 	{
-		return newRestClient( headers ).loadSingleResourceByUrl( url );
+		return newRestClient(headers).delete(resource);
 	}
 
-	protected RestApiResponse<R> getSingleRequestById(
-		final HeaderMap headers,
-		final long id )
-		throws IOException
+	protected RestApiResponse<R> deleteRequestById(final HeaderMap headers, final long id) throws IOException
 	{
-		return newRestClient( headers ).loadSingleResourceById( id );
+		final R resource = getSingleRequestById(headers, id).getResponseSingleData();
+
+		return deleteRequest(headers, resource);
 	}
 
-	protected RestApiResponse<R> postRequest(
-		final HeaderMap headers,
-		final R resource )
-		throws IOException
+	protected RestApiResponse<R> deleteRequestByUrl(final HeaderMap headers, final String url) throws IOException
 	{
-		return newRestClient( headers ).create( resource );
+		return newRestClient(headers).deleteByUrl(url);
 	}
 
-	protected RestApiResponse<R> postRequestByUrl(
-		final HeaderMap headers,
-		final R resource,
-		final String url )
-		throws IOException
+	protected void assertLinkHeaderExists(final RestApiResponse<R> response, final String relationType)
 	{
-		return newRestClient( headers ).createByUrl( url, resource );
+		assertTrue(doesLinkHeaderExist(response, relationType));
 	}
 
-	protected RestApiResponse<R> putRequest(
-		final HeaderMap headerMap,
-		final R resource )
-		throws IOException
+	private boolean doesLinkHeaderExist(final RestApiResponse<R> response, final String relationType)
 	{
-		return newRestClient( headerMap ).update( resource );
+		return response.getParsedLinkHeader(relationType) != null;
 	}
 
-	protected RestApiResponse<R> putRequestByUrl(
-		final HeaderMap headerMap,
-		final R resource,
-		final String url )
-		throws IOException
+	protected void assertLinkHeaderDoesNotExist(final RestApiResponse<R> response, final String relationType)
 	{
-		return newRestClient( headerMap ).updateByUrl( resource, url );
+		assertFalse(doesLinkHeaderExist(response, relationType));
 	}
 
-	protected RestApiResponse<R> deleteRequest(
-		final HeaderMap headers,
-		final R resource )
-		throws IOException
+	protected void assertLinkHeaderStartsWith(final RestApiResponse<R> response, final String relationType,
+		final String startsWith)
 	{
-		return newRestClient( headers ).delete( resource );
+		assertTrue(response.getLinkHeader(relationType).startsWith(startsWith));
 	}
 
-	protected RestApiResponse<R> deleteRequestById(
-		final HeaderMap headers,
-		final long id )
-		throws IOException
+	protected void assertLinkHeaderEquals(final RestApiResponse<R> response, final String relationType,
+		final String equalString)
 	{
-		final R resource = getSingleRequestById( headers, id ).getResponseSingleData( );
-
-		return deleteRequest( headers, resource );
+		assertEquals(equalString, response.getLinkHeader(relationType));
 	}
 
-	protected RestApiResponse<R> deleteRequestByUrl(
-		final HeaderMap headers,
-		final String url )
-		throws IOException
+	protected long cutIdFromLocationHeader(final RestApiResponse<R> response)
 	{
-		return newRestClient( headers ).deleteByUrl( url );
+		final String locationHeader = response.getLocationHeader();
+
+		final String[] split = locationHeader.split("/");
+
+		final String idAsString = split[split.length - 1];
+
+		return Long.parseLong(idAsString);
 	}
 
-	protected void assertLinkHeaderExists(
-		final RestApiResponse<R> response,
-		final String relationType )
+	protected void assertHeaderExists(final RestApiResponse<R> response, final String headerName)
 	{
-		assertTrue( doesLinkHeaderExist( response, relationType ) );
-	}
-
-	private boolean doesLinkHeaderExist(
-		final RestApiResponse<R> response,
-		final String relationType )
-	{
-		return response.getParsedLinkHeader( relationType ) != null;
-	}
-
-	protected void assertLinkHeaderDoesNotExist(
-		final RestApiResponse<R> response,
-		final String relationType )
-	{
-		assertFalse( doesLinkHeaderExist( response, relationType ) );
-	}
-
-	protected void assertLinkHeaderStartsWith(
-		final RestApiResponse<R> response,
-		final String relationType,
-		final String startsWith )
-	{
-		assertTrue( response.getLinkHeader( relationType ).startsWith( startsWith ) );
-	}
-
-	protected void assertLinkHeaderEquals(
-		final RestApiResponse<R> response,
-		final String relationType,
-		final String equalString )
-	{
-		assertEquals( equalString, response.getLinkHeader( relationType ) );
-	}
-
-	protected long cutIdFromLocationHeader( final RestApiResponse<R> response )
-	{
-		final String locationHeader = response.getLocationHeader( );
-
-		final String[] split = locationHeader.split( "/" );
-
-		final String idAsString = split[ split.length - 1 ];
-
-		return Long.parseLong( idAsString );
-	}
-
-	protected void assertHeaderExists( final RestApiResponse<R> response, final String headerName )
-	{
-		assertNotNull( response.getAllResponseHeaders( ).get( headerName ) );
+		assertNotNull(response.getAllResponseHeaders().get(headerName));
 	}
 }

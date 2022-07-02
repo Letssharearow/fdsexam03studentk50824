@@ -11,38 +11,38 @@ import de.fhws.fiw.fds.exam02.models.StudyTrip;
 
 public class DeleteStudyTripState extends AbstractDeleteState<StudyTrip>
 {
-	public DeleteStudyTripState( final AbstractDeleteStateBuilder builder )
+	public DeleteStudyTripState(final AbstractDeleteStateBuilder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override protected SingleModelResult<StudyTrip> loadModel( )
+	@Override protected SingleModelResult<StudyTrip> loadModel()
 	{
-		return DaoFactory.getInstance( ).getStudyTripDao( ).readById( this.modelIdToDelete );
+		return DaoFactory.getInstance().getStudyTripDao().readById(this.modelIdToDelete);
 	}
 
-	@Override protected NoContentResult deleteModel( )
+	@Override protected NoContentResult deleteModel()
 	{
-		DaoFactory.getInstance( ).getStudyTripStudentDao( ).deleteRelationsFromPrimary( this.modelIdToDelete );
+		DaoFactory.getInstance().getStudyTripStudentDao().deleteRelationsFromPrimary(this.modelIdToDelete);
 
-		return DaoFactory.getInstance( ).getStudyTripDao( ).delete( this.modelIdToDelete );
+		return DaoFactory.getInstance().getStudyTripDao().delete(this.modelIdToDelete);
 	}
 
-	@Override protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink( IStudyTripUri.REL_PATH, IStudyTripRelTypes.GET_ALL_STUDY_TRIPS, getAcceptRequestHeader( ) );
+		addLink(IStudyTripUri.REL_PATH, IStudyTripRelTypes.GET_ALL_STUDY_TRIPS, getAcceptRequestHeader());
 	}
 
 	public static class Builder extends AbstractDeleteStateBuilder
 	{
-		@Override public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new DeleteStudyTripState( this );
+			return new DeleteStudyTripState(this);
 		}
 	}
 }

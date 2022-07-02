@@ -37,13 +37,13 @@ public abstract class AbstractState
 
 	protected Response.ResponseBuilder responseBuilder;
 
-	protected AbstractState( final AbstractStateBuilder builder )
+	protected AbstractState(final AbstractStateBuilder builder)
 	{
 		this.uriInfo = builder.uriInfo;
 		this.httpServletRequest = builder.httpServletRequest;
 		this.request = builder.request;
 		this.context = builder.context;
-		this.responseBuilder = Response.ok( );
+		this.responseBuilder = Response.ok();
 	}
 
 	/**
@@ -51,22 +51,21 @@ public abstract class AbstractState
 	 *
 	 * @return the response sent back to the client
 	 */
-	public final Response execute( )
+	public final Response execute()
 	{
 		try
 		{
-			return buildInternal( );
+			return buildInternal();
 		}
-		catch ( final WebApplicationException f )
+		catch (final WebApplicationException f)
 		{
 			throw f;
 		}
-		catch ( final Exception e )
+		catch (final Exception e)
 		{
-			e.printStackTrace( );
+			e.printStackTrace();
 
-			return this.responseBuilder.status( Response.Status.INTERNAL_SERVER_ERROR )
-									   .build( );
+			return this.responseBuilder.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
@@ -75,7 +74,7 @@ public abstract class AbstractState
 	 *
 	 * @return the response sent back to the client
 	 */
-	protected abstract Response buildInternal( );
+	protected abstract Response buildInternal();
 
 	/**
 	 * This method can be used to configure the state. If extended classes implement the work flow
@@ -83,7 +82,7 @@ public abstract class AbstractState
 	 * could be implemented so that it returns always status code 200 with the resource OR to return status
 	 * code 204 without the resource.
 	 */
-	protected void configureState( )
+	protected void configureState()
 	{
 
 	}
@@ -96,27 +95,25 @@ public abstract class AbstractState
 	 * @param relType     the relation type of this link
 	 * @param params      parameters that are replaced in the given template
 	 */
-	protected final void addLink( final String uriTemplate,
-		final String relType,
-		final String mediaType,
-		final Object... params )
+	protected final void addLink(final String uriTemplate, final String relType, final String mediaType,
+		final Object... params)
 	{
-		Hyperlinks.addLink( this.uriInfo, this.responseBuilder, uriTemplate, relType, mediaType, params );
+		Hyperlinks.addLink(this.uriInfo, this.responseBuilder, uriTemplate, relType, mediaType, params);
 	}
 
-	protected final void addLink( final String uriTemplate, final String relType, final Object... params )
+	protected final void addLink(final String uriTemplate, final String relType, final Object... params)
 	{
-		Hyperlinks.addLink( this.uriInfo, this.responseBuilder, uriTemplate, relType, null, params );
+		Hyperlinks.addLink(this.uriInfo, this.responseBuilder, uriTemplate, relType, null, params);
 	}
 
-	protected final String getAcceptRequestHeader( )
+	protected final String getAcceptRequestHeader()
 	{
-		return getRequestHeader( "Accept" );
+		return getRequestHeader("Accept");
 	}
 
-	protected final String getRequestHeader( final String headerName )
+	protected final String getRequestHeader(final String headerName)
 	{
-		return this.httpServletRequest.getHeader( headerName );
+		return this.httpServletRequest.getHeader(headerName);
 	}
 
 	public static abstract class AbstractStateBuilder
@@ -129,30 +126,30 @@ public abstract class AbstractState
 
 		protected ContainerRequestContext context;
 
-		public AbstractStateBuilder setUriInfo( final UriInfo uriInfo )
+		public AbstractStateBuilder setUriInfo(final UriInfo uriInfo)
 		{
 			this.uriInfo = uriInfo;
 			return this;
 		}
 
-		public AbstractStateBuilder setHttpServletRequest( final HttpServletRequest httpServletRequest )
+		public AbstractStateBuilder setHttpServletRequest(final HttpServletRequest httpServletRequest)
 		{
 			this.httpServletRequest = httpServletRequest;
 			return this;
 		}
 
-		public AbstractStateBuilder setRequest( final Request request )
+		public AbstractStateBuilder setRequest(final Request request)
 		{
 			this.request = request;
 			return this;
 		}
 
-		public AbstractStateBuilder setContext( final ContainerRequestContext context )
+		public AbstractStateBuilder setContext(final ContainerRequestContext context)
 		{
 			this.context = context;
 			return this;
 		}
 
-		public abstract AbstractState build( );
+		public abstract AbstractState build();
 	}
 }

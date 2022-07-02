@@ -30,61 +30,58 @@ public abstract class AbstractPostState<T extends AbstractModel> extends Abstrac
 
 	protected NoContentResult resultAfterSave;
 
-	protected AbstractPostState( final AbstractPostStateBuilder<T> builder )
+	protected AbstractPostState(final AbstractPostStateBuilder<T> builder)
 	{
-		super( builder );
+		super(builder);
 		this.modelToStore = builder.modelToCreate;
 	}
 
-	@Override
-	protected Response buildInternal( )
+	@Override protected Response buildInternal()
 	{
-		configureState( );
+		configureState();
 
-		authorizeRequest( );
+		authorizeRequest();
 
-		if ( this.modelToStore.getId( ) != 0 )
+		if (this.modelToStore.getId() != 0)
 		{
-			return Response.status( Response.Status.BAD_REQUEST ).build( );
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 
-		this.resultAfterSave = saveModel( );
+		this.resultAfterSave = saveModel();
 
-		if ( this.resultAfterSave.hasError( ) )
+		if (this.resultAfterSave.hasError())
 		{
-			return Response.serverError( )
-						   .build( );
+			return Response.serverError().build();
 		}
 
-		return createResponse( );
+		return createResponse();
 	}
 
-	protected abstract void authorizeRequest( );
+	protected abstract void authorizeRequest();
 
-	protected abstract NoContentResult saveModel( );
+	protected abstract NoContentResult saveModel();
 
-	protected Response createResponse( )
+	protected Response createResponse()
 	{
-		defineLocationLink( );
+		defineLocationLink();
 
-		defineTransitionLinks( );
+		defineTransitionLinks();
 
-		return this.responseBuilder.build( );
+		return this.responseBuilder.build();
 	}
 
 	/**
 	 * This method is used to define all transition links based on the idea of a REST system as
 	 * a finite state machine.
 	 */
-	protected abstract void defineTransitionLinks( );
+	protected abstract void defineTransitionLinks();
 
-	protected void defineLocationLink( )
+	protected void defineLocationLink()
 	{
-		final UriBuilder builder = this.uriInfo.getAbsolutePathBuilder( );
-		final URI location = builder.path( Long.toString( this.modelToStore.getId( ) ) )
-									.build( );
-		this.responseBuilder.status( Response.Status.CREATED );
-		this.responseBuilder.location( location );
+		final UriBuilder builder = this.uriInfo.getAbsolutePathBuilder();
+		final URI location = builder.path(Long.toString(this.modelToStore.getId())).build();
+		this.responseBuilder.status(Response.Status.CREATED);
+		this.responseBuilder.location(location);
 	}
 
 	public static abstract class AbstractPostStateBuilder<T extends AbstractModel>
@@ -92,7 +89,7 @@ public abstract class AbstractPostState<T extends AbstractModel> extends Abstrac
 	{
 		protected T modelToCreate;
 
-		public AbstractPostStateBuilder setModelToCreate( final T modelToCreate )
+		public AbstractPostStateBuilder setModelToCreate(final T modelToCreate)
 		{
 			this.modelToCreate = modelToCreate;
 			return this;

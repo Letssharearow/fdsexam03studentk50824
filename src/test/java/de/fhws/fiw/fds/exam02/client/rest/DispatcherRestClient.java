@@ -12,26 +12,26 @@ public class DispatcherRestClient
 
 	private final GenericRestClient<EmptyResource> restClient;
 
-	public DispatcherRestClient(  )
+	public DispatcherRestClient()
 	{
-		this.restClient = new GenericRestClient( defineDefaultHeaders( ) );
+		this.restClient = new GenericRestClient(defineDefaultHeaders());
 	}
 
-	private HeaderMap defineDefaultHeaders( )
+	private HeaderMap defineDefaultHeaders()
 	{
-		final HeaderMap headers = new HeaderMap( );
-		headers.addHeader( "Accept", "application/json" );
+		final HeaderMap headers = new HeaderMap();
+		headers.addHeader("Accept", "application/json");
 
 		return headers;
 	}
 
-	public DispatcherRestClient( final HeaderMap headers )
+	public DispatcherRestClient(final HeaderMap headers)
 	{
-		this.restClient = new GenericRestClient<>(headers );
+		this.restClient = new GenericRestClient<>(headers);
 	}
 
-	public RestApiResponse<EmptyResource> triggerDispatcherRequest( ) throws IOException
+	public RestApiResponse<EmptyResource> triggerDispatcherRequest() throws IOException
 	{
-		return this.restClient.sendGetSingleRequest( this.dispatcherUrl );
+		return this.restClient.sendGetSingleRequest(this.dispatcherUrl);
 	}
 }

@@ -27,35 +27,34 @@ public class CollectionModelResult<T extends AbstractModel> extends AbstractResu
 
 	protected int totalNumberOfResult;
 
-	public CollectionModelResult( )
+	public CollectionModelResult()
 	{
-		this.result = new LinkedList<>( );
+		this.result = new LinkedList<>();
 		this.totalNumberOfResult = 0;
 	}
 
-	public CollectionModelResult( final Collection<T> result )
+	public CollectionModelResult(final Collection<T> result)
 	{
-		this.result = result != null ? result : new LinkedList<>( );
-		this.totalNumberOfResult = result.size( );
+		this.result = result != null ? result : new LinkedList<>();
+		this.totalNumberOfResult = result.size();
 	}
 
-	@Override
-	public boolean isEmpty( )
+	@Override public boolean isEmpty()
 	{
-		return this.result.isEmpty( );
+		return this.result.isEmpty();
 	}
 
-	public Collection<T> getResult( )
+	public Collection<T> getResult()
 	{
 		return this.result;
 	}
 
-	public int getTotalNumberOfResult( )
+	public int getTotalNumberOfResult()
 	{
 		return this.totalNumberOfResult;
 	}
 
-	public void setTotalNumberOfResult( final int totalNumberOfResult )
+	public void setTotalNumberOfResult(final int totalNumberOfResult)
 	{
 		this.totalNumberOfResult = totalNumberOfResult;
 	}

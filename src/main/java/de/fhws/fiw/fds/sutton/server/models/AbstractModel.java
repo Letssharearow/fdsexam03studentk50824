@@ -26,30 +26,28 @@ public abstract class AbstractModel implements Serializable, Cloneable
 
 	private long primaryId;
 
-	public long getId( )
+	public long getId()
 	{
 		return this.id;
 	}
 
-	public void setId( final long id )
+	public void setId(final long id)
 	{
 		this.id = id;
 	}
 
-	@JsonIgnore
-	public long getPrimaryId( )
+	@JsonIgnore public long getPrimaryId()
 	{
 		return primaryId;
 	}
 
-	@JsonIgnore
-	public void setPrimaryId( final long primaryId )
+	@JsonIgnore public void setPrimaryId(final long primaryId)
 	{
 		this.primaryId = primaryId;
 	}
 
-	@Override public Object clone( ) throws CloneNotSupportedException
+	@Override public Object clone() throws CloneNotSupportedException
 	{
-		return super.clone( );
+		return super.clone();
 	}
 }

@@ -24,24 +24,23 @@ public class SingleModelResult<T extends AbstractModel> extends AbstractResult
 
 	protected boolean found;
 
-	public SingleModelResult( )
+	public SingleModelResult()
 	{
 		this.found = false;
 	}
 
-	public SingleModelResult( final T result )
+	public SingleModelResult(final T result)
 	{
 		this.result = result;
 		this.found = result != null;
 	}
 
-	public T getResult( )
+	public T getResult()
 	{
 		return this.result;
 	}
 
-	@Override
-	public boolean isEmpty( )
+	@Override public boolean isEmpty()
 	{
 		return !this.found;
 	}

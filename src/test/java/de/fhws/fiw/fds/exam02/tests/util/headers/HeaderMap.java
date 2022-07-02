@@ -7,22 +7,22 @@ public class HeaderMap
 {
 	private final Map<String, String> headerMap;
 
-	public HeaderMap( )
+	public HeaderMap()
 	{
-		this.headerMap = new HashMap<>( );
+		this.headerMap = new HashMap<>();
 	}
 
-	public void addHeader( final String headerName, final String headerValue )
+	public void addHeader(final String headerName, final String headerValue)
 	{
-		this.headerMap.put( headerName, headerValue );
+		this.headerMap.put(headerName, headerValue);
 	}
 
-	public String getHeader( final String headerName)
+	public String getHeader(final String headerName)
 	{
-		return this.headerMap.getOrDefault( headerName, "" );
+		return this.headerMap.getOrDefault(headerName, "");
 	}
 
-	public Map<String, String> getHeaderMap( )
+	public Map<String, String> getHeaderMap()
 	{
 		return headerMap;
 	}

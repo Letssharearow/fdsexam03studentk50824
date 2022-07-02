@@ -8,18 +8,18 @@ import java.io.IOException;
 
 public class ResetDatabaseForTesting
 {
-	public void reset( )
+	public void reset()
 	{
-		final GenericWebClient<EmptyResource> webClient = new GenericWebClient<EmptyResource>( );
+		final GenericWebClient<EmptyResource> webClient = new GenericWebClient<EmptyResource>();
 
 		try
 		{
-			webClient.sendGetSingleRequest( IBaseUrl.BASE_URL + "resetdatabase" );
-			webClient.sendGetSingleRequest( IBaseUrl.BASE_URL + "initializedatabase" );
+			webClient.sendGetSingleRequest(IBaseUrl.BASE_URL + "resetdatabase");
+			webClient.sendGetSingleRequest(IBaseUrl.BASE_URL + "initializedatabase");
 		}
-		catch ( IOException e )
+		catch (IOException e)
 		{
-			e.printStackTrace( );
+			e.printStackTrace();
 		}
 	}
 }

@@ -9,23 +9,25 @@ import java.util.List;
 
 public class StudentRestClient extends AbstractResourceRestClient<Student>
 {
-	public StudentRestClient( final HeaderMap headers )
+	public StudentRestClient(final HeaderMap headers)
 	{
-		super( headers );
+		super(headers);
 	}
 
-	@Override protected String defineUrl( )
+	@Override protected String defineUrl()
 	{
 		return IBaseUrl.BASE_URL + "students";
 	}
 
-	@Override protected Class<Student> defineClassTypeForSingleResource( )
+	@Override protected Class<Student> defineClassTypeForSingleResource()
 	{
 		return Student.class;
 	}
 
-	@Override protected GenericType<List<Student>> defineClassTypeForCollectionResource( )
+	@Override protected GenericType<List<Student>> defineClassTypeForCollectionResource()
 	{
-		return new GenericType<List<Student>>( ) { };
+		return new GenericType<List<Student>>()
+		{
+		};
 	}
 }

@@ -37,185 +37,157 @@ public class GenericWebClient<T extends AbstractModel>
 
 	private final Genson genson;
 
-	public GenericWebClient( )
+	public GenericWebClient()
 	{
-		this( "", "" );
+		this("", "");
 	}
 
-	public GenericWebClient(
-		final String userName,
-		final String password )
+	public GenericWebClient(final String userName, final String password)
 	{
-		this( userName, password, new HeaderMap( ) );
+		this(userName, password, new HeaderMap());
 	}
 
-	public GenericWebClient(
-		final String userName,
-		final String password,
-		final HeaderMap headers )
+	public GenericWebClient(final String userName, final String password, final HeaderMap headers)
 	{
 		this.headers = headers;
 
-		this.client = new OkHttpClient.Builder( )
-			.addInterceptor( new BasicAuthInterceptor( userName, password ) )
-			.build( );
+		this.client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor(userName, password)).build();
 
-		this.genson = new Genson( );
+		this.genson = new Genson();
 	}
 
-	public WebApiResponse<T> sendGetSingleRequest( final String url ) throws IOException
+	public WebApiResponse<T> sendGetSingleRequest(final String url) throws IOException
 	{
-		final Response response = executeGetRequest( url );
+		final Response response = executeGetRequest(url);
 
-		final int statusCodeOfLastRequest = response.code( );
+		final int statusCodeOfLastRequest = response.code();
 
-		if ( statusCodeOfLastRequest == 200 )
+		if (statusCodeOfLastRequest == 200)
 		{
-			return new WebApiResponse<>(
-				Optional.empty( ),
-				response.headers( ),
-				response.code( ) );
+			return new WebApiResponse<>(Optional.empty(), response.headers(), response.code());
 		}
 		else
 		{
-			return new WebApiResponse<>( statusCodeOfLastRequest );
+			return new WebApiResponse<>(statusCodeOfLastRequest);
 		}
 	}
 
-	private Response executeGetRequest( final String url ) throws IOException
+	private Response executeGetRequest(final String url) throws IOException
 	{
-		final Request request = newBuilder( url ).get( ).build( );
+		final Request request = newBuilder(url).get().build();
 
-		return this.client.newCall( request ).execute( );
+		return this.client.newCall(request).execute();
 	}
 
-	private Request.Builder newBuilder( final String url )
+	private Request.Builder newBuilder(final String url)
 	{
-		final Request.Builder builder = new Request.Builder( ).url( url );
+		final Request.Builder builder = new Request.Builder().url(url);
 
-		addHeaders( builder );
+		addHeaders(builder);
 
 		return builder;
 	}
 
-	private void addHeaders( final Request.Builder builder )
+	private void addHeaders(final Request.Builder builder)
 	{
-		for ( String headerName : this.headers.getHeaderMap( ).keySet( ) )
+		for (String headerName : this.headers.getHeaderMap().keySet())
 		{
-			final String headerValue = this.headers.getHeaderMap( ).get( headerName );
+			final String headerValue = this.headers.getHeaderMap().get(headerName);
 
-			builder.addHeader( headerName, headerValue );
+			builder.addHeader(headerName, headerValue);
 		}
 	}
 
-	public WebApiResponse<T> sendGetSingleRequest(
-		final String url,
-		final Class<T> clazz )
-		throws IOException
+	public WebApiResponse<T> sendGetSingleRequest(final String url, final Class<T> clazz) throws IOException
 	{
-		final Response response = executeGetRequest( url );
+		final Response response = executeGetRequest(url);
 
-		final int statusCodeOfLastRequest = response.code( );
+		final int statusCodeOfLastRequest = response.code();
 
-		if ( statusCodeOfLastRequest == 200 )
+		if (statusCodeOfLastRequest == 200)
 		{
-			return new WebApiResponse<>(
-				deserialize( response, clazz ),
-				response.headers( ),
-				response.code( ) );
+			return new WebApiResponse<>(deserialize(response, clazz), response.headers(), response.code());
 		}
 		else
 		{
-			return new WebApiResponse<>( statusCodeOfLastRequest );
+			return new WebApiResponse<>(statusCodeOfLastRequest);
 		}
 	}
 
-	public WebApiResponse<T> sendGetCollectionRequest(
-		final String url,
-		final GenericType<List<T>> genericType )
+	public WebApiResponse<T> sendGetCollectionRequest(final String url, final GenericType<List<T>> genericType)
 		throws IOException
 	{
-		final Request request = newBuilder( url ).get( ).build( );
+		final Request request = newBuilder(url).get().build();
 
-		final Response response = this.client.newCall( request ).execute( );
+		final Response response = this.client.newCall(request).execute();
 
-		final int statusCodeOfLastRequest = response.code( );
+		final int statusCodeOfLastRequest = response.code();
 
-		if ( statusCodeOfLastRequest == 200 )
+		if (statusCodeOfLastRequest == 200)
 		{
-			return new WebApiResponse<>(
-				deserializeToCollection( response, genericType ),
-				response.headers( ),
-				response.code( ) );
+			return new WebApiResponse<>(deserializeToCollection(response, genericType), response.headers(),
+				response.code());
 		}
 		else
 		{
-			return new WebApiResponse<>( statusCodeOfLastRequest );
+			return new WebApiResponse<>(statusCodeOfLastRequest);
 		}
 	}
 
-	public WebApiResponse<T> sendPostRequest( final String url, final T object ) throws IOException
+	public WebApiResponse<T> sendPostRequest(final String url, final T object) throws IOException
 	{
-		final String contentType = this.headers.getHeader( CONTENT_TYPE );
+		final String contentType = this.headers.getHeader(CONTENT_TYPE);
 
-		final RequestBody body = RequestBody.create( MediaType.parse( contentType ), serialize( object ) );
+		final RequestBody body = RequestBody.create(MediaType.parse(contentType), serialize(object));
 
-		final Request request = new Request.Builder( )
-			.url( url )
-			.post( body )
-			.build( );
+		final Request request = new Request.Builder().url(url).post(body).build();
 
-		final Response response = this.client.newCall( request ).execute( );
+		final Response response = this.client.newCall(request).execute();
 
-		final int statusCodeOfLastRequest = response.code( );
+		final int statusCodeOfLastRequest = response.code();
 
-		return new WebApiResponse<>( statusCodeOfLastRequest, response.headers( ) );
+		return new WebApiResponse<>(statusCodeOfLastRequest, response.headers());
 	}
 
-	public WebApiResponse<T> sendPutRequest( final String url, final T object ) throws IOException
+	public WebApiResponse<T> sendPutRequest(final String url, final T object) throws IOException
 	{
-		final String contentType = this.headers.getHeader( CONTENT_TYPE );
+		final String contentType = this.headers.getHeader(CONTENT_TYPE);
 
-		final RequestBody body = RequestBody.create( MediaType.parse( contentType ), serialize( object ) );
+		final RequestBody body = RequestBody.create(MediaType.parse(contentType), serialize(object));
 
-		final Request request = newBuilder( url )
-			.put( body )
-			.build( );
+		final Request request = newBuilder(url).put(body).build();
 
-		final Response response = this.client.newCall( request ).execute( );
+		final Response response = this.client.newCall(request).execute();
 
-		return new WebApiResponse<>( response.code( ), response.headers( ) );
+		return new WebApiResponse<>(response.code(), response.headers());
 	}
 
-	public WebApiResponse<T> sendDeleteRequest( final String url ) throws IOException
+	public WebApiResponse<T> sendDeleteRequest(final String url) throws IOException
 	{
-		final Request request = new Request.Builder( )
-			.url( url )
-			.delete( )
-			.build( );
+		final Request request = new Request.Builder().url(url).delete().build();
 
-		final Response response = this.client.newCall( request ).execute( );
+		final Response response = this.client.newCall(request).execute();
 
-		return new WebApiResponse<>( response.code( ), response.headers( ) );
+		return new WebApiResponse<>(response.code(), response.headers());
 	}
 
-	private String serialize( final T object )
+	private String serialize(final T object)
 	{
-		return this.genson.serialize( object );
+		return this.genson.serialize(object);
 	}
 
-	private List<T> deserializeToCollection( final Response response, final GenericType<List<T>> genericType )
+	private List<T> deserializeToCollection(final Response response, final GenericType<List<T>> genericType)
 		throws IOException
 	{
-		final String data = response.body( ).string( );
+		final String data = response.body().string();
 
-		return genson.deserialize( data, genericType );
+		return genson.deserialize(data, genericType);
 	}
 
-	private Optional<T> deserialize( final Response response, final Class<T> clazz ) throws IOException
+	private Optional<T> deserialize(final Response response, final Class<T> clazz) throws IOException
 	{
-		final String data = response.body( ).string( );
+		final String data = response.body().string();
 
-		return Optional.ofNullable( genson.deserialize( data, clazz ) );
+		return Optional.ofNullable(genson.deserialize(data, clazz));
 	}
 }

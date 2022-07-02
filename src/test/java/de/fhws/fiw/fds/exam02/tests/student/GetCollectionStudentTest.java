@@ -16,64 +16,60 @@ public class GetCollectionStudentTest extends AbstractStudentTest
 {
 	private final static String CREATE_STUDENT = "createStudent";
 
-	@Test
-	public void test_200( ) throws IOException
+	@Test public void test_200() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequest( HeaderMapUtils.withAcceptJson( ) );
+		final RestApiResponse<Student> response = getCollectionRequest(HeaderMapUtils.withAcceptJson());
 
-		assertEquals( 200, response.getLastStatusCode( ) );
-		assertEquals( 4, response.getResponseCollectionData( ).size( ) );
+		assertEquals(200, response.getLastStatusCode());
+		assertEquals(4, response.getResponseCollectionData().size());
 	}
 
-	@Test
-	public void test_hypermedia( ) throws IOException
+	@Test public void test_hypermedia() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequest( HeaderMapUtils.withAcceptJson( ) );
+		final RestApiResponse<Student> response = getCollectionRequest(HeaderMapUtils.withAcceptJson());
 
-		assertLinkHeaderStartsWith( response, CREATE_STUDENT, BASE_URL + "students" );
-		assertLinkHeaderStartsWith( response, SELF, BASE_URL + "students" );
+		assertLinkHeaderStartsWith(response, CREATE_STUDENT, BASE_URL + "students");
+		assertLinkHeaderStartsWith(response, SELF, BASE_URL + "students");
 	}
 
-	@Test
-	public void test_correct_media_type( ) throws IOException
+	@Test public void test_correct_media_type() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequest( HeaderMapUtils.withAcceptJson( ) );
+		final RestApiResponse<Student> response = getCollectionRequest(HeaderMapUtils.withAcceptJson());
 
-		assertEquals( 200, response.getLastStatusCode( ) );
+		assertEquals(200, response.getLastStatusCode());
 	}
 
-	@Test
-	public void test_incorrect_media_type( ) throws IOException
+	@Test public void test_incorrect_media_type() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequest( HeaderMapUtils.withAcceptXml( ) );
+		final RestApiResponse<Student> response = getCollectionRequest(HeaderMapUtils.withAcceptXml());
 
-		assertEquals( 406, response.getLastStatusCode( ) );
+		assertEquals(406, response.getLastStatusCode());
 	}
 
-	@Test
-	public void test_pagination_negative_offset_parameter( ) throws IOException
+	@Test public void test_pagination_negative_offset_parameter() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequestByUrl( HeaderMapUtils.withAcceptJson( ), defineBaseUrl( ) + "?offset=-2&size=2" );
+		final RestApiResponse<Student> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			defineBaseUrl() + "?offset=-2&size=2");
 
-		assertEquals( 200, response.getLastStatusCode( ) );
-		assertEquals( 2, response.getResponseCollectionData( ).size( ) );
+		assertEquals(200, response.getLastStatusCode());
+		assertEquals(2, response.getResponseCollectionData().size());
 
-		final List<String> expectedStudentNames = Arrays.asList( JAMES_BOND, ERIKA_MUSTERMANN );
+		final List<String> expectedStudentNames = Arrays.asList(JAMES_BOND, ERIKA_MUSTERMANN);
 
-		assertEquals( expectedStudentNames, extractStudentNamesFromResponse( response ) );
+		assertEquals(expectedStudentNames, extractStudentNamesFromResponse(response));
 	}
 
-	@Test
-	public void test_pagination_valid_offset_parameter( ) throws IOException
+	@Test public void test_pagination_valid_offset_parameter() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequestByUrl( HeaderMapUtils.withAcceptJson( ), defineBaseUrl( ) + "?offset=2&size=2" );
+		final RestApiResponse<Student> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			defineBaseUrl() + "?offset=2&size=2");
 
-		assertEquals( 200, response.getLastStatusCode( ) );
-		assertEquals( 2, response.getResponseCollectionData( ).size( ) );
+		assertEquals(200, response.getLastStatusCode());
+		assertEquals(2, response.getResponseCollectionData().size());
 
-		final List<String> expectedStudentNames = Arrays.asList( MAX_MUSTERMANN, HARRY_POTTER );
+		final List<String> expectedStudentNames = Arrays.asList(MAX_MUSTERMANN, HARRY_POTTER);
 
-		assertEquals( expectedStudentNames, extractStudentNamesFromResponse( response ) );
+		assertEquals(expectedStudentNames, extractStudentNamesFromResponse(response));
 	}
 
 	//TODO: Auskommentiert, da gewünschtes Verhalten nicht bekannt
@@ -104,34 +100,31 @@ public class GetCollectionStudentTest extends AbstractStudentTest
 		assertEquals( 0, response.getResponseCollectionData( ).size( ) );
 	}*/
 
-	@Test
-	public void test_pagination_valid_size_parameter( ) throws IOException
+	@Test public void test_pagination_valid_size_parameter() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequestByUrl( HeaderMapUtils.withAcceptJson( ), defineBaseUrl( ) + "?offset=0&size=2" );
+		final RestApiResponse<Student> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			defineBaseUrl() + "?offset=0&size=2");
 
-		assertEquals( 200, response.getLastStatusCode( ) );
-		assertEquals( 2, response.getResponseCollectionData( ).size( ) );
+		assertEquals(200, response.getLastStatusCode());
+		assertEquals(2, response.getResponseCollectionData().size());
 
-		final List<String> expectedStudentNames = Arrays.asList( JAMES_BOND, ERIKA_MUSTERMANN );
+		final List<String> expectedStudentNames = Arrays.asList(JAMES_BOND, ERIKA_MUSTERMANN);
 
-		assertEquals( expectedStudentNames, extractStudentNamesFromResponse( response ) );
+		assertEquals(expectedStudentNames, extractStudentNamesFromResponse(response));
 	}
 
-	private List<String> extractStudentNamesFromResponse( final RestApiResponse<Student> response )
+	private List<String> extractStudentNamesFromResponse(final RestApiResponse<Student> response)
 	{
-		return response.getResponseCollectionData( )
-			.stream( )
-			.map( s -> s.getFirstName( ) + " " + s.getLastName( ) )
-			.collect( Collectors.toList( ) );
+		return response.getResponseCollectionData().stream().map(s -> s.getFirstName() + " " + s.getLastName())
+			.collect(Collectors.toList());
 	}
 
-	@Test
-	public void test_sort_by_last_name_and_first_name( ) throws IOException
+	@Test public void test_sort_by_last_name_and_first_name() throws IOException
 	{
-		final RestApiResponse<Student> response = getCollectionRequest( HeaderMapUtils.withAcceptJson( ) );
+		final RestApiResponse<Student> response = getCollectionRequest(HeaderMapUtils.withAcceptJson());
 
-		final List<String> expectedStudentNames = Arrays.asList( STUDENTS_SORTED );
+		final List<String> expectedStudentNames = Arrays.asList(STUDENTS_SORTED);
 
-		assertEquals( expectedStudentNames, extractStudentNamesFromResponse( response ) );
+		assertEquals(expectedStudentNames, extractStudentNamesFromResponse(response));
 	}
 }

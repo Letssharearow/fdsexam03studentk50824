@@ -8,23 +8,25 @@ import java.util.List;
 
 public class EmptyResourceRestClient extends AbstractResourceRestClient<EmptyResource>
 {
-	public EmptyResourceRestClient( final HeaderMap headers )
+	public EmptyResourceRestClient(final HeaderMap headers)
 	{
-		super( headers );
+		super(headers);
 	}
 
-	@Override protected String defineUrl( )
+	@Override protected String defineUrl()
 	{
 		return "";
 	}
 
-	@Override protected Class<EmptyResource> defineClassTypeForSingleResource( )
+	@Override protected Class<EmptyResource> defineClassTypeForSingleResource()
 	{
 		return EmptyResource.class;
 	}
 
-	@Override protected GenericType<List<EmptyResource>> defineClassTypeForCollectionResource( )
+	@Override protected GenericType<List<EmptyResource>> defineClassTypeForCollectionResource()
 	{
-		return new GenericType<List<EmptyResource>>( ) { };
+		return new GenericType<List<EmptyResource>>()
+		{
+		};
 	}
 }

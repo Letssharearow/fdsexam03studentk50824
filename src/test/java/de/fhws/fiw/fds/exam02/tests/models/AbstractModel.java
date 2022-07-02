@@ -20,16 +20,16 @@ public abstract class AbstractModel
 {
 	protected long id;
 
-	public AbstractModel( )
+	public AbstractModel()
 	{
 	}
 
-	public long getId( )
+	public long getId()
 	{
 		return this.id;
 	}
 
-	public void setId( final long id )
+	public void setId(final long id)
 	{
 		this.id = id;
 	}

@@ -8,31 +8,31 @@ import de.fhws.fiw.fds.sutton.server.database.results.NoContentResult;
 
 public class PostStudentOfStudyTripState extends AbstractPostRelationState<Student>
 {
-	public PostStudentOfStudyTripState( final Builder builder )
+	public PostStudentOfStudyTripState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-	@Override protected void authorizeRequest( )
+	@Override protected void authorizeRequest()
 	{
 
 	}
 
-	@Override protected NoContentResult saveModel( )
+	@Override protected NoContentResult saveModel()
 	{
-		return DaoFactory.getInstance( ).getStudyTripStudentDao( ).create( this.primaryId, this.modelToStore );
+		return DaoFactory.getInstance().getStudyTripStudentDao().create(this.primaryId, this.modelToStore);
 	}
 
-	@Override protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
 
 	}
 
 	public static class Builder extends AbstractPostRelationStateBuilder<Student>
 	{
-		@Override public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new PostStudentOfStudyTripState( this );
+			return new PostStudentOfStudyTripState(this);
 		}
 	}
 }

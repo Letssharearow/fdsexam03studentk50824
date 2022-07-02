@@ -21,48 +21,33 @@ public class RestApiResponse<M extends AbstractModel>
 
 	private final Map<String, Link> relationTypeToLinkHeaderMap;
 
-	public RestApiResponse(
-		final int lastStatusCode,
-		final M responseSingleData,
-		final Headers headers,
-		final Map<String, Link> relationTypeToLinkHeaderMap )
+	public RestApiResponse(final int lastStatusCode, final M responseSingleData, final Headers headers,
+		final Map<String, Link> relationTypeToLinkHeaderMap)
 	{
-		this( lastStatusCode, responseSingleData, null, headers, null, relationTypeToLinkHeaderMap );
+		this(lastStatusCode, responseSingleData, null, headers, null, relationTypeToLinkHeaderMap);
 	}
 
-	public RestApiResponse(
-		final int lastStatusCode,
-		final Collection<M> responseCollectionData,
-		final Headers headers,
-		final Map<String, Link> relationTypeToLinkHeaderMap )
+	public RestApiResponse(final int lastStatusCode, final Collection<M> responseCollectionData, final Headers headers,
+		final Map<String, Link> relationTypeToLinkHeaderMap)
 	{
-		this( lastStatusCode, null, responseCollectionData, headers, null, relationTypeToLinkHeaderMap );
+		this(lastStatusCode, null, responseCollectionData, headers, null, relationTypeToLinkHeaderMap);
 	}
 
-	public RestApiResponse(
-		final int lastStatusCode,
-		final String locationHeader,
-		final Headers headers,
-		final Map<String, Link> relationTypeToLinkHeaderMap )
+	public RestApiResponse(final int lastStatusCode, final String locationHeader, final Headers headers,
+		final Map<String, Link> relationTypeToLinkHeaderMap)
 	{
-		this( lastStatusCode, null, null, headers, locationHeader, relationTypeToLinkHeaderMap );
+		this(lastStatusCode, null, null, headers, locationHeader, relationTypeToLinkHeaderMap);
 	}
 
-	public RestApiResponse(
-		final int lastStatusCode,
-		final Headers headers,
-		final Map<String, Link> relationTypeToLinkHeaderMap )
+	public RestApiResponse(final int lastStatusCode, final Headers headers,
+		final Map<String, Link> relationTypeToLinkHeaderMap)
 	{
-		this( lastStatusCode, null, null, headers, null, relationTypeToLinkHeaderMap );
+		this(lastStatusCode, null, null, headers, null, relationTypeToLinkHeaderMap);
 	}
 
-	private RestApiResponse(
-		final int lastStatusCode,
-		final M responseSingleData,
-		final Collection<M> responseCollectionData,
-		final Headers headers,
-		final String locationHeader,
-		final Map<String, Link> relationTypeToLinkHeaderMap )
+	private RestApiResponse(final int lastStatusCode, final M responseSingleData,
+		final Collection<M> responseCollectionData, final Headers headers, final String locationHeader,
+		final Map<String, Link> relationTypeToLinkHeaderMap)
 	{
 		this.lastStatusCode = lastStatusCode;
 		this.responseSingleData = responseSingleData;
@@ -72,58 +57,58 @@ public class RestApiResponse<M extends AbstractModel>
 		this.relationTypeToLinkHeaderMap = relationTypeToLinkHeaderMap;
 	}
 
-	public boolean isLinkHeaderPresent( final String relationType )
+	public boolean isLinkHeaderPresent(final String relationType)
 	{
-		return this.relationTypeToLinkHeaderMap.containsKey( relationType );
+		return this.relationTypeToLinkHeaderMap.containsKey(relationType);
 	}
 
-	public Link getParsedLinkHeader( final String relationType )
+	public Link getParsedLinkHeader(final String relationType)
 	{
-		return this.relationTypeToLinkHeaderMap.get( relationType );
+		return this.relationTypeToLinkHeaderMap.get(relationType);
 	}
 
-	public String getLinkHeader( final String relationType )
+	public String getLinkHeader(final String relationType)
 	{
-		return this.relationTypeToLinkHeaderMap.get( relationType ).getUrl( );
+		return this.relationTypeToLinkHeaderMap.get(relationType).getUrl();
 	}
 
-	public boolean headerExists( final String key, final String value )
+	public boolean headerExists(final String key, final String value)
 	{
 		String headerValue = this.allResponseHeaders.get(key);
 		return headerValue != null && headerValue.equals(value);
 	}
 
-	public String getEtagHeader( )
+	public String getEtagHeader()
 	{
-		return this.allResponseHeaders.get( "Etag" );
+		return this.allResponseHeaders.get("Etag");
 	}
 
-	public int getLastStatusCode( )
+	public int getLastStatusCode()
 	{
 		return lastStatusCode;
 	}
 
-	public M getResponseSingleData( )
+	public M getResponseSingleData()
 	{
 		return responseSingleData;
 	}
 
-	public Collection<M> getResponseCollectionData( )
+	public Collection<M> getResponseCollectionData()
 	{
 		return responseCollectionData;
 	}
 
-	public Headers getAllResponseHeaders( )
+	public Headers getAllResponseHeaders()
 	{
 		return allResponseHeaders;
 	}
 
-	public String getLocationHeader( )
+	public String getLocationHeader()
 	{
 		return locationHeader;
 	}
 
-	public Map<String, Link> getRelationTypeToLinkHeaderMap( )
+	public Map<String, Link> getRelationTypeToLinkHeaderMap()
 	{
 		return relationTypeToLinkHeaderMap;
 	}

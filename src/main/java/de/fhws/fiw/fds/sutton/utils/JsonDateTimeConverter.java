@@ -10,17 +10,15 @@ import java.time.format.DateTimeFormatter;
 
 public class JsonDateTimeConverter implements Converter<LocalDate>
 {
-	@Override
-	public void serialize( final LocalDate convert, final ObjectWriter objectWriter, final Context context )
+	@Override public void serialize(final LocalDate convert, final ObjectWriter objectWriter, final Context context)
 		throws Exception
 	{
-		objectWriter.writeString( convert.format( DateTimeFormatter.ISO_LOCAL_DATE ) );
+		objectWriter.writeString(convert.format(DateTimeFormatter.ISO_LOCAL_DATE));
 	}
 
-	@Override public LocalDate deserialize( final ObjectReader objectReader, final Context context )
-		throws Exception
+	@Override public LocalDate deserialize(final ObjectReader objectReader, final Context context) throws Exception
 	{
 		final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-		return LocalDate.parse( objectReader.valueAsString( ), formatter );
+		return LocalDate.parse(objectReader.valueAsString(), formatter);
 	}
 }

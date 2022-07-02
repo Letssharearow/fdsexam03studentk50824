@@ -24,24 +24,24 @@ public abstract class AbstractResult
 
 	protected String errorMessage;
 
-	protected AbstractResult( )
+	protected AbstractResult()
 	{
 		this.hasError = false;
 	}
 
-	public abstract boolean isEmpty( );
+	public abstract boolean isEmpty();
 
-	public final boolean hasError( )
+	public final boolean hasError()
 	{
 		return this.hasError;
 	}
 
-	public final void setError( )
+	public final void setError()
 	{
 		this.hasError = true;
 	}
 
-	public final void setError( final int errorCode, final String errorMessage )
+	public final void setError(final int errorCode, final String errorMessage)
 	{
 		this.hasError = true;
 		this.errorCode = errorCode;

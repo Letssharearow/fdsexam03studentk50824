@@ -20,64 +20,64 @@ import javax.ws.rs.core.CacheControl;
 
 public class CachingUtils
 {
-	public static CacheControl create2SecondsPublicCaching( )
+	public static CacheControl create2SecondsPublicCaching()
 	{
-		final CacheControl cacheControl = new CacheControl( );
-		cacheControl.setPrivate( false );
-		cacheControl.setMaxAge( 2 );
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setPrivate(false);
+		cacheControl.setMaxAge(2);
 
 		return cacheControl;
 	}
 
-	public static CacheControl create2SecondsPrivateCaching( )
+	public static CacheControl create2SecondsPrivateCaching()
 	{
-		final CacheControl cacheControl = new CacheControl( );
-		cacheControl.setPrivate( true );
-		cacheControl.setMaxAge( 2 );
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setPrivate(true);
+		cacheControl.setMaxAge(2);
 
 		return cacheControl;
 	}
 
-	public static CacheControl create30SecondsPublicCaching( )
+	public static CacheControl create30SecondsPublicCaching()
 	{
-		final CacheControl cacheControl = new CacheControl( );
-		cacheControl.setPrivate( false );
-		cacheControl.setMaxAge( 30 );
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setPrivate(false);
+		cacheControl.setMaxAge(30);
 
 		return cacheControl;
 	}
 
-	public static CacheControl create60SecondsPublicCaching( )
+	public static CacheControl create60SecondsPublicCaching()
 	{
-		final CacheControl cacheControl = new CacheControl( );
-		cacheControl.setPrivate( false );
-		cacheControl.setMaxAge( 60 );
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setPrivate(false);
+		cacheControl.setMaxAge(60);
 
 		return cacheControl;
 	}
 
-	public static CacheControl create30SecondsPrivateCaching( )
+	public static CacheControl create30SecondsPrivateCaching()
 	{
-		final CacheControl cacheControl = new CacheControl( );
-		cacheControl.setPrivate( true );
-		cacheControl.setMaxAge( 30 );
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setPrivate(true);
+		cacheControl.setMaxAge(30);
 
 		return cacheControl;
 	}
 
-	public static CacheControl createAcceptCache( )
+	public static CacheControl createAcceptCache()
 	{
-		final CacheControl cacheControl = new CacheControl( );
-		cacheControl.setPrivate( true );
-		cacheControl.setMaxAge( 30 );
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setPrivate(true);
+		cacheControl.setMaxAge(30);
 		return cacheControl;
 	}
 
-	public static CacheControl createNoCacheNoStoreCaching( )
+	public static CacheControl createNoCacheNoStoreCaching()
 	{
-		final CacheControl cacheControl = new CacheControl( );
-		cacheControl.setNoCache( true );
-		cacheControl.setNoStore( true );
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setNoCache(true);
+		cacheControl.setNoStore(true);
 
 		return cacheControl;
 	}

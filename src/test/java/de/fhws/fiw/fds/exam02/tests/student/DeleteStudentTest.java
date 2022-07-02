@@ -13,67 +13,65 @@ public class DeleteStudentTest extends AbstractStudentTest
 {
 	public final static String GET_ALL_STUDENTS = "getAllStudents";
 
-	@Test
-	public void test_204_and_404( ) throws IOException
+	@Test public void test_204_and_404() throws IOException
 	{
 		//post new resource
-		final RestApiResponse<Student> responseFromPostRequest = postRequest( HeaderMapUtils.withContentTypeJson( ), defineNewResource( ) );
+		final RestApiResponse<Student> responseFromPostRequest = postRequest(HeaderMapUtils.withContentTypeJson(),
+			defineNewResource());
 
-		final String locationHeader = responseFromPostRequest.getLocationHeader( );
+		final String locationHeader = responseFromPostRequest.getLocationHeader();
 
 		//get new resource
-		final RestApiResponse<Student> responseFromFirstGetRequest = getSingleRequestByUrl( HeaderMapUtils.withAcceptJson( ), locationHeader );
+		final RestApiResponse<Student> responseFromFirstGetRequest = getSingleRequestByUrl(
+			HeaderMapUtils.withAcceptJson(), locationHeader);
 
-		final Student studentToDelete = responseFromFirstGetRequest.getResponseSingleData( );
+		final Student studentToDelete = responseFromFirstGetRequest.getResponseSingleData();
 
-		assertNotNull( studentToDelete );
+		assertNotNull(studentToDelete);
 
 		//delete new resource
-		final RestApiResponse<Student> responseFromDeleteRequest = deleteRequest( HeaderMapUtils.empty( ), studentToDelete );
+		final RestApiResponse<Student> responseFromDeleteRequest = deleteRequest(HeaderMapUtils.empty(),
+			studentToDelete);
 
-		assertEquals( 204, responseFromDeleteRequest.getLastStatusCode( ) );
+		assertEquals(204, responseFromDeleteRequest.getLastStatusCode());
 
 		//try to get deleted resource
-		final RestApiResponse<Student> responseFromSecondGetRequest = getSingleRequestByUrl( HeaderMapUtils.withAcceptJson( ), locationHeader );
+		final RestApiResponse<Student> responseFromSecondGetRequest = getSingleRequestByUrl(
+			HeaderMapUtils.withAcceptJson(), locationHeader);
 
-		assertEquals( 404, responseFromSecondGetRequest.getLastStatusCode( ) );
+		assertEquals(404, responseFromSecondGetRequest.getLastStatusCode());
 
-		final Student studentFromSecondGetRequest = responseFromSecondGetRequest.getResponseSingleData( );
+		final Student studentFromSecondGetRequest = responseFromSecondGetRequest.getResponseSingleData();
 
-		assertNull( studentFromSecondGetRequest );
+		assertNull(studentFromSecondGetRequest);
 	}
 
-	private Student defineNewResource( )
+	private Student defineNewResource()
 	{
-		return new Student(
-			"Patrick",
-			"Müller",
-			"patrick.mueller@fhws.de",
-			"BIN",
-			5,
-			1234 );
+		return new Student("Patrick", "Müller", "patrick.mueller@fhws.de", "BIN", 5, 1234);
 	}
 
-	@Test
-	public void test_hypermedia( ) throws IOException
+	@Test public void test_hypermedia() throws IOException
 	{
-		final RestApiResponse<Student> response = postAndDeleteRequest( );
+		final RestApiResponse<Student> response = postAndDeleteRequest();
 
-		assertLinkHeaderEquals( response, GET_ALL_STUDENTS, BASE_URL + "students" );
+		assertLinkHeaderEquals(response, GET_ALL_STUDENTS, BASE_URL + "students");
 	}
 
-	protected RestApiResponse<Student> postAndDeleteRequest( ) throws IOException
+	protected RestApiResponse<Student> postAndDeleteRequest() throws IOException
 	{
-		final RestApiResponse<Student> responseFromPostRequest = postRequest( HeaderMapUtils.withContentTypeJson( ), defineNewResource( ) );
+		final RestApiResponse<Student> responseFromPostRequest = postRequest(HeaderMapUtils.withContentTypeJson(),
+			defineNewResource());
 
-		final String locationHeader = responseFromPostRequest.getLocationHeader( );
+		final String locationHeader = responseFromPostRequest.getLocationHeader();
 
-		final RestApiResponse<Student> responseFromFirstRequest = getSingleRequestByUrl( HeaderMapUtils.withAcceptJson( ), locationHeader );
+		final RestApiResponse<Student> responseFromFirstRequest = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			locationHeader);
 
-		final Student studentToDelete = responseFromFirstRequest.getResponseSingleData( );
+		final Student studentToDelete = responseFromFirstRequest.getResponseSingleData();
 
-		assertNotNull( studentToDelete );
+		assertNotNull(studentToDelete);
 
-		return deleteRequest( HeaderMapUtils.empty( ), studentToDelete );
+		return deleteRequest(HeaderMapUtils.empty(), studentToDelete);
 	}
 }

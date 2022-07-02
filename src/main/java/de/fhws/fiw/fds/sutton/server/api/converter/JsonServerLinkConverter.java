@@ -25,46 +25,46 @@ import javax.ws.rs.core.Link;
 
 public class JsonServerLinkConverter implements Converter<Link>
 {
-	public JsonServerLinkConverter( )
+	public JsonServerLinkConverter()
 	{
 	}
 
-	@Override public void serialize( final Link link, final ObjectWriter objectWriter, final Context context )
+	@Override public void serialize(final Link link, final ObjectWriter objectWriter, final Context context)
 		throws Exception
 	{
-		objectWriter.writeName( link.getTitle( ) );
-		objectWriter.beginObject( );
-		objectWriter.writeString( "href", this.replaceCharacters( link.getUri( ).toASCIIString( ) ) );
-		objectWriter.writeString( "rel", link.getRel( ) );
-		if ( link.getType( ) != null && !link.getType( ).isEmpty( ) )
+		objectWriter.writeName(link.getTitle());
+		objectWriter.beginObject();
+		objectWriter.writeString("href", this.replaceCharacters(link.getUri().toASCIIString()));
+		objectWriter.writeString("rel", link.getRel());
+		if (link.getType() != null && !link.getType().isEmpty())
 		{
-			objectWriter.writeString( "type", link.getType( ) );
+			objectWriter.writeString("type", link.getType());
 		}
 
-		objectWriter.endObject( );
+		objectWriter.endObject();
 	}
 
-	@Override public Link deserialize( final ObjectReader objectReader, final Context context ) throws Exception
+	@Override public Link deserialize(final ObjectReader objectReader, final Context context) throws Exception
 	{
 		Link returnValue = null;
-		objectReader.beginObject( );
+		objectReader.beginObject();
 
-		while ( objectReader.hasNext( ) )
+		while (objectReader.hasNext())
 		{
-			objectReader.next( );
-			if ( "href".equals( objectReader.name( ) ) )
+			objectReader.next();
+			if ("href".equals(objectReader.name()))
 			{
-				final String link = objectReader.valueAsString( );
-				returnValue = Link.fromUri( link ).build( new Object[ 0 ] );
+				final String link = objectReader.valueAsString();
+				returnValue = Link.fromUri(link).build(new Object[0]);
 			}
 		}
 
-		objectReader.endObject( );
+		objectReader.endObject();
 		return returnValue;
 	}
 
-	private String replaceCharacters( final String body )
+	private String replaceCharacters(final String body)
 	{
-		return body.replace( "%3F", "?" ).replaceAll( "%7B", "{" ).replaceAll( "%7D", "}" );
+		return body.replace("%3F", "?").replaceAll("%7B", "{").replaceAll("%7D", "}");
 	}
 }

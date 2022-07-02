@@ -6,9 +6,9 @@ public abstract class AbstractPutRelationState<T extends AbstractModel> extends 
 {
 	protected long primaryId;
 
-	public AbstractPutRelationState( final AbstractPutRelationStateBuilder builder )
+	public AbstractPutRelationState(final AbstractPutRelationStateBuilder builder)
 	{
-		super( builder );
+		super(builder);
 		this.primaryId = builder.parentId;
 	}
 
@@ -17,7 +17,7 @@ public abstract class AbstractPutRelationState<T extends AbstractModel> extends 
 	{
 		protected long parentId;
 
-		public AbstractPutRelationStateBuilder setParentId( final long parentId )
+		public AbstractPutRelationStateBuilder setParentId(final long parentId)
 		{
 			this.parentId = parentId;
 			return this;

@@ -13,37 +13,36 @@ import javax.ws.rs.core.Response;
 
 public class DispatcherState extends AbstractGetDispatcherState
 {
-	public DispatcherState( final Builder builder )
+	public DispatcherState(final Builder builder)
 	{
-		super( builder );
+		super(builder);
 	}
 
-
-	@Override
-	protected Response createResponse( )
+	@Override protected Response createResponse()
 	{
-		defineHttpResponseBody( );
+		defineHttpResponseBody();
 
-		defineSelfLink( );
+		defineSelfLink();
 
-		defineTransitionLinks( );
+		defineTransitionLinks();
 
 		StateHelper.addNeverExpireHeader(this.responseBuilder);
 
-		return this.responseBuilder.build( );
+		return this.responseBuilder.build();
 	}
 
-	@Override protected void defineTransitionLinks( )
+	@Override protected void defineTransitionLinks()
 	{
-		addLink( IStudyTripUri.REL_PATH_QUERY_PARAMETERS, IStudyTripRelTypes.GET_ALL_STUDY_TRIPS, MediaType.APPLICATION_JSON );
-		addLink( IStudentUri.REL_PATH_QUERY_PARAMETERS, IStudentRelTypes.GET_ALL_STUDENTS, MediaType.APPLICATION_JSON );
+		addLink(IStudyTripUri.REL_PATH_QUERY_PARAMETERS, IStudyTripRelTypes.GET_ALL_STUDY_TRIPS,
+			MediaType.APPLICATION_JSON);
+		addLink(IStudentUri.REL_PATH_QUERY_PARAMETERS, IStudentRelTypes.GET_ALL_STUDENTS, MediaType.APPLICATION_JSON);
 	}
 
 	public static class Builder extends AbstractDispatcherStateBuilder
 	{
-		@Override public AbstractState build( )
+		@Override public AbstractState build()
 		{
-			return new DispatcherState( this );
+			return new DispatcherState(this);
 		}
 	}
 }

@@ -18,17 +18,17 @@ package de.fhws.fiw.fds.sutton.server.database;
 
 public class DatabaseException extends Exception
 {
-	public DatabaseException( )
+	public DatabaseException()
 	{
 	}
 
-	public DatabaseException( final String message )
+	public DatabaseException(final String message)
 	{
-		super( message );
+		super(message);
 	}
 
-	public DatabaseException( final String message, final Throwable cause )
+	public DatabaseException(final String message, final Throwable cause)
 	{
-		super( message, cause );
+		super(message, cause);
 	}
 }
