@@ -59,7 +59,6 @@ public class GetSingleStudentState extends AbstractGetState<Student>
 	@Override protected Response createResponse()
 	{
 		addEtagHeader();
-
 		return super.createResponse();
 	}
 

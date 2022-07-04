@@ -12,9 +12,12 @@ import de.fhws.fiw.fds.sutton.server.api.states.get.AbstractGetCollectionRelatio
 import de.fhws.fiw.fds.sutton.server.database.results.CollectionModelResult;
 
 import javax.ws.rs.core.GenericEntity;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+
+import static de.fhws.fiw.fds.exam02.api.states.StateHelper.addNeverExpireHeader;
 
 public class GetCollectionStudentsOfStudyTripState extends AbstractGetCollectionRelationState<Student>
 {
@@ -54,7 +57,15 @@ public class GetCollectionStudentsOfStudyTripState extends AbstractGetCollection
 
 	@Override protected void configureState()
 	{
-		this.responseBuilder.cacheControl(CachingUtils.createNoCacheNoStoreCaching());
+		if (DaoFactory.getInstance().getStudyTripDao().readById(this.primaryId).getResult().getEndDate()
+			.isAfter(LocalDate.now()))
+		{
+			addNeverExpireHeader(responseBuilder);
+		}
+		else
+		{
+			this.responseBuilder.cacheControl(CachingUtils.create2SecondsPublicCaching());
+		}
 	}
 
 	public static class AllStudents extends AbstractRelationQuery<Student>

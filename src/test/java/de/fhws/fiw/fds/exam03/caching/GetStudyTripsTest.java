@@ -34,6 +34,9 @@ public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRes
 		assertEquals(200, response.getLastStatusCode());
 	}
 
+	//TODO singleCaching
+	//TODO expire Date Max value
+
 	@Override protected StudyTripRestClient newRestClient(HeaderMap headers)
 	{
 		return new StudyTripRestClient(headers);

@@ -14,13 +14,18 @@ public class StateHelper
 
 	public static void addExpiresHeader(Response.ResponseBuilder responseBuilder, LocalDate expireDate)
 	{
-		ZoneId defaultZoneId = ZoneId.systemDefault();
-		responseBuilder.expires(Date.from(expireDate.atStartOfDay(defaultZoneId).toInstant()));
+		responseBuilder.expires(getDateFromLocalDate(expireDate));
 	}
 
 	public static void addNeverExpireHeader(Response.ResponseBuilder responseBuilder)
 	{
 		responseBuilder.expires(new Date(Long.MAX_VALUE));
+	}
+
+	public static Date getDateFromLocalDate(LocalDate localDate)
+	{
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		return Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
 	}
 
 }

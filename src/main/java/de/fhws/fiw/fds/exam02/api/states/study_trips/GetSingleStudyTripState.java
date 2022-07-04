@@ -50,7 +50,7 @@ public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 		}
 		else
 		{
-			this.responseBuilder.cacheControl(CachingUtils.create2SecondsPublicCaching());
+			this.responseBuilder.cacheControl(CachingUtils.create10SecondsPublicRevalidate());
 		}
 	}
 
@@ -78,7 +78,6 @@ public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 	private void addEtagHeader()
 	{
 		final EntityTag etag = EtagGenerator.createEntityTag(this.requestedModel.getResult());
-
 		this.responseBuilder.tag(etag);
 	}
 
