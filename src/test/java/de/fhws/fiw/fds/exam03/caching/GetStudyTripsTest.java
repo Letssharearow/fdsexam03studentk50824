@@ -2,6 +2,7 @@ package de.fhws.fiw.fds.exam03.caching;
 
 import de.fhws.fiw.fds.exam02.client.rest.RestApiResponse;
 import de.fhws.fiw.fds.exam02.client.rest.resources.StudyTripRestClient;
+import de.fhws.fiw.fds.exam02.tests.models.Student;
 import de.fhws.fiw.fds.exam02.tests.models.StudyTrip;
 import de.fhws.fiw.fds.exam02.tests.util.headers.HeaderMap;
 import de.fhws.fiw.fds.exam02.tests.util.headers.HeaderMapUtils;
@@ -96,6 +97,75 @@ public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRes
 
 		assertEquals(200, responseFromSecondGetRequest.getLastStatusCode());
 		assertNotNull(responseFromSecondGetRequest.getResponseSingleData());
+	}
+
+	@Test public void test_conditional_put_204() throws IOException
+	{
+		//user A loads a student
+		final RestApiResponse<StudyTrip> responseFromGetRequest = getSingleRequestById(HeaderMapUtils.withAcceptJson(),
+			1);
+		final StudyTrip student = responseFromGetRequest.getResponseSingleData();
+
+		assertHeaderExists(responseFromGetRequest, ETAG);
+
+		final String initialEtag = responseFromGetRequest.getEtagHeader();
+
+		//user A updates this resource
+		student.setCountryName("Klaus");
+
+		final HeaderMap headersForPutRequestForUserA = HeaderMapUtils.withContentTypeJson();
+		headersForPutRequestForUserA.addHeader(IF_MATCH, initialEtag);
+
+		final RestApiResponse<StudyTrip> responseFromPutRequest = putRequest(headersForPutRequestForUserA, student);
+
+		assertEquals(204, responseFromPutRequest.getLastStatusCode());
+
+		assertHeaderExists(responseFromPutRequest, ETAG);
+	}
+
+	@Test public void test_conditional_put_412() throws IOException
+	{
+		//user A loads a student
+		final RestApiResponse<StudyTrip> responseFromGetRequestForUserA = getSingleRequestById(
+			HeaderMapUtils.withAcceptJson(), 1);
+		final StudyTrip studentForUserA = responseFromGetRequestForUserA.getResponseSingleData();
+
+		assertHeaderExists(responseFromGetRequestForUserA, ETAG);
+
+		final String initialEtagForUserA = responseFromGetRequestForUserA.getEtagHeader();
+
+		//user B loads the same student
+		final RestApiResponse<StudyTrip> responseFromGetRequestForUserB = getSingleRequestById(
+			HeaderMapUtils.withAcceptJson(), 1);
+		final StudyTrip studentForUserB = responseFromGetRequestForUserB.getResponseSingleData();
+
+		assertHeaderExists(responseFromGetRequestForUserB, ETAG);
+
+		final String initialEtagForUserB = responseFromGetRequestForUserB.getEtagHeader();
+
+		//user B updates this resource
+		studentForUserB.setCompanyName("Robert");
+
+		final HeaderMap headersForPutRequestForUserB = HeaderMapUtils.withContentTypeJson();
+		headersForPutRequestForUserB.addHeader(IF_MATCH, initialEtagForUserB);
+
+		final RestApiResponse<StudyTrip> responseFromPutRequestForUserB = putRequest(headersForPutRequestForUserB,
+			studentForUserB);
+
+		assertEquals(204, responseFromPutRequestForUserB.getLastStatusCode());
+
+		final String newEtagForUserB = responseFromPutRequestForUserB.getEtagHeader();
+
+		//user A updates this resource
+		studentForUserA.setName("Klaus");
+
+		final HeaderMap headersForPutRequestForUserA = HeaderMapUtils.withContentTypeJson();
+		headersForPutRequestForUserA.addHeader(IF_MATCH, initialEtagForUserA);
+
+		final RestApiResponse<StudyTrip> responseFromPutRequestForUserA = putRequest(headersForPutRequestForUserA,
+			studentForUserA);
+
+		assertEquals(412, responseFromPutRequestForUserA.getLastStatusCode());
 	}
 
 	@Override protected StudyTripRestClient newRestClient(HeaderMap headers)
