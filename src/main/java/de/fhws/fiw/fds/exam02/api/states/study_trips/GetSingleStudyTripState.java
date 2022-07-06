@@ -44,14 +44,7 @@ public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 
 	@Override protected void defineHttpCaching()
 	{
-		if (this.requestedModel.getResult().getEndDate().isAfter(LocalDate.now()))
-		{
-			addNeverExpireHeader(responseBuilder);
-		}
-		else
-		{
-			this.responseBuilder.cacheControl(CachingUtils.create10SecondsPublicRevalidate());
-		}
+		this.responseBuilder.cacheControl(CachingUtils.create30SecondsPrivateCaching());
 	}
 
 	@Override protected boolean clientKnowsCurrentModelState(final AbstractModel modelFromDatabase)

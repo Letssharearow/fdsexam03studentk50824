@@ -2,7 +2,6 @@ package de.fhws.fiw.fds.exam03.caching;
 
 import de.fhws.fiw.fds.exam02.client.rest.RestApiResponse;
 import de.fhws.fiw.fds.exam02.client.rest.resources.StudyTripRestClient;
-import de.fhws.fiw.fds.exam02.tests.models.Student;
 import de.fhws.fiw.fds.exam02.tests.models.StudyTrip;
 import de.fhws.fiw.fds.exam02.tests.util.headers.HeaderMap;
 import de.fhws.fiw.fds.exam02.tests.util.headers.HeaderMapUtils;
@@ -29,7 +28,7 @@ public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRes
 		RestApiResponse<StudyTrip> response = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(),
 			defineCacheUrl() + "studytrips/2");
 		assertTrue(response.headerExists("X-Proxy-Cache", "MISS"));
-		response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(), defineCacheUrl() + "studytrips/2");
+		response = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(), defineCacheUrl() + "studytrips/2");
 		assertTrue(response.headerExists("X-Proxy-Cache", "MISS"));
 	}
 
@@ -47,7 +46,7 @@ public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRes
 
 	@Test public void test_conditional_get_304() throws IOException
 	{
-		//user A loads a student
+		//user A loads a studyTrip
 		final RestApiResponse<StudyTrip> responseFromFirstGetRequest = getSingleRequestById(
 			HeaderMapUtils.withAcceptJson(), 1);
 
@@ -67,22 +66,22 @@ public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRes
 
 	@Test public void test_conditional_get_200() throws IOException
 	{
-		//user A loads a student
+		//user A loads a studyTrip
 		final RestApiResponse<StudyTrip> responseFromFirstGetRequest = getSingleRequestById(
 			HeaderMapUtils.withAcceptJson(), 1);
-		final StudyTrip student = responseFromFirstGetRequest.getResponseSingleData();
+		final StudyTrip studyTrip = responseFromFirstGetRequest.getResponseSingleData();
 
 		assertHeaderExists(responseFromFirstGetRequest, ETAG);
 
 		final String initialEtag = responseFromFirstGetRequest.getEtagHeader();
 
 		//user B updates this resource
-		student.setCityName("Munich");
+		studyTrip.setCityName("Munich2");
 
 		final HeaderMap headersForPutRequestForUserB = HeaderMapUtils.withContentTypeJson();
 		headersForPutRequestForUserB.addHeader(IF_MATCH, initialEtag);
 
-		final RestApiResponse<StudyTrip> responseFromPutRequest = putRequest(headersForPutRequestForUserB, student);
+		final RestApiResponse<StudyTrip> responseFromPutRequest = putRequest(headersForPutRequestForUserB, studyTrip);
 
 		assertEquals(204, responseFromPutRequest.getLastStatusCode());
 
