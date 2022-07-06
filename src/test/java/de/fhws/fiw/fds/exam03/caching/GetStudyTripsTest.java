@@ -39,7 +39,7 @@ public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRes
 		RestApiResponse<StudyTrip> response = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(), getSingleUrl());
 		assertTrue(response.headerExists("X-Proxy-Cache", "MISS"));
 		response = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(), getSingleUrl());
-		assertTrue(response.headerExists("X-Proxy-Cache", "MISS"));
+		assertTrue(response.headerExists("X-Proxy-Cache", "HIT"));
 	}
 
 	@Test public void test_cache_control_single() throws IOException
@@ -52,6 +52,18 @@ public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRes
 	{
 		final RestApiResponse<StudyTrip> response = getCollectionRequest(HeaderMapUtils.withAcceptJson());
 		assertHeaderExists(response, CACHE_CONTROL);
+	}
+
+	@Test public void test_cache_control_single_public_60s() throws IOException
+	{
+		final RestApiResponse<StudyTrip> response = getSingleRequestById(HeaderMapUtils.withAcceptJson(), 2);
+		assertTrue(response.headerExists(CACHE_CONTROL, "no-transform, max-age=60"));
+	}
+
+	@Test public void test_cache_control_collection_no_caching_no_storing() throws IOException
+	{
+		final RestApiResponse<StudyTrip> response = getCollectionRequest(HeaderMapUtils.withAcceptJson());
+		assertTrue(response.headerExists(CACHE_CONTROL, "no-cache, no-store, no-transform"));
 	}
 
 	@Test public void test_conditional_get_304() throws IOException

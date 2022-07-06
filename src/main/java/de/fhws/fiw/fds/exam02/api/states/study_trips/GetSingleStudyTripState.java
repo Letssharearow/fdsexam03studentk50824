@@ -44,7 +44,7 @@ public class GetSingleStudyTripState extends AbstractGetState<StudyTrip>
 
 	@Override protected void defineHttpCaching()
 	{
-		this.responseBuilder.cacheControl(CachingUtils.create30SecondsPrivateCaching());
+		this.responseBuilder.cacheControl(CachingUtils.create60SecondsPublicCaching());
 	}
 
 	@Override protected boolean clientKnowsCurrentModelState(final AbstractModel modelFromDatabase)
