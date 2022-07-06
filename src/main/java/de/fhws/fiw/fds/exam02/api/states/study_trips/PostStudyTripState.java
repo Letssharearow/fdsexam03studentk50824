@@ -1,5 +1,6 @@
 package de.fhws.fiw.fds.exam02.api.states.study_trips;
 
+import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.models.StudyTrip;
 import de.fhws.fiw.fds.sutton.server.api.states.AbstractState;
@@ -15,6 +16,7 @@ public class PostStudyTripState extends AbstractPostState<StudyTrip>
 
 	@Override protected void authorizeRequest()
 	{
+		BearerAuthHelper.accessControl(this.httpServletRequest, "admin");
 
 	}
 

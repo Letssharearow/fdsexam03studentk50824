@@ -2,6 +2,7 @@ package de.fhws.fiw.fds.exam02.api.states.students;
 
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudentRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudentUri;
+import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.models.Student;
 import de.fhws.fiw.fds.sutton.server.api.caching.CachingUtils;
@@ -23,7 +24,7 @@ public class GetSingleStudentState extends AbstractGetState<Student>
 
 	@Override protected void authorizeRequest()
 	{
-
+		BearerAuthHelper.accessControl(this.httpServletRequest, "lecturer", "admin");
 	}
 
 	@Override protected SingleModelResult<Student> loadModel()
@@ -39,7 +40,7 @@ public class GetSingleStudentState extends AbstractGetState<Student>
 
 	@Override protected void defineHttpCaching()
 	{
-		this.responseBuilder.cacheControl(CachingUtils.create30SecondsPrivateCaching());
+		this.responseBuilder.cacheControl(CachingUtils.create30SecondsPrivateMustRevalidateCaching());
 	}
 
 	@Override protected boolean clientKnowsCurrentModelState(final AbstractModel modelFromDatabase)

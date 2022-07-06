@@ -2,6 +2,7 @@ package de.fhws.fiw.fds.exam02.api.states.study_trips;
 
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudyTripRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudyTripUri;
+import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.models.StudyTrip;
 import de.fhws.fiw.fds.exam02.utils.study_trip.StudyTripDateUtils;
@@ -31,7 +32,7 @@ public class GetCollectionStudyTripsState extends AbstractGetCollectionState<Stu
 
 	@Override protected void authorizeRequest()
 	{
-
+		BearerAuthHelper.accessControl(this.httpServletRequest, "lecturer", "admin");
 	}
 
 	@Override protected Response createResponse()

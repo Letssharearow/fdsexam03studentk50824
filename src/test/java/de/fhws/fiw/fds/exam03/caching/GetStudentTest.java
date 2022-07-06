@@ -45,7 +45,7 @@ public class GetStudentTest extends AbstractTest<Student, StudentRestClient>
 	@Test public void test_cache_control_single_private_max_age_30() throws IOException
 	{
 		final RestApiResponse<Student> response = getSingleRequestById(HeaderMapUtils.withAcceptJson(), 2);
-		assertTrue(response.headerExists(CACHE_CONTROL, "private, no-transform, max-age=30"));
+		assertTrue(response.headerExists(CACHE_CONTROL, "private, no-transform, must-revalidate, max-age=30"));
 	}
 
 	@Test public void test_cache_control_collection_no_cache_no_store() throws IOException

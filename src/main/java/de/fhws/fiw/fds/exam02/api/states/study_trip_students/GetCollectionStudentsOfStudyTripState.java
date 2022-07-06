@@ -2,6 +2,7 @@ package de.fhws.fiw.fds.exam02.api.states.study_trip_students;
 
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudyTripStudentRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudyTripStudentUri;
+import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.database.spi.IStudyTripStudentDao;
 import de.fhws.fiw.fds.exam02.models.Student;
@@ -28,7 +29,7 @@ public class GetCollectionStudentsOfStudyTripState extends AbstractGetCollection
 
 	@Override protected void authorizeRequest()
 	{
-
+		BearerAuthHelper.accessControl(this.httpServletRequest, "lecturer", "admin");
 	}
 
 	@Override protected void defineHttpResponseBody()
@@ -57,7 +58,7 @@ public class GetCollectionStudentsOfStudyTripState extends AbstractGetCollection
 
 	@Override protected void configureState()
 	{
-		this.responseBuilder.cacheControl(CachingUtils.createNoCacheNoStoreCaching());
+		this.responseBuilder.cacheControl(CachingUtils.create30SecondsPrivateMustRevalidateCaching());
 	}
 
 	public static class AllStudents extends AbstractRelationQuery<Student>

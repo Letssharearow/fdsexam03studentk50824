@@ -1,5 +1,6 @@
 package de.fhws.fiw.fds.exam02.api.states.students;
 
+import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
 import de.fhws.fiw.fds.sutton.server.api.caching.CachingUtils;
 import de.fhws.fiw.fds.sutton.server.api.queries.AbstractQuery;
 import de.fhws.fiw.fds.sutton.server.api.states.AbstractState;
@@ -25,7 +26,7 @@ public class GetCollectionStudentsState extends AbstractGetCollectionState<Stude
 
 	@Override protected void authorizeRequest()
 	{
-
+		BearerAuthHelper.accessControl(this.httpServletRequest, "lecturer", "admin");
 	}
 
 	@Override protected void defineHttpResponseBody()

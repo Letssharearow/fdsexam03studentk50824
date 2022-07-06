@@ -1,5 +1,6 @@
 package de.fhws.fiw.fds.exam02.api.states.students;
 
+import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.models.Student;
 import de.fhws.fiw.fds.sutton.server.api.states.AbstractState;
@@ -15,7 +16,7 @@ public class PostStudentState extends AbstractPostState<Student>
 
 	@Override protected void authorizeRequest()
 	{
-
+		BearerAuthHelper.accessControl(this.httpServletRequest, "admin");
 	}
 
 	@Override protected NoContentResult saveModel()

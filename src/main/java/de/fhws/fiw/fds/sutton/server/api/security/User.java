@@ -49,6 +49,7 @@ public class User extends AbstractModel
 
 		returnValue.id = this.id;
 		returnValue.role = this.role;
+		returnValue.name = this.name;
 
 		return returnValue;
 	}

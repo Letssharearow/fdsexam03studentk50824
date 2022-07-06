@@ -75,6 +75,16 @@ public class CachingUtils
 		return cacheControl;
 	}
 
+	public static CacheControl create30SecondsPrivateMustRevalidateCaching()
+	{
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setPrivate(true);
+		cacheControl.setMustRevalidate(true);
+		cacheControl.setMaxAge(30);
+
+		return cacheControl;
+	}
+
 	public static CacheControl createAcceptCache()
 	{
 		final CacheControl cacheControl = new CacheControl();
