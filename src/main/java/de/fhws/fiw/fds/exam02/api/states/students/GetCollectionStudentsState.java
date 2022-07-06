@@ -42,7 +42,7 @@ public class GetCollectionStudentsState extends AbstractGetCollectionState<Stude
 
 	@Override protected void configureState()
 	{
-		this.responseBuilder.cacheControl(CachingUtils.create2SecondsPublicCaching());
+		this.responseBuilder.cacheControl(CachingUtils.createNoCacheNoStoreCaching());
 	}
 
 	public static class AllStudents extends AbstractQuery<Student>

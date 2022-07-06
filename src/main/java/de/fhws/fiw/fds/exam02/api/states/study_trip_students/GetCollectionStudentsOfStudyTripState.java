@@ -57,15 +57,7 @@ public class GetCollectionStudentsOfStudyTripState extends AbstractGetCollection
 
 	@Override protected void configureState()
 	{
-		if (DaoFactory.getInstance().getStudyTripDao().readById(this.primaryId).getResult().getEndDate()
-			.isAfter(LocalDate.now()))
-		{
-			addNeverExpireHeader(responseBuilder);
-		}
-		else
-		{
-			this.responseBuilder.cacheControl(CachingUtils.create2SecondsPublicCaching());
-		}
+		this.responseBuilder.cacheControl(CachingUtils.createNoCacheNoStoreCaching());
 	}
 
 	public static class AllStudents extends AbstractRelationQuery<Student>

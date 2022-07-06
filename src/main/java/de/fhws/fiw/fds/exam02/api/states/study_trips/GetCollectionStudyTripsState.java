@@ -54,7 +54,7 @@ public class GetCollectionStudyTripsState extends AbstractGetCollectionState<Stu
 
 	@Override protected void configureState()
 	{
-		this.responseBuilder.cacheControl(CachingUtils.create2SecondsPublicCaching());
+		this.responseBuilder.cacheControl(CachingUtils.createNoCacheNoStoreCaching());
 	}
 
 	public static class ByAttributes extends AbstractQuery<StudyTrip>

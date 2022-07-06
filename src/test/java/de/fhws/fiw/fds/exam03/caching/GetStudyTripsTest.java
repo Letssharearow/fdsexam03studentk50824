@@ -14,28 +14,28 @@ import static org.junit.Assert.*;
 public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRestClient>
 {
 
-	@Test public void testCollectionCaching() throws IOException, InterruptedException
+	@Test public void testGetStudyTripCollectionCaching() throws IOException, InterruptedException
 	{
 		RestApiResponse<StudyTrip> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
 			defineCacheUrl() + "studytrips");
 		assertTrue(response.headerExists("X-Proxy-Cache", "MISS"));
 		response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(), defineCacheUrl() + "studytrips");
 		assertTrue(response.headerExists("X-Proxy-Cache", "HIT"));
-		try
-		{
-			Thread.sleep(2500);
-			response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(), defineCacheUrl() + "studytrips");
-			assertTrue(response.headerExists("X-Proxy-Cache", "EXPIRED"));
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		assertEquals(200, response.getLastStatusCode());
 	}
 
-	//TODO singleCaching
-	//TODO expire Date Max value
+	@Test public void testGetSingleStudyTripCaching() throws IOException, InterruptedException
+	{
+		RestApiResponse<StudyTrip> response = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(),
+			defineCacheUrl() + "studytrips/2");
+		assertTrue(response.headerExists("X-Proxy-Cache", "MISS"));
+		response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(), defineCacheUrl() + "studytrips");
+		assertTrue(response.headerExists("X-Proxy-Cache", "HIT"));
+	}
+
+	//TODO single
+	//TODO Cache control existsxists
+	//TODO conditional get
+	//TODO conditional put
 
 	@Override protected StudyTripRestClient newRestClient(HeaderMap headers)
 	{
