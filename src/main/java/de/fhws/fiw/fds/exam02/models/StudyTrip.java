@@ -125,7 +125,7 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 		return selfLink;
 	}
 
-	public void setSelfLink(final Link selfLink)
+	@JsonConverter(JsonServerLinkConverter.class) public void setSelfLink(final Link selfLink)
 	{
 		this.selfLink = selfLink;
 	}
