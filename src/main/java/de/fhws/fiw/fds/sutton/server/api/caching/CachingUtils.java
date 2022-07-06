@@ -91,4 +91,12 @@ public class CachingUtils
 
 		return cacheControl;
 	}
+
+	public static CacheControl createNoCacheCaching()
+	{
+		final CacheControl cacheControl = new CacheControl();
+		cacheControl.setNoCache(true);
+
+		return cacheControl;
+	}
 }

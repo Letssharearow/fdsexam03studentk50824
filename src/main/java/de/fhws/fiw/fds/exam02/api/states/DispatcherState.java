@@ -5,9 +5,11 @@ import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudyTripRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudentUri;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudyTripUri;
 import de.fhws.fiw.fds.sutton.server.api.caching.CachingUtils;
+import de.fhws.fiw.fds.sutton.server.api.caching.EtagGenerator;
 import de.fhws.fiw.fds.sutton.server.api.states.AbstractState;
 import de.fhws.fiw.fds.sutton.server.api.states.get.AbstractGetDispatcherState;
 
+import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,8 +27,6 @@ public class DispatcherState extends AbstractGetDispatcherState
 		defineSelfLink();
 
 		defineTransitionLinks();
-
-		StateHelper.addNeverExpireHeader(this.responseBuilder);
 
 		return this.responseBuilder.build();
 	}

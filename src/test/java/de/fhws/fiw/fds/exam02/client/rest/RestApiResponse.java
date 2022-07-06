@@ -1,5 +1,7 @@
 package de.fhws.fiw.fds.exam02.client.rest;
 
+import de.fhws.fiw.fds.exam02.client.rest.resources.AbstractResourceRestClient;
+import de.fhws.fiw.fds.exam02.tests.models.StudyTrip;
 import de.fhws.fiw.fds.sutton.client.Link;
 import de.fhws.fiw.fds.exam02.tests.models.AbstractModel;
 import okhttp3.Headers;
