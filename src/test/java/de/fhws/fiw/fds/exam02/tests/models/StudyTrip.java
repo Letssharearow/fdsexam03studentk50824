@@ -23,10 +23,6 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 
 	private String countryName;
 
-	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/studytrips/${instance.id}", rel = "getAllStudents", title = "getAllStudents", type = "application/json") private Link students;
-
-	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/studytrips/${instance.id}", rel = "self", title = "self", type = "application/json") private Link selfLink;
-
 	public StudyTrip()
 	{
 
@@ -103,29 +99,9 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 		this.countryName = countryName;
 	}
 
-	@JsonConverter(JsonServerLinkConverter.class) public Link getStudents()
-	{
-		return students;
-	}
-
-	@JsonConverter(JsonServerLinkConverter.class) public void setStudents(final Link students)
-	{
-		this.students = students;
-	}
-
-	@JsonConverter(JsonServerLinkConverter.class) public Link getSelfLink()
-	{
-		return selfLink;
-	}
-
-	public void setSelfLink(final Link selfLink)
-	{
-		this.selfLink = selfLink;
-	}
-
 	@Override public String toString()
 	{
-		return "StudyTrip {" + "id:" + this.id + ", name: '" + this.name + '\'' + ", firstDate:" + this.startDate
+		return "StudyTrip {" + "id:" + this.id + ", name: '" + this.name + '\'' + ", startDate:" + this.startDate
 			+ ", lastDate: " + this.endDate + ", companyName: '" + this.companyName + '\'' + ", cityName: '"
 			+ this.cityName + '\'' + ", countryName: '" + this.countryName + '\'' + '}';
 	}
