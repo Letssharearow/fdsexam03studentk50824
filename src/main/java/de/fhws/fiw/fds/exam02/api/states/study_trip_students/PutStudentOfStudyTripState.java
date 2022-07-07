@@ -2,7 +2,7 @@ package de.fhws.fiw.fds.exam02.api.states.study_trip_students;
 
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudyTripStudentRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudyTripStudentUri;
-import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
+import de.fhws.fiw.fds.exam02.api.security.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.models.Student;
 import de.fhws.fiw.fds.sutton.server.api.caching.EtagGenerator;

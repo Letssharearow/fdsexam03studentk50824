@@ -2,8 +2,7 @@ package de.fhws.fiw.fds.exam02.api.states.study_trips;
 
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudyTripRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudyTripUri;
-import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
-import de.fhws.fiw.fds.exam02.api.states.study_trip_students.GetCollectionStudentsOfStudyTripState;
+import de.fhws.fiw.fds.exam02.api.security.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.database.spi.IStudyTripStudentDao;
 import de.fhws.fiw.fds.exam02.models.Student;
@@ -15,7 +14,6 @@ import de.fhws.fiw.fds.sutton.server.api.queries.AbstractQuery;
 import de.fhws.fiw.fds.sutton.server.api.states.AbstractState;
 import de.fhws.fiw.fds.sutton.server.api.states.get.AbstractGetCollectionState;
 import de.fhws.fiw.fds.sutton.server.database.results.CollectionModelResult;
-import org.apache.commons.lang.StringUtils;
 
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
@@ -96,7 +94,7 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 		private static StudyTripReport fromStudyTrip(StudyTrip value, int numberOfStudens)
 		{
 			long daysBetween = DAYS.between(value.getStartDate(), value.getEndDate());
-			return new StudyTripReport(value.getCityName(), value.getCountryName(), numberOfStudens, (int) daysBetween);
+			return new StudyTripReport(value.getCityName(), value.getCountryName(), (int) daysBetween, numberOfStudens);
 		}
 
 		protected Predicate<StudyTrip> byAttributes()

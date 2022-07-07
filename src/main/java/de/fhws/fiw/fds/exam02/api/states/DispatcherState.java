@@ -30,6 +30,8 @@ public class DispatcherState extends AbstractGetDispatcherState
 
 		defineTransitionLinks();
 
+		this.responseBuilder.header("Authentication", "Bearer Token");
+
 		return this.responseBuilder.build();
 	}
 

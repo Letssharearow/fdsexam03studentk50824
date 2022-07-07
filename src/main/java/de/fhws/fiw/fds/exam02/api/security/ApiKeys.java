@@ -1,4 +1,4 @@
-package de.fhws.fiw.fds.exam02.api.states;
+package de.fhws.fiw.fds.exam02.api.security;
 
 import javax.ws.rs.NotAuthorizedException;
 import java.util.Collection;

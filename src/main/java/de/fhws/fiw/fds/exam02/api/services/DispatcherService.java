@@ -1,7 +1,7 @@
 package de.fhws.fiw.fds.exam02.api.services;
 
-import de.fhws.fiw.fds.exam02.api.states.BasicAuthHelper;
-import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
+import de.fhws.fiw.fds.exam02.api.security.BasicAuthHelper;
+import de.fhws.fiw.fds.exam02.api.security.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.api.states.DispatcherState;
 import de.fhws.fiw.fds.sutton.server.api.security.User;
 import de.fhws.fiw.fds.sutton.server.api.services.AbstractService;

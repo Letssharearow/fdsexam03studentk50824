@@ -1,11 +1,10 @@
 package de.fhws.fiw.fds.exam02.api.states.students;
 
-import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
+import de.fhws.fiw.fds.exam02.api.security.BearerAuthHelper;
 import de.fhws.fiw.fds.sutton.server.api.caching.CachingUtils;
 import de.fhws.fiw.fds.sutton.server.api.queries.AbstractQuery;
 import de.fhws.fiw.fds.sutton.server.api.states.AbstractState;
 import de.fhws.fiw.fds.sutton.server.api.states.get.AbstractGetCollectionState;
-import de.fhws.fiw.fds.sutton.server.database.DatabaseException;
 import de.fhws.fiw.fds.sutton.server.database.results.CollectionModelResult;
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudentRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudentUri;

@@ -2,7 +2,7 @@ package de.fhws.fiw.fds.exam02.api.states.study_trips;
 
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudyTripRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudyTripUri;
-import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
+import de.fhws.fiw.fds.exam02.api.security.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.models.StudyTrip;
 import de.fhws.fiw.fds.sutton.server.api.caching.CachingUtils;
@@ -14,9 +14,6 @@ import de.fhws.fiw.fds.sutton.server.models.AbstractModel;
 
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Response;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 import static de.fhws.fiw.fds.exam02.api.states.StateHelper.*;
 

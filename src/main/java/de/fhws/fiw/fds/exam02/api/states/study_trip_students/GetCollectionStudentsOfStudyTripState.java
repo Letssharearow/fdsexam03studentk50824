@@ -2,7 +2,7 @@ package de.fhws.fiw.fds.exam02.api.states.study_trip_students;
 
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudyTripStudentRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudyTripStudentUri;
-import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
+import de.fhws.fiw.fds.exam02.api.security.BearerAuthHelper;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
 import de.fhws.fiw.fds.exam02.database.spi.IStudyTripStudentDao;
 import de.fhws.fiw.fds.exam02.models.Student;
@@ -13,12 +13,9 @@ import de.fhws.fiw.fds.sutton.server.api.states.get.AbstractGetCollectionRelatio
 import de.fhws.fiw.fds.sutton.server.database.results.CollectionModelResult;
 
 import javax.ws.rs.core.GenericEntity;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
-import static de.fhws.fiw.fds.exam02.api.states.StateHelper.addNeverExpireHeader;
 
 public class GetCollectionStudentsOfStudyTripState extends AbstractGetCollectionRelationState<Student>
 {
