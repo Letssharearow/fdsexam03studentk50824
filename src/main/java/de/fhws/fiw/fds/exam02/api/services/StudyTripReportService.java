@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Path("studytripReport") public class StudyTripReportService extends AbstractService
 {
 
-	@GET @Produces({ MediaType.APPLICATION_JSON, "text/csv", "text/plain" }) public Response getStudyTripReport(
+	@GET @Produces({ MediaType.APPLICATION_JSON, "text/csv" }) public Response getStudyTripReport(
 		@DefaultValue("") @QueryParam("startDate") final LocalDate startDate,
 		@DefaultValue("") @QueryParam("endDate") final LocalDate endDate)
 	{
