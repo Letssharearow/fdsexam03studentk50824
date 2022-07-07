@@ -33,7 +33,7 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 
 	@Override protected void authorizeRequest()
 	{
-		//TODO BearerAuthHelper.accessControl(this.httpServletRequest, "lecturer", "admin");
+		BearerAuthHelper.accessControl(this.httpServletRequest, "admin");
 	}
 
 	@Override protected Response createResponse()
