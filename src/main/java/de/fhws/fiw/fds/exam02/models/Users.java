@@ -49,6 +49,20 @@ public class Users
 		}
 	}
 
+	public User accessControlOrganizer(final String id, final String organizer, final String... roles)
+	{
+		User user = this.mapIdToUser.get(id);
+		if (user == null)
+		{
+			throw new NotAuthorizedException("");
+		}
+		else
+		{
+			checkRolesOrOrganizer(user, organizer, roles);
+			return user.cloneWithoutSecret();
+		}
+	}
+
 	public User accessControl(final String id, final String password, final String... roles)
 	{
 		if (this.mapIdToUser.containsKey(id) == false)
@@ -74,6 +88,20 @@ public class Users
 			if (Arrays.stream(roles).noneMatch(role -> user.getRole().equalsIgnoreCase(role)))
 			{
 				throw new ForbiddenException("");
+			}
+		}
+	}
+
+	private void checkRolesOrOrganizer(final User user, final String organizer, final String... roles)
+	{
+		if (roles.length > 0)
+		{
+			if (Arrays.stream(roles).noneMatch(role -> user.getRole().equalsIgnoreCase(role)))
+			{
+				if (!user.getName().equals(organizer))
+				{
+					throw new ForbiddenException("");
+				}
 			}
 		}
 	}

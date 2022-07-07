@@ -30,6 +30,16 @@ public class GenericRestClient<M extends AbstractModel>
 			headers);
 	}
 
+	public GenericRestClient(final HeaderMap headers, String username, String password)
+	{
+		this.webClient = new GenericWebClient(username, password, headers);
+	}
+
+	public GenericRestClient(final HeaderMap headers, String username, String password, boolean getToken)
+	{
+		this.webClient = new GenericWebClient(username, password, headers, getToken);
+	}
+
 	public RestApiResponse<M> sendGetSingleRequest(final String url) throws IOException
 	{
 		return toGetSingleResourceRestApiResponse(this.webClient.sendGetSingleRequest(url));

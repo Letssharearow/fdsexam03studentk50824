@@ -19,9 +19,11 @@ package de.fhws.fiw.fds.exam02.client.web;
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
 import de.fhws.fiw.fds.exam02.client.auth.BasicAuthInterceptor;
+import de.fhws.fiw.fds.exam02.client.auth.BearerTokenAuthInterceptor;
 import de.fhws.fiw.fds.exam02.tests.models.AbstractModel;
 import de.fhws.fiw.fds.exam02.tests.util.headers.HeaderMap;
 import okhttp3.*;
+import org.apache.http.client.methods.RequestBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,7 +41,7 @@ public class GenericWebClient<T extends AbstractModel>
 
 	public GenericWebClient()
 	{
-		this("", "");
+		this("idAdmin", "passwordAdmin");
 	}
 
 	public GenericWebClient(final String userName, final String password)
@@ -51,8 +53,24 @@ public class GenericWebClient<T extends AbstractModel>
 	{
 		this.headers = headers;
 
-		this.client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor(userName, password)).build();
+		this.client = new OkHttpClient.Builder().addInterceptor(new BearerTokenAuthInterceptor(userName, password))
+			.build();
+		this.genson = new Genson();
+	}
 
+	public GenericWebClient(final String userName, final String password, final HeaderMap headers, boolean getToken)
+	{
+		this.headers = headers;
+
+		if (getToken)
+		{
+			this.client = new OkHttpClient.Builder().addInterceptor(new BearerTokenAuthInterceptor(userName, password))
+				.build();
+		}
+		else
+		{
+			this.client = new OkHttpClient.Builder().build();
+		}
 		this.genson = new Genson();
 	}
 

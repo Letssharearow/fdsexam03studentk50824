@@ -18,6 +18,16 @@ public abstract class AbstractResourceRestClient<R extends AbstractModel>
 		this.restClient = new GenericRestClient(headers);
 	}
 
+	public AbstractResourceRestClient(final HeaderMap headers, String username, String password)
+	{
+		this.restClient = new GenericRestClient(headers, username, password);
+	}
+
+	public AbstractResourceRestClient(final HeaderMap headers, String username, String password, boolean getToken)
+	{
+		this.restClient = new GenericRestClient(headers, username, password, getToken);
+	}
+
 	protected abstract String defineUrl();
 
 	public RestApiResponse<R> loadSingleResourceByUrl(final String url) throws IOException

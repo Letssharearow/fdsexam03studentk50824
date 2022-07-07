@@ -12,22 +12,22 @@ public class InitializeDatabase
 {
 	private final List<StudyTrip> studyTrips = Arrays.asList(
 		new StudyTrip("India Gateway Program 2022", LocalDate.of(2022, 2, 15), LocalDate.of(2022, 3, 1),
-			"Christ University", "Bangalore", "India"),
+			"Christ University", "Bangalore", "India", "idLecturer"),
 
 		new StudyTrip("Indienreise 2000", LocalDate.of(2000, 1, 10), LocalDate.of(2000, 2, 10), "University of Mumbai",
-			"Mumbai", "India"),
+			"Mumbai", "India", "idLecturer"),
 
 		new StudyTrip("Frankreich 2020", LocalDate.of(2020, 6, 1), LocalDate.of(2020, 6, 30), "FHWS", "Paris",
-			"Frankreich"),
+			"Frankreich", "idLecturer"),
 
 		new StudyTrip("Würzburg 2021", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 30), "FHWS", "Würzburg",
-			"Deutschland"),
+			"Deutschland", "noLecturer"),
 
 		new StudyTrip("Würzburg 2022", LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 30), "FHWS", "Würzburg",
-			"Deutschland"),
+			"Deutschland", "noLecturer"),
 
 		new StudyTrip("Schweinfurt 2021", LocalDate.of(2021, 2, 1), LocalDate.of(2021, 2, 25), "FHWS", "Schweinfurt",
-			"Deutschland"));
+			"Deutschland", "noLecturer"));
 
 	private final List<Student> students = Arrays.asList(
 		new Student("Max", "Mustermann", "max.mustermann@fhws.de", "BIN", 2, 1111),

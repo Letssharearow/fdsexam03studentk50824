@@ -16,6 +16,18 @@ public class BearerAuthHelper
 
 	public static User accessControl(final HttpServletRequest request, final String... roles)
 	{
+		return Users.getInstance().accessControl(getSubject(request, roles), roles);
+
+	}
+
+	public static User accessControlOrganizer(final HttpServletRequest request, final String organizer,
+		final String... roles)
+	{
+		return Users.getInstance().accessControlOrganizer(getSubject(request, roles), organizer, roles);
+	}
+
+	public static String getSubject(final HttpServletRequest request, final String... roles)
+	{
 		final String authHeader = request != null ? request.getHeader(HttpHeaders.AUTHORIZATION) : null;
 
 		if (authHeader != null)
@@ -23,12 +35,9 @@ public class BearerAuthHelper
 			if (authHeader.toLowerCase().startsWith("bearer "))
 			{
 				final String token = authHeader.replaceFirst("(?i)bearer ", "");
-				final String subject = JsonWebTokenHelper.verifyJsonWebToken(token);
-
-				return Users.getInstance().accessControl(subject, roles);
+				return JsonWebTokenHelper.verifyJsonWebToken(token);
 			}
 		}
-
 		throw new NotAuthorizedException("");
 	}
 }

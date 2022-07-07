@@ -23,13 +23,15 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 
 	private String countryName;
 
+	private String organizer;
+
 	public StudyTrip()
 	{
 
 	}
 
-	public StudyTrip(final String name, final LocalDate startDate, final LocalDate endDate, final String companyName,
-		final String cityName, final String countryName)
+	public StudyTrip(String name, LocalDate startDate, LocalDate endDate, String companyName, String cityName,
+		String countryName, String organizer)
 	{
 		this.name = name;
 		this.startDate = startDate;
@@ -37,6 +39,7 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 		this.companyName = companyName;
 		this.cityName = cityName;
 		this.countryName = countryName;
+		this.organizer = organizer;
 	}
 
 	public String getName()
@@ -47,6 +50,16 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 	public void setName(final String name)
 	{
 		this.name = name;
+	}
+
+	public String getOrganizer()
+	{
+		return organizer;
+	}
+
+	public void setOrganizer(String organizer)
+	{
+		this.organizer = organizer;
 	}
 
 	@JsonConverter(JsonDateTimeConverter.class) public LocalDate getStartDate()

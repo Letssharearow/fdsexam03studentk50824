@@ -24,7 +24,7 @@ public class PutStudyTripState extends AbstractPutState<StudyTrip>
 
 	@Override protected void authorizeRequest()
 	{
-		BearerAuthHelper.accessControl(this.httpServletRequest, "admin");
+		BearerAuthHelper.accessControlOrganizer(this.httpServletRequest, this.modelToUpdate.getOrganizer(), "admin");
 	}
 
 	@Override protected SingleModelResult<StudyTrip> loadModel()

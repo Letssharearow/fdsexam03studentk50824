@@ -14,6 +14,16 @@ public class StudentRestClient extends AbstractResourceRestClient<Student>
 		super(headers);
 	}
 
+	public StudentRestClient(final HeaderMap headers, String username, String password)
+	{
+		super(headers, username, password);
+	}
+
+	public StudentRestClient(final HeaderMap headers, String username, String password, boolean getToken)
+	{
+		super(headers, username, password, getToken);
+	}
+
 	@Override protected String defineUrl()
 	{
 		return IBaseUrl.BASE_URL + "students";

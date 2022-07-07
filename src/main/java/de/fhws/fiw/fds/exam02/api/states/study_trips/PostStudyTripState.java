@@ -16,7 +16,7 @@ public class PostStudyTripState extends AbstractPostState<StudyTrip>
 
 	@Override protected void authorizeRequest()
 	{
-		BearerAuthHelper.accessControl(this.httpServletRequest, "admin");
+		BearerAuthHelper.accessControl(this.httpServletRequest, "lecturer", "admin");
 
 	}
 

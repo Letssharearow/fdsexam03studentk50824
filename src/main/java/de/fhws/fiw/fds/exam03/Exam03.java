@@ -18,6 +18,7 @@ package de.fhws.fiw.fds.exam03;
 
 import de.fhws.fiw.fds.exam02.api.services.DispatcherService;
 import de.fhws.fiw.fds.exam02.api.services.StudentService;
+import de.fhws.fiw.fds.exam02.api.services.StudyTripReportService;
 import de.fhws.fiw.fds.exam02.api.services.StudyTripService;
 import de.fhws.fiw.fds.exam02.utils.date.LocalDateConverterProvider;
 import de.fhws.fiw.fds.sutton.server.api.AbstractApplication;
@@ -41,6 +42,7 @@ import java.util.Set;
 		returnValue.add(DispatcherService.class);
 		returnValue.add(StudyTripService.class);
 		returnValue.add(StudentService.class);
+		returnValue.add(StudyTripReportService.class);
 
 		return returnValue;
 	}

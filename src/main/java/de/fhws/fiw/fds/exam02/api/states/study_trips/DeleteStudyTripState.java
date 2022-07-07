@@ -19,7 +19,8 @@ public class DeleteStudyTripState extends AbstractDeleteState<StudyTrip>
 
 	@Override protected void authorizeRequest()
 	{
-		BearerAuthHelper.accessControl(this.httpServletRequest, "admin");
+		BearerAuthHelper.accessControlOrganizer(this.httpServletRequest, this.modelToDelete.getResult().getOrganizer(),
+			"admin");
 	}
 
 	@Override protected SingleModelResult<StudyTrip> loadModel()

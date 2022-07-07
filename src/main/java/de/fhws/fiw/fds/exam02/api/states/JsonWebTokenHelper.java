@@ -10,7 +10,7 @@ public class JsonWebTokenHelper
 {
 	public static String createJsonWebToken(final String subject)
 	{
-		return Jwts.builder().setSubject(subject).setExpiration(timeIn30Minutes())
+		return Jwts.builder().setSubject(subject).setExpiration(timeIn300Minutes())
 			.signWith(SignatureAlgorithm.HS512, MyKeyGenerator.getInstance().getKey()).compact();
 	}
 
@@ -34,6 +34,14 @@ public class JsonWebTokenHelper
 		final Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		calendar.add(Calendar.MINUTE, 30);
+		return calendar.getTime();
+	}
+
+	private static Date timeIn300Minutes()
+	{
+		final Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.MINUTE, 300);
 		return calendar.getTime();
 	}
 }

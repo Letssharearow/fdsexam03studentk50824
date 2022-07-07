@@ -14,6 +14,11 @@ public class StudyTripRestClient extends AbstractResourceRestClient<StudyTrip>
 		super(headers);
 	}
 
+	public StudyTripRestClient(final HeaderMap headers, String username, String password)
+	{
+		super(headers, username, password);
+	}
+
 	@Override protected String defineUrl()
 	{
 		return IBaseUrl.BASE_URL + "studytrips";

@@ -25,17 +25,33 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 
 	private String countryName;
 
+	private String organizer;
+
 	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "studytrips/${instance.id}/students", rel = "getStudentsOfStudyTrip", title = "students", type = "application/json") private Link students;
 
 	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/studytrips/${instance.id}", rel = "self", title = "self", type = "application/json") private Link selfLink;
 
 	public StudyTrip()
 	{
-
 	}
 
-	public StudyTrip(final String name, final LocalDate startDate, final LocalDate endDate, final String companyName,
-		final String cityName, final String countryName)
+	public static Comparator<StudyTrip> getComparator()
+	{
+		return Comparator.comparing(StudyTrip::getStartDate);
+	}
+
+	public String getOrganizer()
+	{
+		return organizer;
+	}
+
+	public void setOrganizer(String organizer)
+	{
+		this.organizer = organizer;
+	}
+
+	public StudyTrip(String name, LocalDate startDate, LocalDate endDate, String companyName, String cityName,
+		String countryName, String organizer)
 	{
 		this.name = name;
 		this.startDate = startDate;
@@ -43,11 +59,7 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 		this.companyName = companyName;
 		this.cityName = cityName;
 		this.countryName = countryName;
-	}
-
-	public static Comparator<StudyTrip> getComparator()
-	{
-		return Comparator.comparing(StudyTrip::getStartDate);
+		this.organizer = organizer;
 	}
 
 	public String getName()

@@ -176,20 +176,4 @@ public abstract class CachingTestHelper<Model extends AbstractModel, Client exte
 
 	public abstract Model changeRessource(Model ressource, String newData);
 
-	public static void main(String[] args)
-	{
-		CachingTestHelper helper = new CachingTestHelper()
-		{
-			@Override public AbstractModel changeRessource(AbstractModel ressource, String newData)
-			{
-				return null;
-			}
-
-			@Override protected AbstractResourceRestClient newRestClient(HeaderMap headers)
-			{
-				return null;
-			}
-		};
-		helper.emptyCache();
-	}
 }
