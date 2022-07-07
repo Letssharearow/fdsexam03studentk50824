@@ -60,24 +60,14 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 
 	public static class ByAttributes extends AbstractQuery<StudyTrip>
 	{
-		protected final String name;
-
 		protected final LocalDate intervalStart;
 
 		protected final LocalDate intervalEnd;
 
-		protected final String cityName;
-
-		protected final String countryName;
-
-		public ByAttributes(final String name, final LocalDate intervalStart, final LocalDate intervalEnd,
-			final String cityName, final String countryName)
+		public ByAttributes(final LocalDate intervalStart, final LocalDate intervalEnd)
 		{
-			this.name = name;
 			this.intervalStart = intervalStart;
 			this.intervalEnd = intervalEnd;
-			this.cityName = cityName;
-			this.countryName = countryName;
 		}
 
 		@Override protected CollectionModelResult<StudyTrip> doExecuteQuery()
@@ -93,12 +83,7 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 
 		protected Predicate<StudyTrip> byAttributes()
 		{
-			return s -> matchName(s) && matchDate(s) && matchCity(s) && matchCountry(s);
-		}
-
-		private boolean matchName(final StudyTrip studyTrip)
-		{
-			return StringUtils.isEmpty(this.name) || StringUtils.containsIgnoreCase(studyTrip.getName(), this.name);
+			return this::matchDate;
 		}
 
 		private boolean matchDate(final StudyTrip studyTrip)
@@ -112,18 +97,6 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 			}
 
 			return isMatch;
-		}
-
-		private boolean matchCity(final StudyTrip studyTrip)
-		{
-			return StringUtils.isEmpty(this.cityName) || StringUtils.containsIgnoreCase(studyTrip.getCityName(),
-				this.cityName);
-		}
-
-		private boolean matchCountry(final StudyTrip studyTrip)
-		{
-			return StringUtils.isEmpty(this.countryName) || StringUtils.containsIgnoreCase(studyTrip.getCountryName(),
-				this.countryName);
 		}
 	}
 
