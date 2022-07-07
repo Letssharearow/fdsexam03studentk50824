@@ -1,6 +1,7 @@
 package de.fhws.fiw.fds.exam02.models;
 
 import com.owlike.genson.annotation.JsonConverter;
+import com.owlike.genson.annotation.JsonIgnore;
 import de.fhws.fiw.fds.sutton.server.api.converter.JsonServerLinkConverter;
 import de.fhws.fiw.fds.sutton.server.api.converter.XmlServerLinkConverter;
 import de.fhws.fiw.fds.sutton.server.models.AbstractModel;
@@ -52,6 +53,11 @@ public class Student extends AbstractModel implements Serializable, Cloneable
 	public static Comparator<Student> getComparator()
 	{
 		return Comparator.comparing(Student::getLastName).thenComparing(Student::getFirstName);
+	}
+
+	@JsonIgnore(serialize = true) @Override public long getId()
+	{
+		return this.id;
 	}
 
 	public String getFirstName()

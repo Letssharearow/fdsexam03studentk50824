@@ -26,7 +26,7 @@ public abstract class AbstractModel implements Serializable, Cloneable
 
 	private long primaryId;
 
-	public long getId()
+	@JsonIgnore public long getId()
 	{
 		return this.id;
 	}

@@ -41,9 +41,9 @@ public abstract class AbstractDeleteState<T extends AbstractModel> extends Abstr
 	{
 		configureState();
 
-		authorizeRequest();
-
 		this.modelToDelete = loadModel();
+		
+		authorizeRequest();
 
 		if (this.modelToDelete.isEmpty())
 		{

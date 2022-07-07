@@ -3,8 +3,12 @@ package de.fhws.fiw.fds.exam02.api.states.study_trips;
 import de.fhws.fiw.fds.exam02.api.hypermedia.rel_types.IStudyTripRelTypes;
 import de.fhws.fiw.fds.exam02.api.hypermedia.uris.IStudyTripUri;
 import de.fhws.fiw.fds.exam02.api.states.BearerAuthHelper;
+import de.fhws.fiw.fds.exam02.api.states.study_trip_students.GetCollectionStudentsOfStudyTripState;
 import de.fhws.fiw.fds.exam02.database.DaoFactory;
+import de.fhws.fiw.fds.exam02.database.spi.IStudyTripStudentDao;
+import de.fhws.fiw.fds.exam02.models.Student;
 import de.fhws.fiw.fds.exam02.models.StudyTrip;
+import de.fhws.fiw.fds.exam02.models.StudyTripReport;
 import de.fhws.fiw.fds.exam02.utils.study_trip.StudyTripDateUtils;
 import de.fhws.fiw.fds.sutton.server.api.caching.CachingUtils;
 import de.fhws.fiw.fds.sutton.server.api.queries.AbstractQuery;
@@ -16,14 +20,13 @@ import org.apache.commons.lang.StringUtils;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static de.fhws.fiw.fds.exam02.api.states.StateHelper.addVaryHeader;
+import static java.time.temporal.ChronoUnit.DAYS;
 
-public class GetCollectionStudyTripReportState extends AbstractGetCollectionState<StudyTrip>
+public class GetCollectionStudyTripReportState extends AbstractGetCollectionState<StudyTripReport>
 {
 	public GetCollectionStudyTripReportState(final Builder builder)
 	{
@@ -43,7 +46,7 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 
 	@Override protected void defineHttpResponseBody()
 	{
-		this.responseBuilder.entity(new GenericEntity<Collection<StudyTrip>>(this.result.getResult())
+		this.responseBuilder.entity(new GenericEntity<Collection<StudyTripReport>>(this.result.getResult())
 		{
 		});
 	}
@@ -58,7 +61,7 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 		this.responseBuilder.cacheControl(CachingUtils.createNoCacheNoStoreCaching());
 	}
 
-	public static class ByAttributes extends AbstractQuery<StudyTrip>
+	public static class ByAttributes extends AbstractQuery<StudyTripReport>
 	{
 		protected final LocalDate intervalStart;
 
@@ -70,15 +73,30 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 			this.intervalEnd = intervalEnd;
 		}
 
-		@Override protected CollectionModelResult<StudyTrip> doExecuteQuery()
+		@Override protected CollectionModelResult<StudyTripReport> doExecuteQuery()
 		{
 			final Collection<StudyTrip> studyTripsFromDb = DaoFactory.getInstance().getStudyTripDao()
 				.readByPredicate(byAttributes()).getResult();
 
-			final List<StudyTrip> sortedStudyTrips = new LinkedList<>(studyTripsFromDb);
-			sortedStudyTrips.sort(StudyTrip.getComparator());
+			return new CollectionModelResult<>(getResultCollection(studyTripsFromDb));
+		}
 
-			return new CollectionModelResult<>(sortedStudyTrips);
+		private static Collection<StudyTripReport> getResultCollection(Collection<StudyTrip> studyTrips)
+		{
+			IStudyTripStudentDao studentDao = DaoFactory.getInstance().getStudyTripStudentDao();
+			Predicate<Student> all = student -> true;
+
+			ArrayList<StudyTripReport> list = new ArrayList<>(studyTrips.size());
+			studyTrips.forEach(studyTrip -> list.add(
+				fromStudyTrip(studyTrip, studentDao.readAllByPredicate(1L, all).getResult().size())));
+
+			return list;
+		}
+
+		private static StudyTripReport fromStudyTrip(StudyTrip value, int numberOfStudens)
+		{
+			long daysBetween = DAYS.between(value.getStartDate(), value.getEndDate());
+			return new StudyTripReport(value.getCityName(), value.getCountryName(), numberOfStudens, (int) daysBetween);
 		}
 
 		protected Predicate<StudyTrip> byAttributes()
@@ -100,7 +118,7 @@ public class GetCollectionStudyTripReportState extends AbstractGetCollectionStat
 		}
 	}
 
-	public static class Builder extends AbstractGetCollectionStateBuilder<StudyTrip>
+	public static class Builder extends AbstractGetCollectionStateBuilder<StudyTripReport>
 	{
 		@Override public AbstractState build()
 		{

@@ -1,6 +1,7 @@
 package de.fhws.fiw.fds.exam02.models;
 
 import com.owlike.genson.annotation.JsonConverter;
+import com.owlike.genson.annotation.JsonIgnore;
 import de.fhws.fiw.fds.sutton.server.api.converter.JsonServerLinkConverter;
 import de.fhws.fiw.fds.sutton.server.models.AbstractModel;
 import de.fhws.fiw.fds.sutton.utils.JsonDateTimeConverter;
@@ -60,6 +61,11 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 		this.cityName = cityName;
 		this.countryName = countryName;
 		this.organizer = organizer;
+	}
+
+	@JsonIgnore(serialize = true) @Override public long getId()
+	{
+		return this.id;
 	}
 
 	public String getName()

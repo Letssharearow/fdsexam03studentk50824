@@ -7,6 +7,7 @@ import de.fhws.fiw.fds.exam02.api.states.Logger;
 import de.fhws.fiw.fds.exam02.api.states.study_trips.GetCollectionStudyTripReportState;
 import de.fhws.fiw.fds.exam02.api.states.study_trips.GetCollectionStudyTripsState;
 import de.fhws.fiw.fds.exam02.models.StudyTrip;
+import de.fhws.fiw.fds.exam02.models.StudyTripReport;
 import de.fhws.fiw.fds.sutton.server.api.queries.AbstractQuery;
 import de.fhws.fiw.fds.sutton.server.api.queries.PagingBehaviorUsingOffsetSize;
 import de.fhws.fiw.fds.sutton.server.api.security.User;
@@ -25,8 +26,8 @@ import java.time.LocalDate;
 		@DefaultValue("") @QueryParam("startDate") final LocalDate startDate,
 		@DefaultValue("") @QueryParam("endDate") final LocalDate endDate)
 	{
-		final AbstractQuery<StudyTrip> query = new GetCollectionStudyTripsState.ByAttributes("", startDate, endDate, "",
-			"");
+		final AbstractQuery<StudyTripReport> query = new GetCollectionStudyTripReportState.ByAttributes(startDate,
+			endDate);
 
 		//query.setPagingBehavior(new PagingBehaviorUsingOffsetSize<>(offset, size));
 
