@@ -30,9 +30,6 @@ public class TokenState extends AbstractGetDispatcherState
 
 	@Override protected void defineTransitionLinks()
 	{
-		addLink(IStudyTripUri.REL_PATH_QUERY_PARAMETERS, IStudyTripRelTypes.GET_ALL_STUDY_TRIPS,
-			MediaType.APPLICATION_JSON);
-		addLink(IStudentUri.REL_PATH_QUERY_PARAMETERS, IStudentRelTypes.GET_ALL_STUDENTS, MediaType.APPLICATION_JSON);
 	}
 
 	public static class Builder extends AbstractDispatcherStateBuilder
