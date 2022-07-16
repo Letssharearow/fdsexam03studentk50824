@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 import static de.fhws.fiw.fds.sutton.server.api.queries.PagingBehaviorUsingOffsetSize.*;
 
-@Path("studytrips") public class StudyTripService extends AbstractService
+@Path("studyTrips") public class StudyTripService extends AbstractService
 {
 	@GET @Produces({ MediaType.APPLICATION_JSON }) public Response getCollectionStudyTrips(
 		@DefaultValue("") @QueryParam("name") final String name,

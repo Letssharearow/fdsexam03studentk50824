@@ -25,6 +25,6 @@ public abstract class AbstractStudyTripStudentsTest extends AbstractSubResourceT
 
 	@Override protected String defineBaseUrl()
 	{
-		return super.defineBaseUrl() + "studytrips/1/students";
+		return super.defineBaseUrl() + "studyTrips/1/students";
 	}
 }

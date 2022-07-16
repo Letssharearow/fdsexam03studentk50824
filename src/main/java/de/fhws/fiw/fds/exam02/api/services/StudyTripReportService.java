@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 
-@Path("studytripReport") public class StudyTripReportService extends AbstractService
+@Path("studyTripReport") public class StudyTripReportService extends AbstractService
 {
 
 	@GET @Produces({ MediaType.APPLICATION_JSON, "text/csv" }) public Response getStudyTripReport(

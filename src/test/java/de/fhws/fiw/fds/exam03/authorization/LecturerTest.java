@@ -19,7 +19,7 @@ public class LecturerTest extends AbstractTest<StudyTrip, StudyTripRestClient>
 	@Test public void test_lecturer_get_request_200() throws IOException
 	{
 		RestApiResponse<StudyTrip> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
-			defineBaseUrl() + "studytrips");
+			defineBaseUrl() + "studyTrips");
 		assertEquals(200, response.getLastStatusCode());
 
 	}
@@ -27,11 +27,11 @@ public class LecturerTest extends AbstractTest<StudyTrip, StudyTripRestClient>
 	@Test public void test_lecturer_put_request_403() throws IOException
 	{
 		RestApiResponse<StudyTrip> responseGet = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(),
-			defineBaseUrl() + "studytrips/4");
+			defineBaseUrl() + "studyTrips/4");
 		StudyTrip responseSingleData = responseGet.getResponseSingleData();
 		responseSingleData.setName("blabla");
 		RestApiResponse<StudyTrip> response = putRequestByUrl(HeaderMapUtils.withContentTypeJson(), responseSingleData,
-			defineBaseUrl() + "studytrips/4");
+			defineBaseUrl() + "studyTrips/4");
 		assertEquals(403, response.getLastStatusCode());
 
 	}
@@ -39,11 +39,11 @@ public class LecturerTest extends AbstractTest<StudyTrip, StudyTripRestClient>
 	@Test public void test_lecturer_put_request_204() throws IOException
 	{
 		RestApiResponse<StudyTrip> responseGet = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(),
-			defineBaseUrl() + "studytrips/1");
+			defineBaseUrl() + "studyTrips/1");
 		StudyTrip responseSingleData = responseGet.getResponseSingleData();
 		responseSingleData.setName("blabla");
 		RestApiResponse<StudyTrip> response = putRequestByUrl(HeaderMapUtils.withContentTypeJson(), responseSingleData,
-			defineBaseUrl() + "studytrips/1");
+			defineBaseUrl() + "studyTrips/1");
 		assertEquals(204, response.getLastStatusCode());
 
 	}
@@ -51,11 +51,11 @@ public class LecturerTest extends AbstractTest<StudyTrip, StudyTripRestClient>
 	@Test public void test_lecturer_post_request_201() throws IOException
 	{
 		RestApiResponse<StudyTrip> responseGet = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(),
-			defineBaseUrl() + "studytrips/1");
+			defineBaseUrl() + "studyTrips/1");
 		StudyTrip responseSingleData = responseGet.getResponseSingleData();
 		responseSingleData.setId(0L);
 		RestApiResponse<StudyTrip> response = postRequestByUrl(HeaderMapUtils.withContentTypeJson(), responseSingleData,
-			defineBaseUrl() + "studytrips");
+			defineBaseUrl() + "studyTrips");
 		assertEquals(201, response.getLastStatusCode());
 
 	}

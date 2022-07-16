@@ -26,12 +26,12 @@ public class GetStudyTripsTest extends CachingTestHelper<StudyTrip, StudyTripRes
 
 	private String getCollectionUrl()
 	{
-		return defineCacheUrl() + "studytrips";
+		return defineCacheUrl() + "studyTrips";
 	}
 
 	private String getSingleUrl()
 	{
-		return defineCacheUrl() + "studytrips/1";
+		return defineCacheUrl() + "studyTrips/1";
 	}
 
 	@Test public void testGetSingleStudyTripPrivateCachingMiss() throws IOException, InterruptedException

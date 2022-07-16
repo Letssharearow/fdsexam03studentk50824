@@ -34,6 +34,6 @@ public abstract class AbstractStudyTripTest extends AbstractTest<StudyTrip, Stud
 
 	@Override protected String defineBaseUrl()
 	{
-		return super.defineBaseUrl() + "studytrips";
+		return super.defineBaseUrl() + "studyTrips";
 	}
 }

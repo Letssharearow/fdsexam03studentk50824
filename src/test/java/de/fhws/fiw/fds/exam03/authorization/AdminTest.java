@@ -17,7 +17,7 @@ public class AdminTest extends AbstractTest<StudyTrip, StudyTripRestClient>
 	@Test public void test_admin_get_request_200() throws IOException
 	{
 		RestApiResponse<StudyTrip> response = getCollectionRequestByUrl(HeaderMapUtils.withAcceptJson(),
-			defineBaseUrl() + "studytrips");
+			defineBaseUrl() + "studyTrips");
 		assertEquals(200, response.getLastStatusCode());
 
 	}
@@ -25,11 +25,11 @@ public class AdminTest extends AbstractTest<StudyTrip, StudyTripRestClient>
 	@Test public void test_lecturer_put_request_204() throws IOException
 	{
 		RestApiResponse<StudyTrip> responseGet = getSingleRequestByUrl(HeaderMapUtils.withAcceptJson(),
-			defineBaseUrl() + "studytrips/4");
+			defineBaseUrl() + "studyTrips/4");
 		StudyTrip responseSingleData = responseGet.getResponseSingleData();
 		responseSingleData.setName("blabla");
 		RestApiResponse<StudyTrip> response = putRequestByUrl(HeaderMapUtils.withContentTypeJson(), responseSingleData,
-			defineBaseUrl() + "studytrips/4");
+			defineBaseUrl() + "studyTrips/4");
 		assertEquals(204, response.getLastStatusCode());
 
 	}

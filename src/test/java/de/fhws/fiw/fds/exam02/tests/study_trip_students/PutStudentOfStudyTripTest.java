@@ -42,7 +42,7 @@ public class PutStudentOfStudyTripTest extends AbstractStudyTripStudentsTest
 
 	@Test public void test_204_link_and_update_student() throws IOException
 	{
-		//the student (id = 4) is currently not linked to the studytrip (id = 1)
+		//the student (id = 4) is currently not linked to the studyTrip (id = 1)
 		final Student secondaryResource = loadSecondaryResourceById(HeaderMapUtils.withAcceptJson(),
 			ID_OF_UNLINKED_STUDENT);
 
@@ -50,7 +50,7 @@ public class PutStudentOfStudyTripTest extends AbstractStudyTripStudentsTest
 
 		secondaryResource.setFirstName("Hagrid");
 
-		//link student to studytrip. Also change the student's first name from "Harry" to "Hagrid"
+		//link student to studyTrip. Also change the student's first name from "Harry" to "Hagrid"
 		final RestApiResponse<Student> responseFromFirstPutRequest = linkSecondaryResource(
 			HeaderMapUtils.withContentTypeJson(), secondaryResource, defineBaseUrl() + "/" + ID_OF_UNLINKED_STUDENT);
 

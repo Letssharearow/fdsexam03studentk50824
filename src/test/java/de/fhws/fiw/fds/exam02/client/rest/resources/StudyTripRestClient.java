@@ -21,7 +21,7 @@ public class StudyTripRestClient extends AbstractResourceRestClient<StudyTrip>
 
 	@Override protected String defineUrl()
 	{
-		return IBaseUrl.BASE_URL + "studytrips";
+		return IBaseUrl.BASE_URL + "studyTrips";
 	}
 
 	@Override protected Class<StudyTrip> defineClassTypeForSingleResource()

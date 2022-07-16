@@ -28,9 +28,9 @@ public class StudyTrip extends AbstractModel implements Serializable, Cloneable
 
 	private String organizer;
 
-	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "studytrips/${instance.id}/students", rel = "getStudentsOfStudyTrip", title = "students", type = "application/json") private Link students;
+	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "studyTrips/${instance.id}/students", rel = "getStudentsOfStudyTrip", title = "students", type = "application/json") private Link students;
 
-	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/studytrips/${instance.id}", rel = "self", title = "self", type = "application/json") private Link selfLink;
+	@InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/studyTrips/${instance.id}", rel = "self", title = "self", type = "application/json") private Link selfLink;
 
 	public StudyTrip()
 	{
