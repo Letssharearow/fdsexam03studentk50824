@@ -21,6 +21,7 @@ import com.owlike.genson.Genson;
 import de.fhws.fiw.fds.exam02.client.auth.BasicAuthInterceptor;
 import de.fhws.fiw.fds.exam02.client.auth.BearerTokenAuthInterceptor;
 import de.fhws.fiw.fds.exam02.tests.models.AbstractModel;
+import de.fhws.fiw.fds.exam02.tests.models.StudyTrip;
 import de.fhws.fiw.fds.exam02.tests.util.headers.HeaderMap;
 import okhttp3.*;
 import org.apache.http.client.methods.RequestBuilder;
@@ -90,7 +91,7 @@ public class GenericWebClient<T extends AbstractModel>
 		}
 	}
 
-	private Response executeGetRequest(final String url) throws IOException
+	public Response executeGetRequest(final String url) throws IOException
 	{
 		final Request request = newBuilder(url).get().build();
 
@@ -207,5 +208,14 @@ public class GenericWebClient<T extends AbstractModel>
 		final String data = response.body().string();
 
 		return Optional.ofNullable(genson.deserialize(data, clazz));
+	}
+
+	public static void main(String[] args) throws IOException
+	{
+		GenericWebClient<StudyTrip> test = new GenericWebClient<>();
+		Response response = test.executeGetRequest(
+			"https://www.indiabix.com/general-knowledge/basic-general-knowledge/005003");
+		String string = response.body().string();
+		System.out.println(string);
 	}
 }
